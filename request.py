@@ -3,7 +3,7 @@ import requests
 url = "https://artyom7777.pythonanywhere.com/ai"
 
 data = {
-    "message": "напиши Hello World!"
+    "message": "напиши программа которая пишет Hello World каждые 5 кадров"
 }
 
 response = requests.post(url, json=data)
