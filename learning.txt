@@ -134,6 +134,51 @@ NODE WHAT WRITE TEXT IN CONSOLE
     }
 }
 
+----- everyFrame -----
+NODE WHAT RETURNS PATH EVERY N FRAMES
+
+"everyFrame": {
+    "type": "event",
+    "name": "everyFrame",
+    "x": null,
+    "y": null,
+    "width": 6,
+    "height": 3,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "N": {
+            "code": "N",
+            "name": "__n__",
+            "type": "number",
+            "value": null,
+            "standard": 1,
+            "visible": false
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.everyFrame",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__n__": "node.text.n"
+        }
+    }
+}
+
 ----- TRAINING DATA -----
 
 YOU MUST OBEY THESE RULES AND ANSWER THE QUESTION BASED ON WHAT IS DESCRIBED IN THE RULES
