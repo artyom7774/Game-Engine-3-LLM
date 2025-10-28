@@ -1,4 +1,4 @@
-LEARNING_VERSION = 1.0.3
+LEARNING_VERSION = 1.0.4
 
 ----- TRAINING DATA -----
 
@@ -78,6 +78,8 @@ HAVEN'T GOT VALUE FOR PATH
 
 TYPE: EVENT
 DESCRIPTION: NODE RETURNS PATH ON START GAME
+INPUTS: -
+OUTPUTS: path
 
 "onStartGame": {
     "type": "event",
@@ -108,6 +110,8 @@ DESCRIPTION: NODE RETURNS PATH ON START GAME
 
 TYPE: EVENT
 DESCRIPTION: NODE RETURNS PATH EVERY N FRAMES
+INPUTS: N (time between calls node)
+OUTPUTS: path
 
 "everyFrame": {
     "type": "event",
@@ -155,6 +159,8 @@ DESCRIPTION: NODE RETURNS PATH EVERY N FRAMES
 
 TYPE: TEXT
 DESCRIPTION: NODE WRITE TEXT IN CONSOLE
+INPUTS: path, text (text for write in console)
+OUTPUTS: path
 
 "writeText": {
     "type": "text",
