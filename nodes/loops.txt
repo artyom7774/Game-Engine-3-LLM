@@ -1,0 +1,84 @@
+## FOR N TIMES
+
+TYPE: LOOPS
+DESCRIPTION: RETURNS ITERATOR (PATH THAT IS CALLED EVERY CYCLE), INDEX OF CYCLE, PATH AFTER CYCLES
+INPUTS: path, N, X
+OUTPUTS: iterator, index, after
+
+"for_": {
+    "type": "loop",
+    "name": "for_",
+    "x": null,
+    "y": null,
+    "width": 8,
+    "height": 4,
+    "id": null,
+
+    "sorting": {
+        "inputs": [
+            "path",
+            "n",
+            "x"
+        ],
+        "outputs": [
+            "iterator",
+            "index",
+            "after"
+        ]
+    },
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "n": {
+            "code": "n",
+            "name": "__n__",
+            "type": "number",
+            "value": null,
+            "standard": 1
+        },
+        "x": {
+            "code": "x",
+            "name": "__x__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        }
+    },
+    "outputs": {
+        "iterator": {
+            "code": "iterator",
+            "name": "__iterator__",
+            "type": "iterator"
+        },
+
+        "index": {
+            "code": "index",
+            "name": "__index__",
+            "type": "number"
+        },
+
+        "after": {
+            "code": "after",
+            "name": "__after__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.for",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__iterator__": "node.text.iterator",
+            "__after__": "node.text.after",
+            "__name__": "node.text.name",
+            "__n__": "node.text.n",
+            "__x__": "node.text.x",
+            "__index__": "node.text.index"
+        }
+    }
+}
