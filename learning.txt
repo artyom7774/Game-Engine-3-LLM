@@ -1,4 +1,4 @@
-LEARNING_VERSION = 1.0.11
+LEARNING_VERSION = 1.0.12
 
 ----- TRAINING DATA -----
 
@@ -10,8 +10,6 @@ A NODE IS A UNIT FOR WRITING CODE IN A PROGRAM
 THEY COME IN THE FOLLOWING TYPES: events, loops, text, numbers, logic, objects, animation, another, set, music, experimental
 YOU SHOULD DO INDENTS FROM NODES ON 2 POINTS (DO NOT FORGET ABOUT THE WIDTH AND HEIGHT OF THE OBJECT)
 PROGRAM LOGIC STARTS WITH NODE IN GROUP EVENTS
-NODES WHO TYPE IN EVENTS HAVEN'T VALUE FOR PATH (THIS NODES: onStartGame, everyFrame, etc.)
-YOU MUST WRITE ANSWER WITH THIS CONTEXT
 
 THE PHRASE "RETURNS THE PATH" MEANS THAT ALL NODES IN WHICH THE PATH IS OBTAINED FROM THIS NODE ARE LAUNCHED FOR EXECUTION
 "standard" IS VALUE WHAT SET VALUE OF NODE, BUT "value" IN A LINK TO GET VALUE FROM LAST NODE AND HAVE PATH FOR CONNECTOR AND NODE ID
@@ -193,6 +191,69 @@ OUTPUTS: path
             "__none__": "node.text.none",
             "__text__": "node.text.text",
             "__path__": "node.text.path"
+        }
+    }
+}
+
+## PLUS
+
+TYPE: NUMBERS
+DESCRIPTION: RETURNS SUM OF A + B
+INPUTS: path, A, B
+OUTPUTS: path, answer
+
+"plus": {
+    "type": "number",
+    "name": "plus",
+    "x": null,
+    "y": null,
+    "width": 8,
+    "height": 4,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "a": {
+            "code": "a",
+            "name": "__a__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        },
+        "b": {
+            "code": "b",
+            "name": "__b__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        },
+        "answer": {
+            "code": "answer",
+            "name": "__answer__",
+            "type": "number"
+        }
+    },
+    "display": {
+        "name": "node.name.plus",
+        "text": {
+            "__none__": "node.text.none",
+            "__text__": "node.text.text",
+            "__path__": "node.text.path",
+            "__a__": "node.text.a",
+            "__b__": "node.text.b",
+            "__answer__": "node.text.answer"
         }
     }
 }
