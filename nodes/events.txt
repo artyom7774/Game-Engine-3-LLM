@@ -1,0 +1,73 @@
+## ON START GAME
+
+TYPE: EVENT
+DESCRIPTION: NODE RETURNS PATH ON START GAME
+INPUTS: -
+OUTPUTS: path
+
+"onStartGame": {
+    "type": "event",
+    "name": "onStartGame",
+    "x": null,
+    "y": null,
+    "width": 6,
+    "height": 3,
+    "id": null,
+    "inputs": {},
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.onStartGame",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path"
+        }
+    }
+}
+
+## EVERY FRAME
+
+TYPE: EVENT
+DESCRIPTION: NODE RETURNS PATH EVERY N FRAMES
+INPUTS: N (time between calls node)
+OUTPUTS: path
+
+"everyFrame": {
+    "type": "event",
+    "name": "everyFrame",
+    "x": null,
+    "y": null,
+    "width": 6,
+    "height": 3,
+    "id": null,
+    "inputs": {
+        "N": {
+            "code": "N",
+            "name": "__n__",
+            "type": "number",
+            "value": null,
+            "standard": 1,
+            "visible": false
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.everyFrame",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__n__": "node.text.n"
+        }
+    }
+}

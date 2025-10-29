@@ -1,0 +1,62 @@
+## PLUS
+
+TYPE: NUMBERS
+DESCRIPTION: RETURNS SUM OF A + B
+INPUTS: path, A, B
+OUTPUTS: path, answer
+
+"plus": {
+    "type": "number",
+    "name": "plus",
+    "x": null,
+    "y": null,
+    "width": 8,
+    "height": 4,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "a": {
+            "code": "a",
+            "name": "__a__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        },
+        "b": {
+            "code": "b",
+            "name": "__b__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        },
+        "answer": {
+            "code": "answer",
+            "name": "__answer__",
+            "type": "number"
+        }
+    },
+    "display": {
+        "name": "node.name.plus",
+        "text": {
+            "__none__": "node.text.none",
+            "__text__": "node.text.text",
+            "__path__": "node.text.path",
+            "__a__": "node.text.a",
+            "__b__": "node.text.b",
+            "__answer__": "node.text.answer"
+        }
+    }
+}

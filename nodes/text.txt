@@ -1,0 +1,47 @@
+## WRITE TEXT
+
+TYPE: TEXT
+DESCRIPTION: NODE WRITE TEXT IN CONSOLE
+INPUTS: path, text (text for write in console)
+OUTPUTS: path
+
+"writeText": {
+    "type": "text",
+    "name": "writeText",
+    "x": null,
+    "y": null,
+    "width": 6,
+    "height": 3,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "text": {
+            "code": "text",
+            "name": "__text__",
+            "type": "text",
+            "value": null,
+            "standard": ""
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.writeText",
+        "text": {
+            "__none__": "node.text.none",
+            "__text__": "node.text.text",
+            "__path__": "node.text.path"
+        }
+    }
+}
