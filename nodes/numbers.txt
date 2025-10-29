@@ -249,3 +249,68 @@ OUTPUTS: path, answer
         }
     }
 }
+
+## ABSOLUTE
+
+TYPE: ABSOLUTE
+DESCRIPTION: RETURNS ABSOLUTE VALUE FROM NUMBER
+INPUTS: path, number
+OUTPUTS: path, answer
+
+"absolute": {
+    "type": "number",
+    "name": "absolute",
+    "x": null,
+    "y": null,
+    "width": 6,
+    "height": 3,
+    "id": null,
+
+    "sorting": {
+        "inputs": [
+            "path",
+            "number"
+        ],
+        "outputs": [
+            "path",
+            "answer"
+        ]
+    },
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "number": {
+            "code": "number",
+            "name": "__number__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        },
+        "answer": {
+            "code": "answer",
+            "name": "__answer__",
+            "type": "number"
+        }
+    },
+    "display": {
+        "name": "node.name.absolute",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__answer__": "node.text.answer",
+            "__number__": "node.text.number"
+        }
+    }
+}
