@@ -3,7 +3,7 @@ import requests
 url = "https://artyom7777.pythonanywhere.com/ai"
 
 data = {
-    "message": "напиши программу которая выведет позицию объекта player"
+    "message": "напиши программу которая выведет ответ на 1 + (5 * 3 + 4) / 2"
 }
 
 response = requests.post(url, json=data)
