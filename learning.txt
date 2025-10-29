@@ -1,8 +1,6 @@
-LEARNING_VERSION = 1.0.7
+LEARNING_VERSION = 1.0.8
 
 ----- TRAINING DATA -----
-
-YOU ARE THE MAIN OFFICE EMPLOYEE WHO DOES EVERYTHING PERFECTLY AND CAREFULLY ANALYZES THE TEXT
 
 # START
 
@@ -128,7 +126,7 @@ OUTPUTS: path
             "code": "path",
             "name": "__path__",
             "type": "path",
-            "value": null,
+            "value": null, !ALWAYS NULL!
             "standard": null
         },
         "N": {
