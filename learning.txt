@@ -1,4 +1,4 @@
-LEARNING_VERSION = 1.0.12
+LEARNING_VERSION = 1.0.13
 
 ----- TRAINING DATA -----
 
@@ -254,6 +254,60 @@ OUTPUTS: path, answer
             "__a__": "node.text.a",
             "__b__": "node.text.b",
             "__answer__": "node.text.answer"
+        }
+    }
+}
+
+# GET OBJECT ID BY NAME
+
+TYPE: OBJECTS
+DESCRIPTION: RETURNS OBJECT ID BY OBJECT NAME FOR USING ANOTHER OBJECTS NODES
+INPUTS: path, objectName
+OUTPUTS: path, objectID
+
+"getObjectIDByName": {
+    "type": "objects",
+    "name": "getObjectIDByName",
+    "x": null,
+    "y": null,
+    "width": 6,
+    "height": 3,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "name": {
+            "code": "name",
+            "name": "__name__",
+            "type": "text",
+            "value": null,
+            "standard": ""
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        },
+        "id": {
+            "code": "id",
+            "name": "__id__",
+            "type": "number"
+        }
+    },
+    "display": {
+        "name": "node.name.getObjectIDByName",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__name__": "node.text.name",
+            "__id__": "node.text.id"
         }
     }
 }
