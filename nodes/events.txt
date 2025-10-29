@@ -46,6 +46,14 @@ OUTPUTS: path
     "height": 3,
     "id": null,
     "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+
         "N": {
             "code": "N",
             "name": "__n__",
@@ -71,3 +79,104 @@ OUTPUTS: path
         }
     }
 }
+
+## KEYBOARD CLICK
+
+TYPE: EVENT
+DESCRIPTION: NODE RETURNS PATH ON CLICK BY KEY
+INPUTS: key
+OUTPUTS: path
+
+"keyboardClick": {
+    "type": "event",
+    "name": "keyboardClick",
+    "x": null,
+    "y": null,
+    "width": 6,
+    "height": 3,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+
+        "key": {
+            "code": "key",
+            "name": "__key__",
+            "type": "text",
+            "value": null,
+            "standard": "",
+            "visible": false
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.keyboardClick",
+        "text": {
+            "__none__": "node.text.none",
+            "__key__": "node.text.key",
+            "__path__": "node.text.path"
+        }
+    }
+}
+
+## KEYBOARD CLICK
+
+TYPE: EVENT
+DESCRIPTION: NODE RETURNS PATH EVERY FRAME WHILE KEY CLICKED
+INPUTS: key
+OUTPUTS: path
+
+"keyboardPress": {
+    "type": "event",
+    "name": "keyboardPress",
+    "x": null,
+    "y": null,
+    "width": 6,
+    "height": 3,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+
+        "key": {
+            "code": "key",
+            "name": "__key__",
+            "type": "text",
+            "value": null,
+            "standard": "",
+            "visible": false
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.keyboardPress",
+        "text": {
+            "__none__": "node.text.none",
+            "__key__": "node.text.key",
+            "__path__": "node.text.path"
+        }
+    }
+}
+
