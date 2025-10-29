@@ -2,8 +2,8 @@
 
 TYPE: LOOPS
 DESCRIPTION: RETURNS ITERATOR (PATH THAT IS CALLED EVERY CYCLE), INDEX OF CYCLE, PATH AFTER CYCLES
-INPUTS: path, N, X
-OUTPUTS: iterator, index, after
+INPUTS: path, N (COUNT OF ITERATIONS), X (FRAME DELAY BY NEW CYCLE)
+OUTPUTS: iterator, index, after (PATH WHAT CALLED AFTER ALL CYCLES)
 
 "for_": {
     "type": "loop",
@@ -79,6 +79,79 @@ OUTPUTS: iterator, index, after
             "__n__": "node.text.n",
             "__x__": "node.text.x",
             "__index__": "node.text.index"
+        }
+    }
+}
+
+## FOR OBJECTS GROUP
+
+TYPE: LOOPS
+DESCRIPTION: RETURNS ITERATOR (PATH THAT IS CALLED EVERY CYCLE), ID OF OBJECT, PATH AFTER CYCLES
+INPUTS: path, group
+OUTPUTS: iterator, object ID, after (PATH WHAT CALLED AFTER ALL CYCLES)
+
+"forObjectsGroup": {
+    "type": "loop",
+    "name": "forObjectsGroup",
+    "x": null,
+    "y": null,
+    "width": 8,
+    "height": 4,
+    "id": null,
+    "sorting": {
+        "inputs": [
+            "path",
+            "group"
+        ],
+        "outputs": [
+            "iterator",
+            "id",
+            "after"
+        ]
+    },
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "group": {
+            "code": "group",
+            "name": "__group__",
+            "type": "text",
+            "value": null,
+            "standard": "object"
+        }
+    },
+    "outputs": {
+        "iterator": {
+            "code": "iterator",
+            "name": "__iterator__",
+            "type": "iterator"
+        },
+        "id": {
+            "code": "id",
+            "name": "__id__",
+            "type": "number"
+        },
+        "after": {
+            "code": "after",
+            "name": "__after__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.forObjectsGroup",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__iterator__": "node.text.iterator",
+            "__after__": "node.text.after",
+            "__name__": "node.text.name",
+            "__group__": "node.text.group",
+            "__id__": "node.text.id"
         }
     }
 }
