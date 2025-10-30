@@ -3,7 +3,7 @@ import requests
 url = "https://artyom7777.pythonanywhere.com/ai"
 
 data = {
-    "message": "напиши программу которая если позиция объекта по X равняеться 0 то выводит Yes иначе выводит No"
+    "message": "напиши программу которая перемещает объект player вправо со скорость 2"
 }
 
 response = requests.post(url, json=data)

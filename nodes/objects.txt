@@ -52,7 +52,7 @@ OUTPUTS: path, objectID
     }
 }
 
-# SET OBJECT POS
+## SET OBJECT POS
 
 TYPE: OBJECTS
 DESCRIPTION: SET OBJECT POSITION BY OBJECT ID
@@ -117,68 +117,7 @@ OUTPUTS: path
     }
 }
 
-# GET OBJECT POS
-
-TYPE: OBJECTS
-DESCRIPTION: RETURNS OBJECT POSITION BY OBJECT ID
-INPUTS: path, objectID
-OUTPUTS: path, X, Y
-
-"getObjectPos": {
-    "type": "objects",
-    "name": "getObjectPos",
-    "x": null,
-    "y": null,
-    "width": 8,
-    "height": 4,
-    "id": null,
-    "inputs": {
-        "path": {
-            "code": "path",
-            "name": "__path__",
-            "type": "path",
-            "value": null,
-            "standard": null
-        },
-        "id": {
-            "code": "id",
-            "name": "__id__",
-            "type": "number",
-            "value": null,
-            "standard": -1
-        }
-    },
-    "outputs": {
-        "path": {
-            "code": "path",
-            "name": "__path__",
-            "type": "path"
-        },
-        "x": {
-            "code": "x",
-            "name": "__x__",
-            "type": "number"
-        },
-        "y": {
-            "code": "y",
-            "name": "__y__",
-            "type": "number"
-        }
-    },
-    "display": {
-        "name": "node.name.getObjectPos",
-        "text": {
-            "__none__": "node.text.none",
-            "__path__": "node.text.path",
-            "__name__": "node.text.name",
-            "__id__": "node.text.id",
-            "__x__": "node.text.x",
-            "__y__": "node.text.y"
-        }
-    }
-}
-
-# MOVE OBJECT
+## MOVE OBJECT
 
 TYPE: OBJECTS
 DESCRIPTION: MOVE OBJECT BY ID ON ANGLE WITH POWER
@@ -246,6 +185,271 @@ OUTPUTS: path
             "__none__": "node.text.none",
             "__path__": "node.text.path",
             "__name__": "node.text.name",
+            "__id__": "node.text.id",
+            "__angle__": "node.text.angle",
+            "__power__": "node.text.power"
+        }
+    }
+}
+
+## GET OBJECT POS
+
+TYPE: OBJECTS
+DESCRIPTION: RETURNS OBJECT POSITION BY OBJECT ID
+INPUTS: path, objectID
+OUTPUTS: path, X, Y
+
+"getObjectPos": {
+    "type": "objects",
+    "name": "getObjectPos",
+    "x": null,
+    "y": null,
+    "width": 8,
+    "height": 4,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "id": {
+            "code": "id",
+            "name": "__id__",
+            "type": "number",
+            "value": null,
+            "standard": -1
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        },
+        "x": {
+            "code": "x",
+            "name": "__x__",
+            "type": "number"
+        },
+        "y": {
+            "code": "y",
+            "name": "__y__",
+            "type": "number"
+        }
+    },
+    "display": {
+        "name": "node.name.getObjectPos",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__name__": "node.text.name",
+            "__id__": "node.text.id",
+            "__x__": "node.text.x",
+            "__y__": "node.text.y"
+        }
+    }
+}
+
+## CREATE OBJECT
+
+TYPE: OBJECTS
+DESCRIPTION: CREATE OBJECT BY NAME IN OBJECTS AND X, Y
+INPUTS: path, name, X, Y
+OUTPUTS: path, objectID
+
+"createObject": {
+    "type": "objects",
+    "name": "createObject",
+    "x": null,
+    "y": null,
+    "width": 10,
+    "height": 5,
+    "id": null,
+
+    "sorting": {
+        "inputs": [
+            "path",
+            "name",
+            "x",
+            "y"
+        ],
+        "outputs": [
+            "path",
+            "id"
+        ]
+    },
+
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+
+        "name": {
+            "code": "name",
+            "name": "__name__",
+            "type": "text",
+            "value": null,
+            "standard": ""
+        },
+
+        "x": {
+            "code": "x",
+            "name": "__x__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        },
+
+        "y": {
+            "code": "y",
+            "name": "__y__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        }
+    },
+
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        },
+
+        "id": {
+            "code": "id",
+            "name": "__id__",
+            "type": "number"
+        }
+    },
+
+    "display": {
+        "name": "node.name.createObject",
+        "text": {
+            "__none__": "node.text.none",
+            "__name__": "node.text.name",
+            "__path__": "node.text.path",
+            "__id__": "node.text.id",
+            "__x__": "node.text.x",
+            "__y__": "node.text.y"
+        }
+    }
+}
+
+## REMOVE OBJECT
+
+TYPE: OBJECTS
+DESCRIPTION: REMOVE OBJECT BY ID
+INPUTS: path, objectID
+OUTPUTS: path
+
+"removeObject": {
+    "type": "objects",
+    "name": "removeObject",
+    "x": null,
+    "y": null,
+    "width": 6,
+    "height": 3,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "id": {
+            "code": "id",
+            "name": "__id__",
+            "type": "number",
+            "value": null,
+            "standard": -1
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.removeObject",
+        "text": {
+            "__none__": "node.text.none",
+            "__id__": "node.text.id",
+            "__path__": "node.text.path"
+        }
+    }
+}
+
+## IMIMATE JUMP
+
+TYPE: OBJECTS
+DESCRIPTION: IMITATE JUMP FOR OBJECT BY ID AND JUMP POWER
+INPUTS: path, objectID, power
+OUTPUTS: path
+
+"jump": {
+    "type": "objects",
+    "name": "jump",
+    "x": null,
+    "y": null,
+    "width": 8,
+    "height": 4,
+    "id": null,
+
+    "sorting": {
+        "inputs": [
+            "path",
+            "id",
+            "power"
+        ]
+    },
+
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "id": {
+            "code": "id",
+            "name": "__id__",
+            "type": "number",
+            "value": null,
+            "standard": -1
+        },
+        "power": {
+            "code": "power",
+            "name": "__power__",
+            "type": "number",
+            "value": null,
+            "standard": 10
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.jump",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
             "__id__": "node.text.id",
             "__angle__": "node.text.angle",
             "__power__": "node.text.power"
