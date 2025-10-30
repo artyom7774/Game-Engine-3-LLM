@@ -1,0 +1,184 @@
+## IF
+
+TYPE: LOGIC
+DESCRIPTION: IF CONDITION TRUE RETURN TRUE PATH ELSE FALSE PATH
+INPUTS: path, A, operation (["0. ==", "1. !=", "2. <=", "3. >=", "4. <", "5. >"]), B
+OUTPUTS: path_true, path_false
+
+"if_": {
+    "type": "logic",
+    "name": "if_",
+    "x": null,
+    "y": null,
+    "width": 10,
+    "height": 5,
+    "id": null,
+
+    "sorting": {
+        "inputs": [
+            "path",
+            "a",
+            "operation",
+            "b"
+        ],
+        "outputs": [
+            "path_true",
+            "path_false"
+        ]
+    },
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "a": {
+            "code": "a",
+            "name": "__a__",
+            "type": "Any",
+            "value": null,
+            "standard": null
+        },
+        "b": {
+            "code": "b",
+            "name": "__b__",
+            "type": "Any",
+            "value": null,
+            "standard": null
+        },
+        "operation": {
+            "code": "operation",
+            "name": "__operation__",
+            "type": "choose",
+            "value": null,
+            "standard": 0,
+            "choose": {
+                "options": [
+                    "0. ==",
+                    "1. !=",
+                    "2. <=",
+                    "3. >=",
+                    "4. <",
+                    "5. >"
+                ]
+            }
+        }
+    },
+    "outputs": {
+        "path_true": {
+            "code": "path_true",
+            "name": "__path_true__",
+            "type": "path"
+        },
+        "path_false": {
+            "code": "path_false",
+            "name": "__path_false__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.if",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__a__": "node.text.a",
+            "__b__": "node.text.b",
+            "__operation__": "node.text.operation",
+            "__path_true__": "node.text.pathTrue",
+            "__path_false__": "node.text.pathFalse"
+        }
+    }
+}
+
+## IF COLLISION
+
+TYPE: LOGIC
+DESCRIPTION: IF OBJECT COLLISION GROUP RETURN TRUE PATH AND OBJECT ID ELSE FALSE PATH. THE ID OF THE OBJECT WITH WHICH THE COLLISION IS CHECKED MUST BE DYNAMIC!!!
+INPUTS: path, objectID, group, append (returns true if the objects not only intersect, but also touch each other)
+OUTPUTS: path_true, path_false
+
+"ifCollision": {
+    "type": "logic",
+    "name": "ifCollision",
+    "x": null,
+    "y": null,
+    "width": 10,
+    "height": 5,
+    "id": null,
+
+    "sorting": {
+        "inputs": [
+            "path",
+            "id",
+            "group",
+            "append"
+        ],
+        "outputs": [
+            "path_true",
+            "path_false",
+            "id_in_group"
+        ]
+    },
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "id": {
+            "code": "id",
+            "name": "__id__",
+            "type": "number",
+            "value": null,
+            "standard": -1
+        },
+        "group": {
+            "code": "group",
+            "name": "__group__",
+            "type": "text",
+            "value": null,
+            "standard": "object"
+        },
+        "append": {
+            "code": "append",
+            "name": "__append__",
+            "type": "logic",
+            "value": null,
+            "standard": false
+        }
+    },
+    "outputs": {
+        "path_true": {
+            "code": "path_true",
+            "name": "__path_true__",
+            "type": "path"
+        },
+        "path_false": {
+            "code": "path_false",
+            "name": "__path_false__",
+            "type": "path"
+        },
+        "id_in_group": {
+            "code": "id_in_group",
+            "name": "__id_in_group__",
+            "type": "number"
+        }
+    },
+    "display": {
+        "name": "node.name.ifCollision",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__id__": "node.text.id",
+            "__group__": "node.text.group",
+            "__append__": "node.text.append",
+            "__path_true__": "node.text.pathTrue",
+            "__path_false__": "node.text.pathFalse",
+            "__id_in_group__": "node.text.idInGroup"
+        }
+    }
+}
