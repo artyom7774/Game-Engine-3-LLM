@@ -52,6 +52,71 @@ OUTPUTS: path, objectID
     }
 }
 
+# SET OBJECT POS
+
+TYPE: OBJECTS
+DESCRIPTION: SET OBJECT POSITION BY OBJECT ID
+INPUTS: path, objectID, X, Y
+OUTPUTS: path
+
+"setObjectPos": {
+    "type": "objects",
+    "name": "setObjectPos",
+    "x": null,
+    "y": null,
+    "width": 10,
+    "height": 5,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "id": {
+            "code": "id",
+            "name": "__id__",
+            "type": "number",
+            "value": null,
+            "standard": -1
+        },
+        "x": {
+            "code": "x",
+            "name": "__x__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        },
+        "y": {
+            "code": "y",
+            "name": "__y__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.setObjectPos",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__name__": "node.text.name",
+            "__id__": "node.text.id",
+            "__x__": "node.text.x",
+            "__y__": "node.text.y"
+        }
+    }
+}
+
 # GET OBJECT POS
 
 TYPE: OBJECTS
@@ -109,6 +174,81 @@ OUTPUTS: path, X, Y
             "__id__": "node.text.id",
             "__x__": "node.text.x",
             "__y__": "node.text.y"
+        }
+    }
+}
+
+# MOVE OBJECT
+
+TYPE: OBJECTS
+DESCRIPTION: MOVE OBJECT BY ID ON ANGLE WITH POWER
+INPUTS: path, objectID, angle, power
+OUTPUTS: path
+
+"moveObject": {
+    "type": "objects",
+    "name": "moveObject",
+    "x": null,
+    "y": null,
+    "width": 10,
+    "height": 5,
+    "id": null,
+
+    "sorting": {
+        "inputs": [
+            "path",
+            "id",
+            "angle",
+            "power"
+        ]
+    },
+
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "id": {
+            "code": "id",
+            "name": "__id__",
+            "type": "number",
+            "value": null,
+            "standard": -1
+        },
+        "angle": {
+            "code": "angle",
+            "name": "__angle__",
+            "type": "number",
+            "value": null,
+            "standard": 0
+        },
+        "power": {
+            "code": "power",
+            "name": "__power__",
+            "type": "number",
+            "value": null,
+            "standard": 1
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.moveObject",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__name__": "node.text.name",
+            "__id__": "node.text.id",
+            "__angle__": "node.text.angle",
+            "__power__": "node.text.power"
         }
     }
 }
