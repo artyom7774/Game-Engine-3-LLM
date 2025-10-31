@@ -1,0 +1,283 @@
+## SET VAR
+
+TYPE: ANOTHER
+DESCRIPTION: SET VARIABLE BY NAME AND VALUE (IF global == True VARIABLE VISIBLE IN ALL PROJECT, ELSE ONLY IN THIS FUNCTION)
+INPUTS: path, name, global, value
+OUTPUTS: path
+
+"setVar": {
+    "type": "another",
+    "name": "setVar",
+    "x": null,
+    "y": null,
+    "width": 10,
+    "height": 5,
+    "id": null,
+
+    "sorting": {
+        "inputs": [
+            "path",
+            "name",
+            "global",
+            "value"
+        ],
+        "outputs": [
+            "path"
+        ]
+    },
+
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+
+        "name": {
+            "code": "name",
+            "name": "__name__",
+            "type": "text",
+            "value": null,
+            "standard": ""
+        },
+
+        "global": {
+            "code": "global",
+            "name": "__global__",
+            "type": "logic",
+            "value": null,
+            "standard": false
+        },
+
+        "value": {
+            "code": "value",
+            "name": "__value__",
+            "type": "Any",
+            "value": null,
+            "standard": ""
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.setVar",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__value__": "node.text.value",
+            "__name__": "node.text.name",
+            "__global__": "node.text.global"
+        }
+    }
+}
+
+## GET VAR
+
+TYPE: ANOTHER
+DESCRIPTION: GET VARIABLE BY NAME (IF global == True VARIABLE VISIBLE IN ALL PROJECT, ELSE ONLY IN THIS FUNCTION)
+INPUTS: path, name, global
+OUTPUTS: path, answer
+
+"getVar": {
+    "type": "another",
+    "name": "getVar",
+    "x": null,
+    "y": null,
+    "width": 8,
+    "height": 4,
+    "id": null,
+
+    "sorting": {
+        "inputs": [
+            "path",
+            "name",
+            "global"
+        ],
+        "outputs": [
+            "path",
+            "answer"
+        ]
+    },
+
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+
+        "global": {
+            "code": "global",
+            "name": "__global__",
+            "type": "logic",
+            "value": null,
+            "standard": false
+        },
+
+        "name": {
+            "code": "name",
+            "name": "__name__",
+            "type": "text",
+            "value": null,
+            "standard": ""
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        },
+
+        "answer": {
+            "code": "answer",
+            "name": "__answer__",
+            "type": "Any"
+        }
+    },
+    "display": {
+        "name": "node.name.getVar",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__answer__": "node.text.answer",
+            "__name__": "node.text.name",
+            "__global__": "node.text.global"
+        }
+    }
+}
+
+## RANDOM
+
+TYPE: ANOTHER
+DESCRIPTION: RETURN RANDOM NUMBER FROM A TO B
+INPUTS: path, A, B
+OUTPUTS: path, answer
+
+"random_": {
+    "type": "another",
+    "name": "random_",
+    "x": null,
+    "y": null,
+    "width": 8,
+    "height": 4,
+    "id": null,
+
+    "sorting": {
+        "inputs": [
+            "path",
+            "a",
+            "b"
+        ],
+        "outputs": [
+            "path",
+            "answer"
+        ]
+    },
+
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+
+        "a": {
+            "code": "a",
+            "name": "__a__",
+            "type": "number",
+            "value": null,
+            "standard": 1
+        },
+
+        "b": {
+            "code": "b",
+            "name": "__b__",
+            "type": "number",
+            "value": null,
+            "standard": 2
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        },
+
+        "answer": {
+            "code": "answer",
+            "name": "__answer__",
+            "type": "number"
+        }
+    },
+    "display": {
+        "name": "node.name.random",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__answer__": "node.text.answer",
+            "__a__": "node.text.a",
+            "__b__": "node.text.b"
+        }
+    }
+}
+
+## WAIT
+
+TYPE: ANOTHER
+DESCRIPTION: WAIT TIME FRAMES
+INPUTS: path, TIME
+OUTPUTS: path
+
+"wait": {
+    "type": "another",
+    "name": "wait",
+    "x": null,
+    "y": null,
+    "width": 6,
+    "height": 3,
+    "id": null,
+    "inputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path",
+            "value": null,
+            "standard": null
+        },
+        "time": {
+            "code": "time",
+            "name": "__time__",
+            "type": "number",
+            "value": null,
+            "standard": 100
+        }
+    },
+    "outputs": {
+        "path": {
+            "code": "path",
+            "name": "__path__",
+            "type": "path"
+        }
+    },
+    "display": {
+        "name": "node.name.wait",
+        "text": {
+            "__none__": "node.text.none",
+            "__path__": "node.text.path",
+            "__time__": "node.text.time"
+        }
+    }
+}
