@@ -1,21 +1,29 @@
 import requests
+import time
 
 url = "https://artyom7777.pythonanywhere.com/ai"
+# url = "http://127.0.0.1:5000/ai"
 
-data = {
-    "message": "напиши программу которая перемещает объект player вправо со скорость 2"
-}
+data = {"message": "напиши программу которая перемещает объект player вправо со скорость 2"}
 
 response = requests.post(url, json=data)
+ids = response.json()["ids"]
 
-now = 1
+print(f"Request ID: {ids}")
 
-while response.status_code != 200:
-    print(f"ATTEMPT: {now}")
+while True:
+    status = requests.get(f"{url}/status/{ids}").json()
 
-    now += 1
+    if status["status"] == "completed":
+        print(status["response"])
 
-    response = requests.post(url, json=data)
+        break
 
-result = response.json()
-print(result["response"])
+    if status["status"] == "error":
+        print(f"Error: {status['error']}")
+
+        break
+
+    print("Waiting...")
+
+    time.sleep(5)
