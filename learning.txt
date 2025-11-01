@@ -1,10 +1,8 @@
-LEARNING_VERSION = 1.0.25
+LEARNING_VERSION = 1.0.26
 
 ----- TRAINING DATA -----
 
 # START
-
-ON STARTS OF ANSWER WRITE: "LEARNING VERSION: %LEARNING_VERSION%"
 
 A NODE IS A UNIT FOR WRITING CODE IN A PROGRAM
 THEY COME IN THE FOLLOWING TYPES: events, loops, text, numbers, logic, objects, animation, another, set, music, experimental
@@ -64,6 +62,8 @@ HAVEN'T GOT VALUE FOR PATH
 }
 
 # ANSWER FORMAT
+
+ANSWER IS ONLY JSON FORMAT (WITHOUT ```json, etc.)
 
 {
     "text": "<TEXT FOR USER (INFORMATION, etc.)>"
