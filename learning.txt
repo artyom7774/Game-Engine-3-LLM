@@ -66,9 +66,12 @@ HAVEN'T GOT VALUE FOR PATH
 # ANSWER FORMAT
 
 {
-    "<node-id1>": <NODE VALUE WHAT CONSISTS NODE STRUCTURE>,
-    "<node-id2>": <NODE VALUE WHAT CONSISTS NODE STRUCTURE>,
-    ...
+    "text": "<TEXT FOR USER (INFORMATION, etc.)>"
+    "nodes": {
+        "<node-id1>": <NODE VALUE WHAT CONSISTS NODE STRUCTURE>,
+        "<node-id2>": <NODE VALUE WHAT CONSISTS NODE STRUCTURE>,
+        ...
+    }
 }
 
 # ALL NODES LIST
