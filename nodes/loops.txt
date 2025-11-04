@@ -43,7 +43,7 @@ OUTPUTS: iterator, index, after (PATH WHAT CALLED AFTER ALL CYCLES)
         },
         "x": {
             "code": "x",
-            "name": "__x__",
+            "name": "__delay__",
             "type": "number",
             "value": null,
             "standard": 0
@@ -78,7 +78,8 @@ OUTPUTS: iterator, index, after (PATH WHAT CALLED AFTER ALL CYCLES)
             "__name__": "node.text.name",
             "__n__": "node.text.n",
             "__x__": "node.text.x",
-            "__index__": "node.text.index"
+            "__index__": "node.text.index",
+            "__delay__": "node.text.delay"
         }
     }
 }
