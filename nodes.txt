@@ -63,7 +63,7 @@ OUTPUTS: path
 ### EVERY FRAME
 TYPE: EVENT
 DESCRIPTION: Triggers every N frames
-INPUTS: path, N (number, default: 1)
+INPUTS: path, N
 OUTPUTS: path
 
 {
@@ -111,7 +111,7 @@ OUTPUTS: path
 ### EVERY TICK
 TYPE: EVENT
 DESCRIPTION: Triggers every N game ticks
-INPUTS: path, N (number, default: 1)
+INPUTS: path, N
 OUTPUTS: path
 
 {
@@ -159,7 +159,7 @@ OUTPUTS: path
 ### KEYBOARD CLICK
 TYPE: EVENT
 DESCRIPTION: Triggers when a keyboard key is clicked (single press)
-INPUTS: path, key (text)
+INPUTS: path, key
 OUTPUTS: path
 
 {
@@ -190,7 +190,7 @@ OUTPUTS: path
 ### KEYBOARD PRESS
 TYPE: EVENT
 DESCRIPTION: Triggers while a keyboard key is being pressed (continuous)
-INPUTS: path, key (text)
+INPUTS: path, key
 OUTPUTS: path
 
 {
@@ -319,7 +319,7 @@ OUTPUTS: path
 TYPE: EVENT
 DESCRIPTION: Triggers when a UI button is pressed
 INPUTS: path
-OUTPUTS: path, id (number)
+OUTPUTS: path, id
 
 {
     "type": "event",
@@ -363,8 +363,8 @@ OUTPUTS: path, id (number)
 ### FUNCTION EVENT
 TYPE: EVENT
 DESCRIPTION: Defines a custom function that can be called from other parts of the code
-INPUTS: name (text), params (list, default: [])
-OUTPUTS: path, params (list)
+INPUTS: name, params
+OUTPUTS: path, params
 
 {
     "type": "loop",
@@ -445,8 +445,8 @@ OUTPUTS: path, params (list)
 ### FOR
 TYPE: LOOP
 DESCRIPTION: Repeats execution N times with optional delay between iterations
-INPUTS: path, n (number, default: 1), delay (number, default: 0)
-OUTPUTS: iterator (path), index (number), after (path)
+INPUTS: path, n, delay
+OUTPUTS: iterator, index, after
 
 {
     "type": "loop",
@@ -517,8 +517,8 @@ OUTPUTS: iterator (path), index (number), after (path)
 ### FOR OBJECTS GROUP
 TYPE: LOOP
 DESCRIPTION: Iterates through all objects in a specified group
-INPUTS: path, group (text, default: "object")
-OUTPUTS: iterator (path), id (number), after (path)
+INPUTS: path, group
+OUTPUTS: iterator, id, after
 
 {
     "type": "loop",
@@ -596,8 +596,8 @@ OUTPUTS: iterator (path), id (number), after (path)
 ### FOR LIST ELEMENTS
 TYPE: LOOP
 DESCRIPTION: Iterates through all elements in a list
-INPUTS: path, list (list, default: [])
-OUTPUTS: iterator (path), index (number), element (Any), after (path)
+INPUTS: path, list
+OUTPUTS: iterator, index, element, after
 
 {
     "type": "loop",
@@ -675,8 +675,8 @@ OUTPUTS: iterator (path), index (number), element (Any), after (path)
 ### FOR DICT ELEMENTS
 TYPE: LOOP
 DESCRIPTION: Iterates through all key-value pairs in a dictionary
-INPUTS: path, dict (dict, default: {})
-OUTPUTS: iterator (path), key (text), element (Any), after (path)
+INPUTS: path, dict
+OUTPUTS: iterator, key, element, after
 
 {
     "type": "text",
@@ -748,7 +748,7 @@ OUTPUTS: iterator (path), key (text), element (Any), after (path)
 ### WRITE TEXT
 TYPE: TEXT
 DESCRIPTION: Outputs text to console/debug
-INPUTS: path, text (text, default: "")
+INPUTS: path, text
 OUTPUTS: path
 
 {
@@ -828,7 +828,7 @@ OUTPUTS: path
 ### DISPLAY TEXT
 TYPE: TEXT
 DESCRIPTION: Displays text on screen at specified coordinates
-INPUTS: path, x (number, default: 0), y (number, default: 0), text (text, default: "")
+INPUTS: path, x, y, text
 OUTPUTS: path
 
 {
@@ -875,8 +875,8 @@ OUTPUTS: path
 ### CONNECT TEXT
 TYPE: TEXT
 DESCRIPTION: Concatenates two text strings
-INPUTS: path, text1 (text, default: ""), text2 (text, default: "")
-OUTPUTS: path, text (text)
+INPUTS: path, text1, text2
+OUTPUTS: path, text
 
 {
     "type": "text",
@@ -938,8 +938,8 @@ OUTPUTS: path, text (text)
 ### SLICE TEXT
 TYPE: TEXT
 DESCRIPTION: Extracts a substring from start to end position
-INPUTS: path, text (text, default: ""), start (number, default: 0), end (number, default: -1)
-OUTPUTS: path, text (text)
+INPUTS: path, text, start, end
+OUTPUTS: path, text
 
 {
     "type": "number",
@@ -1000,8 +1000,8 @@ OUTPUTS: path, text (text)
 ### PLUS
 TYPE: NUMBER
 DESCRIPTION: Adds two numbers (a + b)
-INPUTS: path, a (number, default: 0), b (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1062,8 +1062,8 @@ OUTPUTS: path, answer (number)
 ### MINUS
 TYPE: NUMBER
 DESCRIPTION: Subtracts two numbers (a - b)
-INPUTS: path, a (number, default: 0), b (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1124,8 +1124,8 @@ OUTPUTS: path, answer (number)
 ### MULTIPLY
 TYPE: NUMBER
 DESCRIPTION: Multiplies two numbers (a × b)
-INPUTS: path, a (number, default: 0), b (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1186,8 +1186,8 @@ OUTPUTS: path, answer (number)
 ### DIVIDE
 TYPE: NUMBER
 DESCRIPTION: Divides two numbers (a ÷ b)
-INPUTS: path, a (number, default: 0), b (number, default: 1)
-OUTPUTS: path, answer (number)
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1239,8 +1239,8 @@ OUTPUTS: path, answer (number)
 ### POW
 TYPE: NUMBER
 DESCRIPTION: Raises number to specified power
-INPUTS: path, number (number, default: 0), power (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, number, power
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1292,8 +1292,8 @@ OUTPUTS: path, answer (number)
 ### SQRT
 TYPE: NUMBER
 DESCRIPTION: Calculates square root of a number
-INPUTS: path, number (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, number
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1345,8 +1345,8 @@ OUTPUTS: path, answer (number)
 ### MODULO
 TYPE: NUMBER
 DESCRIPTION: Returns remainder of division (a % b)
-INPUTS: path, a (number, default: 0), b (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1398,8 +1398,8 @@ OUTPUTS: path, answer (number)
 ### ABSOLUTE
 TYPE: NUMBER
 DESCRIPTION: Returns absolute value of a number
-INPUTS: path, number (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, number
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1451,8 +1451,8 @@ OUTPUTS: path, answer (number)
 ### SIN
 TYPE: NUMBER
 DESCRIPTION: Calculates sine of x (in radians)
-INPUTS: path, x (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, x
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1504,8 +1504,8 @@ OUTPUTS: path, answer (number)
 ### COS
 TYPE: NUMBER
 DESCRIPTION: Calculates cosine of x (in radians)
-INPUTS: path, x (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, x
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1567,8 +1567,8 @@ OUTPUTS: path, answer (number)
 ### TAN
 TYPE: NUMBER
 DESCRIPTION: Calculates tangent of x (in radians)
-INPUTS: path, x (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, x
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1629,8 +1629,8 @@ OUTPUTS: path, answer (number)
 ### CTG
 TYPE: NUMBER
 DESCRIPTION: Calculates cotangent of x (in radians)
-INPUTS: path, x (number, default: 0)
-OUTPUTS: path, answer (number)
+INPUTS: path, x
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1683,8 +1683,8 @@ OUTPUTS: path, answer (number)
 ### RADIANS
 TYPE: NUMBER
 DESCRIPTION: Converts degrees to radians
-INPUTS: path, degrees (number, default: 0)
-OUTPUTS: path, radians (number)
+INPUTS: path, degrees
+OUTPUTS: path, radians
 
 {
     "type": "number",
@@ -1745,8 +1745,8 @@ OUTPUTS: path, radians (number)
 ### DEGREES
 TYPE: NUMBER
 DESCRIPTION: Converts radians to degrees
-INPUTS: path, radians (number, default: 0)
-OUTPUTS: path, degrees (number)
+INPUTS: path, radians
+OUTPUTS: path, degrees
 
 {
     "type": "logic",
@@ -1837,8 +1837,8 @@ OUTPUTS: path, degrees (number)
 ### IF
 TYPE: LOGIC
 DESCRIPTION: Compares two values using specified operation and branches execution
-INPUTS: path, a (Any), b (Any), operation (choose: ==, !=, <=, >=, <, >)
-OUTPUTS: path_true (path), path_false (path)
+INPUTS: path, a, b, operation
+OUTPUTS: path_true, path_false
 
 {
     "type": "logic",
@@ -1926,8 +1926,8 @@ OUTPUTS: path_true (path), path_false (path)
 ### IF COLLISION
 TYPE: LOGIC
 DESCRIPTION: Checks if object collides with any object in specified group
-INPUTS: path, id (number, default: -1), group (text, default: "object"), append (logic, default: false)
-OUTPUTS: path_true (path), path_false (path), id_in_group (number)
+INPUTS: path, id, group, append
+OUTPUTS: path_true, path_false, id_in_group
 
 {
     "type": "logic",
@@ -1999,8 +1999,8 @@ OUTPUTS: path_true (path), path_false (path), id_in_group (number)
 ### IF KEY IN DICT
 TYPE: LOGIC
 DESCRIPTION: Checks if a key exists in dictionary
-INPUTS: path, dict (dict, default: {}), key (text, default: "")
-OUTPUTS: path_true (path), path_false (path)
+INPUTS: path, dict, key
+OUTPUTS: path_true, path_false
 
 {
     "type": "logic",
@@ -2072,8 +2072,8 @@ OUTPUTS: path_true (path), path_false (path)
 ### IF ELEMENT IN LIST
 TYPE: LOGIC
 DESCRIPTION: Checks if an element exists in list
-INPUTS: path, list (list, default: []), element (Any, default: "")
-OUTPUTS: path_true (path), path_false (path)
+INPUTS: path, list, element
+OUTPUTS: path_true, path_false
 
 {
     "type": "objects",
@@ -2125,8 +2125,8 @@ OUTPUTS: path_true (path), path_false (path)
 ### GET OBJECT ID BY NAME
 TYPE: OBJECTS
 DESCRIPTION: Returns object ID by its name
-INPUTS: path, name (text, default: "")
-OUTPUTS: path, id (number)
+INPUTS: path, name
+OUTPUTS: path, id
 
 {
     "type": "objects",
@@ -2189,8 +2189,8 @@ OUTPUTS: path, id (number)
 ### CREATE OBJECT
 TYPE: OBJECTS
 DESCRIPTION: Creates a new object at specified position
-INPUTS: path, name (text, default: ""), x (number, default: 0), y (number, default: 0)
-OUTPUTS: path, id (number)
+INPUTS: path, name, x, y
+OUTPUTS: path, id
 
 {
     "type": "objects",
@@ -2261,7 +2261,7 @@ OUTPUTS: path, id (number)
 ### REMOVE OBJECT
 TYPE: OBJECTS
 DESCRIPTION: Removes an object from the game
-INPUTS: path, id (number, default: -1)
+INPUTS: path, id
 OUTPUTS: path
 
 {
@@ -2342,7 +2342,7 @@ OUTPUTS: path
 ### SET OBJECT POSITION
 TYPE: OBJECTS
 DESCRIPTION: Sets object position to exact coordinates
-INPUTS: path, id (number, default: -1), x (number, default: 0), y (number, default: 0)
+INPUTS: path, id, x, y
 OUTPUTS: path
 
 {
@@ -2402,8 +2402,8 @@ OUTPUTS: path
 ### GET OBJECT POSITION
 TYPE: OBJECTS
 DESCRIPTION: Returns current object position
-INPUTS: path, id (number, default: -1)
-OUTPUTS: path, x (number), y (number)
+INPUTS: path, id
+OUTPUTS: path, x, y
 
 {
     "type": "objects",
@@ -2477,7 +2477,7 @@ OUTPUTS: path, x (number), y (number)
 ### MOVE OBJECT
 TYPE: OBJECTS
 DESCRIPTION: Moves object in specified angle with given power
-INPUTS: path, id (number, default: -1), angle (number, default: 0), power (number, default: 1)
+INPUTS: path, id, angle, power
 OUTPUTS: path
 
 {
@@ -2549,7 +2549,7 @@ OUTPUTS: path
 ### MOVE OBJECT WITH BRAKING
 TYPE: OBJECTS
 DESCRIPTION: Moves object with gradual braking effect
-INPUTS: path, id (number, default: -1), angle (number, default: 0), power (number, default: 1), slidingStep (number, default: 1e9)
+INPUTS: path, id, angle, power, slidingStep
 OUTPUTS: path
 
 {
@@ -2630,7 +2630,7 @@ OUTPUTS: path
 ### JUMP
 TYPE: OBJECTS
 DESCRIPTION: Makes object jump with specified power
-INPUTS: path, id (number, default: -1), power (number, default: 10)
+INPUTS: path, id, power
 OUTPUTS: path
 
 {
@@ -2677,7 +2677,7 @@ OUTPUTS: path
 ### SET OBJECT VAR
 TYPE: OBJECTS
 DESCRIPTION: Sets a custom variable for specific object
-INPUTS: path, id (number, default: -1), name (text, default: ""), value (Any, default: "")
+INPUTS: path, id, name, value
 OUTPUTS: path
 
 {
@@ -2747,8 +2747,8 @@ OUTPUTS: path
 ### GET OBJECT VAR
 TYPE: OBJECTS
 DESCRIPTION: Gets a custom variable from specific object
-INPUTS: path, id (number, default: -1), name (text, default: "")
-OUTPUTS: path, answer (Any)
+INPUTS: path, id, name
+OUTPUTS: path, answer
 
 {
     "type": "objects",
@@ -2829,7 +2829,7 @@ OUTPUTS: path, answer (Any)
 ### SET OBJECT PARAMETER
 TYPE: OBJECTS
 DESCRIPTION: Sets built-in object parameter (hitbox, mass, layer, etc.)
-INPUTS: path, id (number, default: -1), name (choose from: hitbox, group, mass, layer, invisible, gravity, brakingPower, message, fontSize, alignment, fontColor, backgroundColor, ramaColor, spriteHitbox, liveTime, minusSpriteSizePerFrame, alpha), value (Any, default: "")
+INPUTS: path, id, name, value
 OUTPUTS: path
 
 {
@@ -2913,8 +2913,8 @@ OUTPUTS: path
 ### GET OBJECT PARAMETER
 TYPE: OBJECTS
 DESCRIPTION: Gets built-in object parameter value
-INPUTS: path, id (number, default: -1), name (choose from parameters list)
-OUTPUTS: path, value (Any)
+INPUTS: path, id, name
+OUTPUTS: path, value
 
 {
     "type": "objects",
@@ -2977,8 +2977,8 @@ OUTPUTS: path, value (Any)
 ### GET RESULTING VECTOR
 TYPE: OBJECTS
 DESCRIPTION: Returns object's movement vector components
-INPUTS: path, id (number, default: -1)
-OUTPUTS: path, x (number), y (number)
+INPUTS: path, id
+OUTPUTS: path, x, y
 
 {
     "type": "objects",
@@ -3040,8 +3040,8 @@ OUTPUTS: path, x (number), y (number)
 ### GET ALL OBJECTS IN GROUP
 TYPE: OBJECTS
 DESCRIPTION: Returns list of all object IDs in specified group
-INPUTS: path, group (text, default: "")
-OUTPUTS: path, objects (list)
+INPUTS: path, group
+OUTPUTS: path, objects
 
 {
     "type": "animation",
@@ -3105,7 +3105,7 @@ OUTPUTS: path, objects (list)
 ### RUN ANIMATION
 TYPE: ANIMATION
 DESCRIPTION: Starts playing animation on object
-INPUTS: path, id (number, default: -1), animation (text, default: "")
+INPUTS: path, id, animation
 OUTPUTS: path
 
 {
@@ -3161,7 +3161,7 @@ OUTPUTS: path
 ### STOP ANIMATION
 TYPE: ANIMATION
 DESCRIPTION: Stops current animation on object
-INPUTS: path, id (number, default: -1)
+INPUTS: path, id
 OUTPUTS: path
 
 {
@@ -3235,7 +3235,7 @@ OUTPUTS: path
 ### MIRROR ANIMATION
 TYPE: ANIMATION
 DESCRIPTION: Flips animation horizontally and/or vertically
-INPUTS: path, id (number, default: -1), horizontal (logic, default: false), vertical (logic, default: false)
+INPUTS: path, id, horizontal, vertical
 OUTPUTS: path
 
 {
@@ -3309,7 +3309,7 @@ OUTPUTS: path
 ### SET VAR
 TYPE: ANOTHER
 DESCRIPTION: Sets variable by name and value (if global == true, variable visible in all project, else only in this function)
-INPUTS: path, name (text, default: ""), global (logic, default: false), value (Any, default: "")
+INPUTS: path, name, global, value
 OUTPUTS: path
 
 {
@@ -3381,8 +3381,8 @@ OUTPUTS: path
 ### GET VAR
 TYPE: ANOTHER
 DESCRIPTION: Gets variable by name (if global == true, variable visible in all project, else only in this function)
-INPUTS: path, name (text, default: ""), global (logic, default: false)
-OUTPUTS: path, answer (Any)
+INPUTS: path, name, global
+OUTPUTS: path, answer
 
 {
     "type": "another",
@@ -3453,8 +3453,8 @@ OUTPUTS: path, answer (Any)
 ### ADD LIST ELEMENT
 TYPE: SET
 DESCRIPTION: Appends element to the end of list
-INPUTS: path, list (list, default: []), element (Any, default: "")
-OUTPUTS: path, list (list)
+INPUTS: path, list, element
+OUTPUTS: path, list
 
 {
     "type": "another",
@@ -3516,8 +3516,8 @@ OUTPUTS: path, list (list)
 ### INSERT LIST ELEMENT
 TYPE: SET
 DESCRIPTION: Inserts element at specified index in list
-INPUTS: path, list (list, default: []), index (number, default: 1), element (Any, default: "")
-OUTPUTS: path, list (list)
+INPUTS: path, list, index, element
+OUTPUTS: path, list
 
 {
     "type": "another",
@@ -3579,8 +3579,8 @@ OUTPUTS: path, list (list)
 ### GET BY INDEX
 TYPE: SET
 DESCRIPTION: Returns element at specified index from list
-INPUTS: path, list (list, default: []), index (number, default: 0)
-OUTPUTS: path, element (Any)
+INPUTS: path, list, index
+OUTPUTS: path, element
 
 {
     "type": "another",
@@ -3617,8 +3617,8 @@ OUTPUTS: path, element (Any)
 ### DELETE BY INDEX
 TYPE: SET
 DESCRIPTION: Removes element at specified index from list
-INPUTS: path, list (list, default: []), index (number, default: 0)
-OUTPUTS: path, list (list)
+INPUTS: path, list, index
+OUTPUTS: path, list
 
 {
     "type": "another",
@@ -3712,8 +3712,8 @@ OUTPUTS: path, list (list)
 ### GET INDEX OF ELEMENT
 TYPE: SET
 DESCRIPTION: Finds and returns index of element in list
-INPUTS: path, list (list, default: []), element (Any, default: "")
-OUTPUTS: path, index (number)
+INPUTS: path, list, element
+OUTPUTS: path, index
 
 {
     "type": "event",
@@ -3784,8 +3784,8 @@ OUTPUTS: path, index (number)
 ### SLICE LIST
 TYPE: SET
 DESCRIPTION: Extracts portion of list from start to end index
-INPUTS: path, list (list, default: []), start (number, default: 0), end (number, default: -1)
-OUTPUTS: path, list (list)
+INPUTS: path, list, start, end
+OUTPUTS: path, list
 
 {
     "type": "another",
@@ -3849,8 +3849,8 @@ OUTPUTS: path, list (list)
 ### ADD DICT ELEMENT
 TYPE: SET
 DESCRIPTION: Adds or updates key-value pair in dictionary
-INPUTS: path, dict (dict, default: {}), key (text, default: ""), element (Any, default: "")
-OUTPUTS: path, dict (dict)
+INPUTS: path, dict, key, element
+OUTPUTS: path, dict
 
 {
     "type": "another",
@@ -3900,8 +3900,8 @@ OUTPUTS: path, dict (dict)
 ### GET BY KEY
 TYPE: SET
 DESCRIPTION: Returns value associated with key in dictionary
-INPUTS: path, dict (dict, default: {}), key (text, default: "")
-OUTPUTS: path, element (Any)
+INPUTS: path, dict, key
+OUTPUTS: path, element
 
 {
     "type": "another",
@@ -3945,8 +3945,8 @@ OUTPUTS: path, element (Any)
 ### REMOVE BY KEY
 TYPE: SET
 DESCRIPTION: Removes key-value pair from dictionary
-INPUTS: path, dict (dict, default: {}), key (text, default: "")
-OUTPUTS: path, dict (dict)
+INPUTS: path, dict, key
+OUTPUTS: path, dict
 
 {
     "type": "another",
@@ -3992,8 +3992,8 @@ OUTPUTS: path, dict (dict)
 ### GET KEY OF ELEMENT
 TYPE: SET
 DESCRIPTION: Finds and returns key for given value in dictionary
-INPUTS: path, dict (dict, default: {}), element (Any, default: "")
-OUTPUTS: path, key (text)
+INPUTS: path, dict, element
+OUTPUTS: path, key
 
 {
     "type": "another",
@@ -4037,8 +4037,8 @@ OUTPUTS: path, key (text)
 ### RANDOM
 TYPE: ANOTHER
 DESCRIPTION: Returns random number from A to B
-INPUTS: path, a (number, default: 1), b (number, default: 2)
-OUTPUTS: path, answer (number)
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "another",
@@ -4084,7 +4084,7 @@ OUTPUTS: path, answer (number)
 ### WAIT
 TYPE: ANOTHER
 DESCRIPTION: Pauses execution for specified number of frames
-INPUTS: path, time (number, default: 100)
+INPUTS: path, time
 OUTPUTS: path
 
 {
@@ -4117,8 +4117,8 @@ OUTPUTS: path
 ### LEN
 TYPE: ANOTHER
 DESCRIPTION: Returns length of text, list, or dictionary
-INPUTS: path, element (Any, default: "")
-OUTPUTS: path, answer (number)
+INPUTS: path, element
+OUTPUTS: path, answer
 
 {
     "type": "set",
@@ -4341,8 +4341,8 @@ OUTPUTS: None
 ### DECODE HOLDER
 TYPE: ANOTHER
 DESCRIPTION: Decodes/parses text into appropriate data type
-INPUTS: path, text (text, default: "")
-OUTPUTS: path, answer (Any)
+INPUTS: path, text
+OUTPUTS: path, answer
 
 {
     "type": "set",
@@ -4412,7 +4412,7 @@ OUTPUTS: path, answer (Any)
 ### CALL FUNCTION
 TYPE: ANOTHER
 DESCRIPTION: Calls custom function by name with parameters
-INPUTS: path, name (text, default: ""), params (list, default: [])
+INPUTS: path, name, params
 OUTPUTS: path
 
 {
@@ -4484,8 +4484,8 @@ OUTPUTS: path
 ### PYTHON
 TYPE: ANOTHER
 DESCRIPTION: Executes custom Python code with provided arguments
-INPUTS: path, text (text, default: "def run(program, args, kwargs):\n\tpass"), list (list, default: []), dict (dict, default: {})
-OUTPUTS: path, answer (list)
+INPUTS: path, text, list, dict
+OUTPUTS: path, answer
 
 {
     "type": "set",
@@ -4565,7 +4565,7 @@ OUTPUTS: path, answer (list)
 TYPE: ANOTHER
 DESCRIPTION: Returns current mouse cursor coordinates
 INPUTS: path
-OUTPUTS: path, x (number), y (number)
+OUTPUTS: path, x, y
 
 {
     "type": "set",
@@ -4645,7 +4645,7 @@ OUTPUTS: path, x (number), y (number)
 TYPE: ANOTHER
 DESCRIPTION: Returns time elapsed since game start
 INPUTS: path
-OUTPUTS: path, time_passed (number)
+OUTPUTS: path, time_passed
 
 {
     "type": "set",
@@ -4716,7 +4716,7 @@ OUTPUTS: path, time_passed (number)
 ### GO TO SCENE
 TYPE: ANOTHER
 DESCRIPTION: Switches to specified scene
-INPUTS: path, scene (text, default: "")
+INPUTS: path, scene
 OUTPUTS: path
 
 {
@@ -4789,7 +4789,7 @@ OUTPUTS: path
 TYPE: ANOTHER
 DESCRIPTION: Returns name of current scene
 INPUTS: path
-OUTPUTS: path, answer (text)
+OUTPUTS: path, answer
 
 {
     "type": "set",
@@ -4860,7 +4860,7 @@ OUTPUTS: path, answer (text)
 ### PLAY MUSIC
 TYPE: MUSIC
 DESCRIPTION: Starts playing music track with specified volume
-INPUTS: path, name (text, default: ""), volume (number, default: 1)
+INPUTS: path, name, volume
 OUTPUTS: path
 
 {
@@ -4962,7 +4962,7 @@ OUTPUTS: path
 ### PLAY SOUND
 TYPE: MUSIC
 DESCRIPTION: Plays sound effect with specified volume
-INPUTS: path, name (text, default: ""), volume (number, default: 1)
+INPUTS: path, name, volume
 OUTPUTS: path
 
 {
@@ -5021,146 +5021,3 @@ OUTPUTS: path
     }
 }
 
-### GET NOISE VALUE
-TYPE: EXPERIMENTAL
-DESCRIPTION: Generates Perlin noise value at coordinates with advanced parameters
-INPUTS: path, seed (number, default: 0), x (number, default: 0), y (number, default: 0), min (number, default: 0), max (number, default: 1), octaves (number, default: 4), frequency (number, default: 1), amplitude (number, default: 1), lacunarity (number, default: 2), persistence (number, default: 0.5)
-OUTPUTS: path, value (number)
-
-{
-    "type": "another",
-    "name": "getNoiseValue",
-    "x": null,
-    "y": null,
-    "width": 10,
-    "height": 12,
-    "id": null,
-    "sorting": {
-        "inputs": [
-            "path",
-            "seed",
-            "x",
-            "y",
-            "min",
-            "max",
-            "octaves",
-            "frequency",
-            "amplitude",
-            "lacunarity",
-            "persistence"
-        ],
-        "outputs": [
-            "path",
-            "value"
-        ]
-    },
-    "inputs": {
-        "path": {
-            "code": "path",
-            "name": "__path__",
-            "type": "path",
-            "value": null,
-            "standard": null
-        },
-        "seed": {
-            "code": "seed",
-            "name": "__seed__",
-            "type": "number",
-            "value": null,
-            "standard": 0
-        },
-        "x": {
-            "code": "x",
-            "name": "__x__",
-            "type": "number",
-            "value": null,
-            "standard": 0
-        },
-        "y": {
-            "code": "y",
-            "name": "__y__",
-            "type": "number",
-            "value": null,
-            "standard": 0
-        },
-        "min": {
-            "code": "min",
-            "name": "__min__",
-            "type": "number",
-            "value": null,
-            "standard": 0
-        },
-        "max": {
-            "code": "max",
-            "name": "__max__",
-            "type": "number",
-            "value": null,
-            "standard": 1
-        },
-        "octaves": {
-            "code": "octaves",
-            "name": "__octaves__",
-            "type": "number",
-            "value": null,
-            "standard": 4
-        },
-        "frequency": {
-            "code": "frequency",
-            "name": "__frequency__",
-            "type": "number",
-            "value": null,
-            "standard": 1
-        },
-        "amplitude": {
-            "code": "amplitude",
-            "name": "__amplitude__",
-            "type": "number",
-            "value": null,
-            "standard": 1
-        },
-        "lacunarity": {
-            "code": "lacunarity",
-            "name": "__lacunarity__",
-            "type": "number",
-            "value": null,
-            "standard": 2
-        },
-        "persistence": {
-            "code": "persistence",
-            "name": "__persistence__",
-            "type": "number",
-            "value": null,
-            "standard": 0.5
-        }
-    },
-    "outputs": {
-        "path": {
-            "code": "path",
-            "name": "__path__",
-            "type": "path"
-        },
-        "value": {
-            "code": "value",
-            "name": "__value__",
-            "type": "number"
-        }
-    },
-    "display": {
-        "name": "node.name.getNoiseValue",
-        "text": {
-            "__none__": "node.text.none",
-            "__path__": "node.text.path",
-            "__value__": "node.text.value",
-            "__x__": "node.text.x",
-            "__y__": "node.text.y",
-            "__seed__": "node.text.seed",
-            "__min__": "node.text.minValue",
-            "__max__": "node.text.maxValue",
-            "__octaves__": "node.text.octaves",
-            "__frequency__": "node.text.frequency",
-            "__amplitude__": "node.text.amplitude",
-            "__lacunarity__": "node.text.lacunarity",
-            "__persistence__": "node.text.persistence"
-        }
-    }
-}
