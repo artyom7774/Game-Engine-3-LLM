@@ -1,8 +1,8 @@
-NAME: onStartGame
+### ON START GAME
 TYPE: EVENT
 DESCRIPTION: Triggers once when the game starts
-Inputs: None
-Outputs: path
+INPUTS: None
+OUTPUTS: path
 
 {
     "type": "event",
@@ -29,11 +29,11 @@ Outputs: path
     }
 }
 
-NAME: onLoadScene
+### ON LOAD SCENE
 TYPE: EVENT
 DESCRIPTION: Triggers when a scene is loaded
-Inputs: None
-Outputs: path
+INPUTS: None
+OUTPUTS: path
 
 {
     "type": "event",
@@ -60,11 +60,11 @@ Outputs: path
     }
 }
 
-NAME: everyFrame
+### EVERY FRAME
 TYPE: EVENT
 DESCRIPTION: Triggers every N frames
-Inputs: path, N
-Outputs: path
+INPUTS: path, N
+OUTPUTS: path
 
 {
     "type": "event",
@@ -108,11 +108,11 @@ Outputs: path
     }
 }
 
-NAME: everyTick
+### EVERY TICK
 TYPE: EVENT
 DESCRIPTION: Triggers every N game ticks
-Inputs: path, N
-Outputs: path
+INPUTS: path, N
+OUTPUTS: path
 
 {
     "type": "event",
@@ -156,11 +156,11 @@ Outputs: path
     }
 }
 
-NAME: mouseRightClick
+### KEYBOARD CLICK
 TYPE: EVENT
-DESCRIPTION: Triggers when the right mouse button is clicked
-Inputs: None
-Outputs: path
+DESCRIPTION: Triggers when a keyboard key is clicked (single press)
+INPUTS: path, key
+OUTPUTS: path
 
 {
     "type": "event",
@@ -187,11 +187,11 @@ Outputs: path
     }
 }
 
-NAME: mouseLeftClick
+### KEYBOARD PRESS
 TYPE: EVENT
-DESCRIPTION: Triggers when the left mouse button is clicked
-Inputs: None
-Outputs: path
+DESCRIPTION: Triggers while a keyboard key is being pressed (continuous)
+INPUTS: path, key
+OUTPUTS: path
 
 {
     "type": "event",
@@ -219,11 +219,11 @@ Outputs: path
     }
 }
 
-NAME: keyboardClick
+### MOUSE LEFT CLICK
 TYPE: EVENT
-DESCRIPTION: Triggers when a keyboard key is clicked (single press)
-Inputs: path, key
-Outputs: path
+DESCRIPTION: Triggers when the left mouse button is clicked
+INPUTS: None
+OUTPUTS: path
 
 {
     "type": "event",
@@ -267,11 +267,11 @@ Outputs: path
     }
 }
 
-NAME: keyboardPress
+### MOUSE RIGHT CLICK
 TYPE: EVENT
-DESCRIPTION: Triggers while a keyboard key is being pressed (continuous)
-Inputs: path, key
-Outputs: path
+DESCRIPTION: Triggers when the right mouse button is clicked
+INPUTS: None
+OUTPUTS: path
 
 {
     "type": "event",
@@ -315,11 +315,11 @@ Outputs: path
     }
 }
 
-NAME: onButtonPress
+### ON BUTTON PRESS
 TYPE: EVENT
 DESCRIPTION: Triggers when a UI button is pressed
-Inputs: path
-Outputs: path, id
+INPUTS: path
+OUTPUTS: path, id
 
 {
     "type": "event",
@@ -360,11 +360,11 @@ Outputs: path, id
     }
 }
 
-NAME: for_
+### FUNCTION EVENT
 TYPE: EVENT
 DESCRIPTION: Defines a custom function that can be called from other parts of the code
-Inputs: name, params
-Outputs: path, params
+INPUTS: name, params
+OUTPUTS: path, params
 
 {
     "type": "loop",
@@ -442,11 +442,11 @@ Outputs: path, params
     }
 }
 
-NAME: forObjectsGroup
+### FOR
 TYPE: LOOP
 DESCRIPTION: Repeats execution N times with optional delay between iterations
-Inputs: path, n, delay
-Outputs: iterator, index, after
+INPUTS: path, n, delay
+OUTPUTS: iterator, index, after
 
 {
     "type": "loop",
@@ -514,11 +514,11 @@ Outputs: iterator, index, after
     }
 }
 
-NAME: forListElements
+### FOR OBJECTS GROUP
 TYPE: LOOP
 DESCRIPTION: Iterates through all objects in a specified group
-Inputs: path, group
-Outputs: iterator, id, after
+INPUTS: path, group
+OUTPUTS: iterator, id, after
 
 {
     "type": "loop",
@@ -593,11 +593,11 @@ Outputs: iterator, id, after
     }
 }
 
-NAME: forDictElements
+### FOR LIST ELEMENTS
 TYPE: LOOP
 DESCRIPTION: Iterates through all elements in a list
-Inputs: path, list
-Outputs: iterator, index, element, after
+INPUTS: path, list
+OUTPUTS: iterator, index, element, after
 
 {
     "type": "loop",
@@ -672,11 +672,11 @@ Outputs: iterator, index, element, after
     }
 }
 
-NAME: connectText
+### FOR DICT ELEMENTS
 TYPE: LOOP
 DESCRIPTION: Iterates through all key-value pairs in a dictionary
-Inputs: path, dict
-Outputs: iterator, key, element, after
+INPUTS: path, dict
+OUTPUTS: iterator, key, element, after
 
 {
     "type": "text",
@@ -745,11 +745,11 @@ Outputs: iterator, key, element, after
     }
 }
 
-NAME: sliceText
+### WRITE TEXT
 TYPE: TEXT
 DESCRIPTION: Outputs text to console/debug
-Inputs: path, text
-Outputs: path
+INPUTS: path, text
+OUTPUTS: path
 
 {
     "type": "text",
@@ -825,11 +825,11 @@ Outputs: path
     }
 }
 
-NAME: writeText
+### DISPLAY TEXT
 TYPE: TEXT
 DESCRIPTION: Displays text on screen at specified coordinates
-Inputs: path, x, y, text
-Outputs: path
+INPUTS: path, x, y, text
+OUTPUTS: path
 
 {
     "type": "text",
@@ -872,11 +872,11 @@ Outputs: path
     }
 }
 
-NAME: displayText
+### CONNECT TEXT
 TYPE: TEXT
 DESCRIPTION: Concatenates two text strings
-Inputs: path, text1, text2
-Outputs: path, text
+INPUTS: path, text1, text2
+OUTPUTS: path, text
 
 {
     "type": "text",
@@ -935,11 +935,11 @@ Outputs: path, text
     }
 }
 
-NAME: plus
+### SLICE TEXT
 TYPE: TEXT
 DESCRIPTION: Extracts a substring from start to end position
-Inputs: path, text, start, end
-Outputs: path, text
+INPUTS: path, text, start, end
+OUTPUTS: path, text
 
 {
     "type": "number",
@@ -997,11 +997,11 @@ Outputs: path, text
     }
 }
 
-NAME: minus
+### PLUS
 TYPE: NUMBER
 DESCRIPTION: Adds two numbers (a + b)
-Inputs: path, a, b
-Outputs: path, answer
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1059,11 +1059,11 @@ Outputs: path, answer
     }
 }
 
-NAME: multiply
+### MINUS
 TYPE: NUMBER
 DESCRIPTION: Subtracts two numbers (a - b)
-Inputs: path, a, b
-Outputs: path, answer
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1121,11 +1121,11 @@ Outputs: path, answer
     }
 }
 
-NAME: divide
+### MULTIPLY
 TYPE: NUMBER
 DESCRIPTION: Multiplies two numbers (a × b)
-Inputs: path, a, b
-Outputs: path, answer
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1183,11 +1183,11 @@ Outputs: path, answer
     }
 }
 
-NAME: radians
+### DIVIDE
 TYPE: NUMBER
 DESCRIPTION: Divides two numbers (a ÷ b)
-Inputs: path, a, b
-Outputs: path, answer
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1236,11 +1236,11 @@ Outputs: path, answer
     }
 }
 
-NAME: degrees
+### POW
 TYPE: NUMBER
 DESCRIPTION: Raises number to specified power
-Inputs: path, number, power
-Outputs: path, answer
+INPUTS: path, number, power
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1289,11 +1289,11 @@ Outputs: path, answer
     }
 }
 
-NAME: sin
+### SQRT
 TYPE: NUMBER
 DESCRIPTION: Calculates square root of a number
-Inputs: path, number
-Outputs: path, answer
+INPUTS: path, number
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1342,11 +1342,11 @@ Outputs: path, answer
     }
 }
 
-NAME: cos
+### MODULO
 TYPE: NUMBER
 DESCRIPTION: Returns remainder of division (a % b)
-Inputs: path, a, b
-Outputs: path, answer
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1395,11 +1395,11 @@ Outputs: path, answer
     }
 }
 
-NAME: tan
+### ABSOLUTE
 TYPE: NUMBER
 DESCRIPTION: Returns absolute value of a number
-Inputs: path, number
-Outputs: path, answer
+INPUTS: path, number
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1448,11 +1448,11 @@ Outputs: path, answer
     }
 }
 
-NAME: ctg
+### SIN
 TYPE: NUMBER
 DESCRIPTION: Calculates sine of x (in radians)
-Inputs: path, x
-Outputs: path, answer
+INPUTS: path, x
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1501,11 +1501,11 @@ Outputs: path, answer
     }
 }
 
-NAME: absolute
+### COS
 TYPE: NUMBER
 DESCRIPTION: Calculates cosine of x (in radians)
-Inputs: path, x
-Outputs: path, answer
+INPUTS: path, x
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1564,11 +1564,11 @@ Outputs: path, answer
     }
 }
 
-NAME: pow
+### TAN
 TYPE: NUMBER
 DESCRIPTION: Calculates tangent of x (in radians)
-Inputs: path, x
-Outputs: path, answer
+INPUTS: path, x
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1593,9 +1593,9 @@ Outputs: path, answer
             "value": null,
             "standard": 0
         },
-        "degree": {
-            "code": "degree",
-            "name": "__degree__",
+        "power": {
+            "code": "power",
+            "name": "__power__",
             "type": "number",
             "value": null,
             "standard": 0
@@ -1620,17 +1620,17 @@ Outputs: path, answer
             "__text__": "node.text.text",
             "__path__": "node.text.path",
             "__number__": "node.text.number",
-            "__degree__": "node.text.degree",
+            "__power__": "node.text.power",
             "__answer__": "node.text.answer"
         }
     }
 }
 
-NAME: sqrt
+### CTG
 TYPE: NUMBER
 DESCRIPTION: Calculates cotangent of x (in radians)
-Inputs: path, x
-Outputs: path, answer
+INPUTS: path, x
+OUTPUTS: path, answer
 
 {
     "type": "number",
@@ -1680,11 +1680,11 @@ Outputs: path, answer
     }
 }
 
-NAME: modulo
+### RADIANS
 TYPE: NUMBER
 DESCRIPTION: Converts degrees to radians
-Inputs: path, degrees
-Outputs: path, radians
+INPUTS: path, degrees
+OUTPUTS: path, radians
 
 {
     "type": "number",
@@ -1742,11 +1742,11 @@ Outputs: path, radians
     }
 }
 
-NAME: if_
+### DEGREES
 TYPE: NUMBER
 DESCRIPTION: Converts radians to degrees
-Inputs: path, radians
-Outputs: path, degrees
+INPUTS: path, radians
+OUTPUTS: path, degrees
 
 {
     "type": "logic",
@@ -1834,11 +1834,11 @@ Outputs: path, degrees
     }
 }
 
-NAME: ifCollision
+### IF
 TYPE: LOGIC
 DESCRIPTION: Compares two values using specified operation and branches execution
-Inputs: path, a, b, operation
-Outputs: path_true, path_false
+INPUTS: path, a, b, operation
+OUTPUTS: path_true, path_false
 
 {
     "type": "logic",
@@ -1923,11 +1923,11 @@ Outputs: path_true, path_false
     }
 }
 
-NAME: ifKeyInDict
+### IF COLLISION
 TYPE: LOGIC
 DESCRIPTION: Checks if object collides with any object in specified group
-Inputs: path, id, group, append
-Outputs: path_true, path_false, id_in_group
+INPUTS: path, id, group, append
+OUTPUTS: path_true, path_false, id_in_group
 
 {
     "type": "logic",
@@ -1996,11 +1996,11 @@ Outputs: path_true, path_false, id_in_group
     }
 }
 
-NAME: ifElementInList
+### IF KEY IN DICT
 TYPE: LOGIC
 DESCRIPTION: Checks if a key exists in dictionary
-Inputs: path, dict, key
-Outputs: path_true, path_false
+INPUTS: path, dict, key
+OUTPUTS: path_true, path_false
 
 {
     "type": "logic",
@@ -2069,11 +2069,11 @@ Outputs: path_true, path_false
     }
 }
 
-NAME: getObjectIDByName
+### IF ELEMENT IN LIST
 TYPE: LOGIC
 DESCRIPTION: Checks if an element exists in list
-Inputs: path, list, element
-Outputs: path_true, path_false
+INPUTS: path, list, element
+OUTPUTS: path_true, path_false
 
 {
     "type": "objects",
@@ -2122,11 +2122,11 @@ Outputs: path_true, path_false
     }
 }
 
-NAME: setObjectPos
+### GET OBJECT ID BY NAME
 TYPE: OBJECTS
 DESCRIPTION: Returns object ID by its name
-Inputs: path, name
-Outputs: path, id
+INPUTS: path, name
+OUTPUTS: path, id
 
 {
     "type": "objects",
@@ -2186,11 +2186,11 @@ Outputs: path, id
     }
 }
 
-NAME: moveObject
+### CREATE OBJECT
 TYPE: OBJECTS
 DESCRIPTION: Creates a new object at specified position
-Inputs: path, name, x, y
-Outputs: path, id
+INPUTS: path, name, x, y
+OUTPUTS: path, id
 
 {
     "type": "objects",
@@ -2258,11 +2258,11 @@ Outputs: path, id
     }
 }
 
-NAME: moveObjectWithBraking
+### REMOVE OBJECT
 TYPE: OBJECTS
 DESCRIPTION: Removes an object from the game
-Inputs: path, id
-Outputs: path
+INPUTS: path, id
+OUTPUTS: path
 
 {
     "type": "objects",
@@ -2339,11 +2339,11 @@ Outputs: path
     }
 }
 
-NAME: getObjectPos
+### SET OBJECT POSITION
 TYPE: OBJECTS
 DESCRIPTION: Sets object position to exact coordinates
-Inputs: path, id, x, y
-Outputs: path
+INPUTS: path, id, x, y
+OUTPUTS: path
 
 {
     "type": "objects",
@@ -2399,11 +2399,11 @@ Outputs: path
     }
 }
 
-NAME: setObjectVar
+### GET OBJECT POSITION
 TYPE: OBJECTS
 DESCRIPTION: Returns current object position
-Inputs: path, id
-Outputs: path, x, y
+INPUTS: path, id
+OUTPUTS: path, x, y
 
 {
     "type": "objects",
@@ -2474,11 +2474,11 @@ Outputs: path, x, y
     }
 }
 
-NAME: getObjectVar
+### MOVE OBJECT
 TYPE: OBJECTS
 DESCRIPTION: Moves object in specified angle with given power
-Inputs: path, id, angle, power
-Outputs: path
+INPUTS: path, id, angle, power
+OUTPUTS: path
 
 {
     "type": "objects",
@@ -2546,11 +2546,11 @@ Outputs: path
     }
 }
 
-NAME: createObject
+### MOVE OBJECT WITH BRAKING
 TYPE: OBJECTS
 DESCRIPTION: Moves object with gradual braking effect
-Inputs: path, id, angle, power, slidingStep
-Outputs: path
+INPUTS: path, id, angle, power, slidingStep
+OUTPUTS: path
 
 {
     "type": "objects",
@@ -2627,11 +2627,11 @@ Outputs: path
     }
 }
 
-NAME: removeObject
+### JUMP
 TYPE: OBJECTS
 DESCRIPTION: Makes object jump with specified power
-Inputs: path, id, power
-Outputs: path
+INPUTS: path, id, power
+OUTPUTS: path
 
 {
     "type": "objects",
@@ -2674,11 +2674,11 @@ Outputs: path
     }
 }
 
-NAME: getResultingVector
+### SET OBJECT VAR
 TYPE: OBJECTS
 DESCRIPTION: Sets a custom variable for specific object
-Inputs: path, id, name, value
-Outputs: path
+INPUTS: path, id, name, value
+OUTPUTS: path
 
 {
     "type": "objects",
@@ -2744,11 +2744,11 @@ Outputs: path
     }
 }
 
-NAME: getObjectParameter
+### GET OBJECT VAR
 TYPE: OBJECTS
 DESCRIPTION: Gets a custom variable from specific object
-Inputs: path, id, name
-Outputs: path, answer
+INPUTS: path, id, name
+OUTPUTS: path, answer
 
 {
     "type": "objects",
@@ -2826,11 +2826,11 @@ Outputs: path, answer
     }
 }
 
-NAME: setObjectParameter
+### SET OBJECT PARAMETER
 TYPE: OBJECTS
 DESCRIPTION: Sets built-in object parameter (hitbox, mass, layer, etc.)
-Inputs: path, id, name, value
-Outputs: path
+INPUTS: path, id, name, value
+OUTPUTS: path
 
 {
     "type": "objects",
@@ -2910,11 +2910,11 @@ Outputs: path
     }
 }
 
-NAME: getAllObjectInGroup
+### GET OBJECT PARAMETER
 TYPE: OBJECTS
 DESCRIPTION: Gets built-in object parameter value
-Inputs: path, id, name
-Outputs: path, value
+INPUTS: path, id, name
+OUTPUTS: path, value
 
 {
     "type": "objects",
@@ -2974,11 +2974,11 @@ Outputs: path, value
     }
 }
 
-NAME: jump
+### GET RESULTING VECTOR
 TYPE: OBJECTS
 DESCRIPTION: Returns object's movement vector components
-Inputs: path, id
-Outputs: path, x, y
+INPUTS: path, id
+OUTPUTS: path, x, y
 
 {
     "type": "objects",
@@ -3037,11 +3037,11 @@ Outputs: path, x, y
     }
 }
 
-NAME: runAnimation
+### GET ALL OBJECTS IN GROUP
 TYPE: OBJECTS
 DESCRIPTION: Returns list of all object IDs in specified group
-Inputs: path, group
-Outputs: path, objects
+INPUTS: path, group
+OUTPUTS: path, objects
 
 {
     "type": "animation",
@@ -3102,11 +3102,11 @@ Outputs: path, objects
     }
 }
 
-NAME: stopAnimation
+### RUN ANIMATION
 TYPE: ANIMATION
 DESCRIPTION: Starts playing animation on object
-Inputs: path, id, animation
-Outputs: path
+INPUTS: path, id, animation
+OUTPUTS: path
 
 {
     "type": "animation",
@@ -3158,11 +3158,11 @@ Outputs: path
     }
 }
 
-NAME: mirrorAnimation
+### STOP ANIMATION
 TYPE: ANIMATION
 DESCRIPTION: Stops current animation on object
-Inputs: path, id
-Outputs: path
+INPUTS: path, id
+OUTPUTS: path
 
 {
     "type": "animation",
@@ -3232,11 +3232,11 @@ Outputs: path
     }
 }
 
-NAME: setVar
+### MIRROR ANIMATION
 TYPE: ANIMATION
 DESCRIPTION: Flips animation horizontally and/or vertically
-Inputs: path, id, horizontal, vertical
-Outputs: path
+INPUTS: path, id, horizontal, vertical
+OUTPUTS: path
 
 {
     "type": "another",
@@ -3306,11 +3306,11 @@ Outputs: path
     }
 }
 
-NAME: getVar
+### SET VAR
 TYPE: ANOTHER
 DESCRIPTION: Sets variable by name and value (if global == true, variable visible in all project, else only in this function)
-Inputs: path, name, global, value
-Outputs: path
+INPUTS: path, name, global, value
+OUTPUTS: path
 
 {
     "type": "another",
@@ -3378,11 +3378,11 @@ Outputs: path
     }
 }
 
-NAME: random_
+### GET VAR
 TYPE: ANOTHER
 DESCRIPTION: Gets variable by name (if global == true, variable visible in all project, else only in this function)
-Inputs: path, name, global
-Outputs: path, answer
+INPUTS: path, name, global
+OUTPUTS: path, answer
 
 {
     "type": "another",
@@ -3450,11 +3450,11 @@ Outputs: path, answer
     }
 }
 
-NAME: decodeHolder
+### ADD LIST ELEMENT
 TYPE: SET
 DESCRIPTION: Appends element to the end of list
-Inputs: path, list, element
-Outputs: path, list
+INPUTS: path, list, element
+OUTPUTS: path, list
 
 {
     "type": "another",
@@ -3513,11 +3513,11 @@ Outputs: path, list
     }
 }
 
-NAME: len_
+### INSERT LIST ELEMENT
 TYPE: SET
 DESCRIPTION: Inserts element at specified index in list
-Inputs: path, list, index, element
-Outputs: path, list
+INPUTS: path, list, index, element
+OUTPUTS: path, list
 
 {
     "type": "another",
@@ -3576,11 +3576,11 @@ Outputs: path, list
     }
 }
 
-NAME: exit_
+### GET BY INDEX
 TYPE: SET
 DESCRIPTION: Returns element at specified index from list
-Inputs: path, list, index
-Outputs: path, element
+INPUTS: path, list, index
+OUTPUTS: path, element
 
 {
     "type": "another",
@@ -3614,11 +3614,11 @@ Outputs: path, element
     }
 }
 
-NAME: python
+### DELETE BY INDEX
 TYPE: SET
 DESCRIPTION: Removes element at specified index from list
-Inputs: path, list, index
-Outputs: path, list
+INPUTS: path, list, index
+OUTPUTS: path, list
 
 {
     "type": "another",
@@ -3709,11 +3709,11 @@ Outputs: path, list
     }
 }
 
-NAME: functionEvent
+### GET INDEX OF ELEMENT
 TYPE: SET
 DESCRIPTION: Finds and returns index of element in list
-Inputs: path, list, element
-Outputs: path, index
+INPUTS: path, list, element
+OUTPUTS: path, index
 
 {
     "type": "event",
@@ -3781,11 +3781,11 @@ Outputs: path, index
     }
 }
 
-NAME: callFunction
+### SLICE LIST
 TYPE: SET
 DESCRIPTION: Extracts portion of list from start to end index
-Inputs: path, list, start, end
-Outputs: path, list
+INPUTS: path, list, start, end
+OUTPUTS: path, list
 
 {
     "type": "another",
@@ -3846,11 +3846,11 @@ Outputs: path, list
     }
 }
 
-NAME: getMousePos
+### ADD DICT ELEMENT
 TYPE: SET
 DESCRIPTION: Adds or updates key-value pair in dictionary
-Inputs: path, dict, key, element
-Outputs: path, dict
+INPUTS: path, dict, key, element
+OUTPUTS: path, dict
 
 {
     "type": "another",
@@ -3897,11 +3897,11 @@ Outputs: path, dict
     }
 }
 
-NAME: getTimePassed
+### GET BY KEY
 TYPE: SET
 DESCRIPTION: Returns value associated with key in dictionary
-Inputs: path, dict, key
-Outputs: path, element
+INPUTS: path, dict, key
+OUTPUTS: path, element
 
 {
     "type": "another",
@@ -3942,11 +3942,11 @@ Outputs: path, element
     }
 }
 
-NAME: goToScene
+### REMOVE BY KEY
 TYPE: SET
 DESCRIPTION: Removes key-value pair from dictionary
-Inputs: path, dict, key
-Outputs: path, dict
+INPUTS: path, dict, key
+OUTPUTS: path, dict
 
 {
     "type": "another",
@@ -3989,11 +3989,11 @@ Outputs: path, dict
     }
 }
 
-NAME: getSceneName
+### GET KEY OF ELEMENT
 TYPE: SET
 DESCRIPTION: Finds and returns key for given value in dictionary
-Inputs: path, dict, element
-Outputs: path, key
+INPUTS: path, dict, element
+OUTPUTS: path, key
 
 {
     "type": "another",
@@ -4034,11 +4034,11 @@ Outputs: path, key
     }
 }
 
-NAME: wait
+### RANDOM
 TYPE: ANOTHER
 DESCRIPTION: Returns random number from A to B
-Inputs: path, a, b
-Outputs: path, answer
+INPUTS: path, a, b
+OUTPUTS: path, answer
 
 {
     "type": "another",
@@ -4081,11 +4081,11 @@ Outputs: path, answer
     }
 }
 
-NAME: break_
+### WAIT
 TYPE: ANOTHER
 DESCRIPTION: Pauses execution for specified number of frames
-Inputs: path, time
-Outputs: path
+INPUTS: path, time
+OUTPUTS: path
 
 {
     "type": "another",
@@ -4114,11 +4114,11 @@ Outputs: path
     }
 }
 
-NAME: addListElement
+### LEN
 TYPE: ANOTHER
 DESCRIPTION: Returns length of text, list, or dictionary
-Inputs: path, element
-Outputs: path, answer
+INPUTS: path, element
+OUTPUTS: path, answer
 
 {
     "type": "set",
@@ -4186,11 +4186,11 @@ Outputs: path, answer
     }
 }
 
-NAME: insertListElement
+### EXIT
 TYPE: ANOTHER
 DESCRIPTION: Stops execution of current script
-Inputs: path
-Outputs: None
+INPUTS: path
+OUTPUTS: None
 
 {
     "type": "set",
@@ -4266,11 +4266,11 @@ Outputs: None
     }
 }
 
-NAME: getByIndex
+### BREAK
 TYPE: ANOTHER
 DESCRIPTION: Breaks out of current loop
-Inputs: path
-Outputs: None
+INPUTS: path
+OUTPUTS: None
 
 {
     "type": "set",
@@ -4338,11 +4338,11 @@ Outputs: None
     }
 }
 
-NAME: deleteByIndex
+### DECODE HOLDER
 TYPE: ANOTHER
 DESCRIPTION: Decodes/parses text into appropriate data type
-Inputs: path, text
-Outputs: path, answer
+INPUTS: path, text
+OUTPUTS: path, answer
 
 {
     "type": "set",
@@ -4409,11 +4409,11 @@ Outputs: path, answer
     }
 }
 
-NAME: getIndexOfElement
+### CALL FUNCTION
 TYPE: ANOTHER
 DESCRIPTION: Calls custom function by name with parameters
-Inputs: path, name, params
-Outputs: path
+INPUTS: path, name, params
+OUTPUTS: path
 
 {
     "type": "set",
@@ -4481,11 +4481,11 @@ Outputs: path
     }
 }
 
-NAME: sliceList
+### PYTHON
 TYPE: ANOTHER
 DESCRIPTION: Executes custom Python code with provided arguments
-Inputs: path, text, list, dict
-Outputs: path, answer
+INPUTS: path, text, list, dict
+OUTPUTS: path, answer
 
 {
     "type": "set",
@@ -4561,11 +4561,11 @@ Outputs: path, answer
     }
 }
 
-NAME: addDictElement
+### GET MOUSE POSITION
 TYPE: ANOTHER
 DESCRIPTION: Returns current mouse cursor coordinates
-Inputs: path
-Outputs: path, x, y
+INPUTS: path
+OUTPUTS: path, x, y
 
 {
     "type": "set",
@@ -4641,11 +4641,11 @@ Outputs: path, x, y
     }
 }
 
-NAME: getByKey
+### GET TIME PASSED
 TYPE: ANOTHER
 DESCRIPTION: Returns time elapsed since game start
-Inputs: path
-Outputs: path, time_passed
+INPUTS: path
+OUTPUTS: path, time_passed
 
 {
     "type": "set",
@@ -4713,11 +4713,11 @@ Outputs: path, time_passed
     }
 }
 
-NAME: removeByKey
+### GO TO SCENE
 TYPE: ANOTHER
 DESCRIPTION: Switches to specified scene
-Inputs: path, scene
-Outputs: path
+INPUTS: path, scene
+OUTPUTS: path
 
 {
     "type": "set",
@@ -4785,11 +4785,11 @@ Outputs: path
     }
 }
 
-NAME: getKeyOfElement
+### GET SCENE NAME
 TYPE: ANOTHER
 DESCRIPTION: Returns name of current scene
-Inputs: path
-Outputs: path, answer
+INPUTS: path
+OUTPUTS: path, answer
 
 {
     "type": "set",
@@ -4857,11 +4857,11 @@ Outputs: path, answer
     }
 }
 
-NAME: playMusic
+### PLAY MUSIC
 TYPE: MUSIC
 DESCRIPTION: Starts playing music track with specified volume
-Inputs: path, name, volume
-Outputs: path
+INPUTS: path, name, volume
+OUTPUTS: path
 
 {
     "type": "music",
@@ -4919,11 +4919,11 @@ Outputs: path
     }
 }
 
-NAME: stopMusic
+### STOP MUSIC
 TYPE: MUSIC
 DESCRIPTION: Stops currently playing music
-Inputs: path
-Outputs: path
+INPUTS: path
+OUTPUTS: path
 
 {
     "type": "music",
@@ -4959,11 +4959,11 @@ Outputs: path
     }
 }
 
-NAME: playSound
+### PLAY SOUND
 TYPE: MUSIC
 DESCRIPTION: Plays sound effect with specified volume
-Inputs: path, name, volume
-Outputs: path
+INPUTS: path, name, volume
+OUTPUTS: path
 
 {
     "type": "music",
@@ -5020,3 +5020,4 @@ Outputs: path
         }
     }
 }
+
