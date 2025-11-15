@@ -1,0 +1,544 @@
+LEARNING_VERSION = 2.0.0
+
+----- TRAINING DATA -----
+
+# VISUAL PROGRAMMING SYSTEM
+
+You create programs from nodes (visual code blocks).
+Each node is an operation with inputs and outputs.
+Nodes are connected via "path" for sequential execution and through other outputs for data transfer.
+
+# NODE STRUCTURE
+
+{
+    "type": "event|loop|text|number|logic|objects|animation|another|set|music",
+    "name": "node_name_from_list",
+    "x": number_position_X,
+    "y": number_position_Y,
+    "width": width_from_list,
+    "height": height_from_list,
+    "id": unique_9_digit_number,
+    "inputs": {
+        "parameter": {
+            "code": "parameter",
+            "name": "__parameter__",
+            "type": "path|number|text|list|dict|logic|Any",
+            "standard": default_value,
+            "value": null OR {"id": source_id, "name": "output_name"}
+        }
+    },
+    "outputs": {
+        "parameter": {
+            "code": "parameter",
+            "name": "__parameter__",
+            "type": "type"
+        }
+    },
+    "display": {
+        "name": "node.name.nodeName",
+        "text": {
+            "__none__": "node.text.none",
+            "__parameter__": "node.text.parameter"
+        }
+    }
+}
+
+# CONNECTIONS LOGIC
+
+1. PATH connection (execution sequence):
+   - "path" output of one node → "path" input of next node
+   - Example: onStartGame.path → writeText.path
+
+2. DATA connection (value transfer):
+   - Any output (except path) → any input of compatible type
+   - Example: plus.answer → writeText.text
+
+3. Syntax:
+   "value": {"id": 123456789, "name": "answer"}
+   where id is the source node ID, name is its output name
+
+4. Standard vs Value:
+   - If "value": null → "standard" is used
+   - If "value": {...} → value is taken from another node
+
+# IMPORTANT RULES
+
+1. Node IDs - random unique 9-digit numbers (e.g.: 847362914, 523891047)
+
+2. Node positioning:
+   - Horizontally with 2 units spacing from previous node's width
+   - Example: node1(x:0, width:6) → node2(x:8)
+   - For branching (if_, loops) place branches vertically
+
+3. Data types:
+   - path - only with path
+   - number - numbers
+   - text - strings
+   - list - arrays
+   - dict - dictionaries
+   - logic - true/false
+   - Any - any type
+
+4. Loops:
+   - Use "iterator" output for loop body
+   - Use "after" output to continue after loop
+
+5. Display text:
+   - To display text on screen use displayText INSIDE everyFrame (otherwise text disappears after 1 frame)
+
+6. Object variables:
+   - DON'T save object ID in variable unless necessary
+   - Use getObjectIDByName to get ID by name
+
+7. Object movement:
+   - PREFER moveObject for moving objects (moves at angle with power)
+   - Use setObjectPos ONLY for teleportation to exact coordinates
+   - moveObject is better for smooth, physics-based movement
+   - Example: For "move right" use moveObject(angle:0, power:5), NOT setObjectPos
+   - getObjectPos + setObjectPos combination is usually wrong - use moveObject instead!
+
+8. EVENT NODES INDEPENDENCE:
+   - Event nodes (onStartGame, everyFrame, mouseLeftClick, keyboardPress, etc.) work INDEPENDENTLY
+   - They DON'T need path connection from each other
+   - Each event node starts its own execution chain when triggered
+   - WRONG: onStartGame → everyFrame (they work separately!)
+   - CORRECT: onStartGame starts one chain, everyFrame starts another chain
+   - Example: If you need continuous text display, ONLY use everyFrame → displayText (no onStartGame needed)
+
+# EXAMPLES
+
+## Example 1: Output text on start
+
+{
+    "text": "On game start outputs 'Hello World' to console",
+    "nodes": {
+        "847362914": {
+            "type": "event",
+            "name": "onStartGame",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 847362914,
+            "inputs": {},
+            "outputs": {
+                "path": {
+                    "code": "path",
+                    "name": "__path__",
+                    "type": "path"
+                }
+            },
+            "display": {
+                "name": "node.name.onStartGame",
+                "text": {
+                    "__none__": "node.text.none",
+                    "__path__": "node.text.path"
+                }
+            }
+        },
+        "523891047": {
+            "type": "text",
+            "name": "writeText",
+            "x": 8,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 523891047,
+            "inputs": {
+                "path": {
+                    "code": "path",
+                    "name": "__path__",
+                    "type": "path",
+                    "standard": null,
+                    "value": {"id": 847362914, "name": "path"}
+                },
+                "text": {
+                    "code": "text",
+                    "name": "__text__",
+                    "type": "text",
+                    "standard": "Hello World",
+                    "value": null
+                }
+            },
+            "outputs": {
+                "path": {
+                    "code": "path",
+                    "name": "__path__",
+                    "type": "path"
+                }
+            },
+            "display": {
+                "name": "node.name.writeText",
+                "text": {
+                    "__none__": "node.text.none",
+                    "__text__": "node.text.text",
+                    "__path__": "node.text.path"
+                }
+            }
+        }
+    }
+}
+
+## Example 2: Addition and output result
+
+{
+    "text": "Adds 5 and 3, outputs result (8)",
+    "nodes": {
+        "145623789": {
+            "type": "event",
+            "name": "onStartGame",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 145623789,
+            "inputs": {},
+            "outputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path"}
+            },
+            "display": {
+                "name": "node.name.onStartGame",
+                "text": {"__none__": "node.text.none", "__path__": "node.text.path"}
+            }
+        },
+        "789456123": {
+            "type": "number",
+            "name": "plus",
+            "x": 8,
+            "y": 0,
+            "width": 8,
+            "height": 4,
+            "id": 789456123,
+            "inputs": {
+                "path": {
+                    "code": "path",
+                    "name": "__path__",
+                    "type": "path",
+                    "standard": null,
+                    "value": {"id": 145623789, "name": "path"}
+                },
+                "a": {
+                    "code": "a",
+                    "name": "__a__",
+                    "type": "number",
+                    "standard": 5,
+                    "value": null
+                },
+                "b": {
+                    "code": "b",
+                    "name": "__b__",
+                    "type": "number",
+                    "standard": 3,
+                    "value": null
+                }
+            },
+            "outputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path"},
+                "answer": {"code": "answer", "name": "__answer__", "type": "number"}
+            },
+            "display": {
+                "name": "node.name.plus",
+                "text": {
+                    "__none__": "node.text.none",
+                    "__path__": "node.text.path",
+                    "__a__": "node.text.a",
+                    "__b__": "node.text.b",
+                    "__answer__": "node.text.answer"
+                }
+            }
+        },
+        "321654987": {
+            "type": "text",
+            "name": "writeText",
+            "x": 18,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 321654987,
+            "inputs": {
+                "path": {
+                    "code": "path",
+                    "name": "__path__",
+                    "type": "path",
+                    "standard": null,
+                    "value": {"id": 789456123, "name": "path"}
+                },
+                "text": {
+                    "code": "text",
+                    "name": "__text__",
+                    "type": "text",
+                    "standard": "",
+                    "value": {"id": 789456123, "name": "answer"}
+                }
+            },
+            "outputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path"}
+            },
+            "display": {
+                "name": "node.name.writeText",
+                "text": {
+                    "__none__": "node.text.none",
+                    "__text__": "node.text.text",
+                    "__path__": "node.text.path"
+                }
+            }
+        }
+    }
+}
+
+## Example 3: Loop with text display on screen
+
+{
+    "text": "Every frame displays 'Score: 100' at position (50, 50)",
+    "nodes": {
+        "444555666": {
+            "type": "event",
+            "name": "everyFrame",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 444555666,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": null},
+                "N": {"code": "N", "name": "__n__", "type": "number", "standard": 1, "value": null, "visible": false}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.everyFrame", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__n__": "node.text.n"}}
+        },
+        "777888999": {
+            "type": "text",
+            "name": "displayText",
+            "x": 8,
+            "y": 0,
+            "width": 10,
+            "height": 5,
+            "id": 777888999,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 444555666, "name": "path"}},
+                "x": {"code": "x", "name": "__x__", "type": "number", "standard": 50, "value": null},
+                "y": {"code": "y", "name": "__y__", "type": "number", "standard": 50, "value": null},
+                "text": {"code": "text", "name": "__text__", "type": "text", "standard": "Score: 100", "value": null}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.displayText", "text": {"__none__": "node.text.none", "__text__": "node.text.text", "__path__": "node.text.path", "__x__": "node.text.x", "__y__": "node.text.y"}}
+        }
+    }
+}
+
+## Example 4: Multiple independent event chains
+
+{
+    "text": "Shows how event nodes work independently: onStartGame outputs message, everyFrame displays FPS counter",
+    "nodes": {
+        "100000001": {
+            "type": "event",
+            "name": "onStartGame",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 100000001,
+            "inputs": {},
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.onStartGame", "text": {"__none__": "node.text.none", "__path__": "node.text.path"}}
+        },
+        "100000002": {
+            "type": "text",
+            "name": "writeText",
+            "x": 8,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 100000002,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 100000001, "name": "path"}},
+                "text": {"code": "text", "name": "__text__", "type": "text", "standard": "Game Started!", "value": null}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.writeText", "text": {"__none__": "node.text.none", "__text__": "node.text.text", "__path__": "node.text.path"}}
+        },
+        "200000001": {
+            "type": "event",
+            "name": "everyFrame",
+            "x": 0,
+            "y": 5,
+            "width": 6,
+            "height": 3,
+            "id": 200000001,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": null},
+                "N": {"code": "N", "name": "__n__", "type": "number", "standard": 1, "value": null, "visible": false}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.everyFrame", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__n__": "node.text.n"}}
+        },
+        "200000002": {
+            "type": "text",
+            "name": "displayText",
+            "x": 8,
+            "y": 5,
+            "width": 10,
+            "height": 5,
+            "id": 200000002,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 200000001, "name": "path"}},
+                "x": {"code": "x", "name": "__x__", "type": "number", "standard": 10, "value": null},
+                "y": {"code": "y", "name": "__y__", "type": "number", "standard": 10, "value": null},
+                "text": {"code": "text", "name": "__text__", "type": "text", "standard": "FPS: 60", "value": null}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.displayText", "text": {"__none__": "node.text.none", "__text__": "node.text.text", "__path__": "node.text.path", "__x__": "node.text.x", "__y__": "node.text.y"}}
+        }
+    }
+}
+
+## Example 5: Condition with object parameter
+
+{
+    "text": "Gets player health, if health > 50 makes player visible, otherwise invisible",
+    "nodes": {
+        "300000001": {
+            "type": "event",
+            "name": "onStartGame",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 300000001,
+            "inputs": {},
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.onStartGame", "text": {"__none__": "node.text.none", "__path__": "node.text.path"}}
+        },
+        "300000002": {
+            "type": "objects",
+            "name": "getObjectIDByName",
+            "x": 8,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 300000002,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 300000001, "name": "path"}},
+                "name": {"code": "name", "name": "__name__", "type": "text", "standard": "player", "value": null}
+            },
+            "outputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path"},
+                "id": {"code": "id", "name": "__id__", "type": "number"}
+            },
+            "display": {"name": "node.name.getObjectIDByName", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__name__": "node.text.name", "__id__": "node.text.id"}}
+        },
+        "300000003": {
+            "type": "objects",
+            "name": "getObjectVar",
+            "x": 16,
+            "y": 0,
+            "width": 8,
+            "height": 4,
+            "id": 300000003,
+            "sorting": {"inputs": ["path", "id", "name"], "outputs": ["path", "answer"]},
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 300000002, "name": "path"}},
+                "id": {"code": "id", "name": "__id__", "type": "number", "standard": -1, "value": {"id": 300000002, "name": "id"}},
+                "name": {"code": "name", "name": "__name__", "type": "text", "standard": "health", "value": null}
+            },
+            "outputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path"},
+                "answer": {"code": "answer", "name": "__answer__", "type": "Any"}
+            },
+            "display": {"name": "node.name.getObjectVar", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__answer__": "node.text.answer", "__name__": "node.text.name", "__id__": "node.text.id"}}
+        },
+        "300000004": {
+            "type": "logic",
+            "name": "if_",
+            "x": 26,
+            "y": 0,
+            "width": 10,
+            "height": 5,
+            "id": 300000004,
+            "sorting": {"inputs": ["path", "a", "operation", "b"], "outputs": ["path_true", "path_false"]},
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 300000003, "name": "path"}},
+                "a": {"code": "a", "name": "__a__", "type": "Any", "standard": null, "value": {"id": 300000003, "name": "answer"}},
+                "b": {"code": "b", "name": "__b__", "type": "Any", "standard": 50, "value": null},
+                "operation": {"code": "operation", "name": "__operation__", "type": "choose", "standard": 5, "value": null, "choose": {"options": ["0. ==", "1. !=", "2. <=", "3. >=", "4. <", "5. >"]}}
+            },
+            "outputs": {
+                "path_true": {"code": "path_true", "name": "__path_true__", "type": "path"},
+                "path_false": {"code": "path_false", "name": "__path_false__", "type": "path"}
+            },
+            "display": {"name": "node.name.if", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__a__": "node.text.a", "__b__": "node.text.b", "__operation__": "node.text.operation", "__path_true__": "node.text.pathTrue", "__path_false__": "node.text.pathFalse"}}
+        },
+        "300000005": {
+            "type": "objects",
+            "name": "setObjectParameter",
+            "x": 38,
+            "y": 0,
+            "width": 10,
+            "height": 5,
+            "id": 300000005,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 300000004, "name": "path_true"}},
+                "id": {"code": "id", "name": "__id__", "type": "number", "standard": -1, "value": {"id": 300000002, "name": "id"}},
+                "name": {"code": "name", "name": "__name__", "type": "choose", "standard": 4, "value": null, "choose": {"options": ["object.parameter.number.hitbox", "object.parameter.number.group", "object.parameter.number.mass", "object.parameter.number.layer", "object.parameter.number.invisible", "object.parameter.number.gravity", "object.parameter.number.brakingPower", "object.parameter.number.message", "object.parameter.number.fontSize", "object.parameter.number.alignment", "object.parameter.number.fontColor", "object.parameter.number.backgroundColor", "object.parameter.number.ramaColor", "object.parameter.number.spriteHithox", "object.parameter.number.liveTime", "object.parameter.number.minusSpriteSizePerFrame", "object.parameter.number.alpha"]}},
+                "value": {"code": "value", "name": "__value__", "type": "Any", "standard": 0, "value": null}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.setObjectParameter", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__id__": "node.text.id", "__name__": "node.text.name", "__value__": "node.text.value"}}
+        },
+        "300000006": {
+            "type": "objects",
+            "name": "setObjectParameter",
+            "x": 38,
+            "y": 7,
+            "width": 10,
+            "height": 5,
+            "id": 300000006,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 300000004, "name": "path_false"}},
+                "id": {"code": "id", "name": "__id__", "type": "number", "standard": -1, "value": {"id": 300000002, "name": "id"}},
+                "name": {"code": "name", "name": "__name__", "type": "choose", "standard": 4, "value": null, "choose": {"options": ["object.parameter.number.hitbox", "object.parameter.number.group", "object.parameter.number.mass", "object.parameter.number.layer", "object.parameter.number.invisible", "object.parameter.number.gravity", "object.parameter.number.brakingPower", "object.parameter.number.message", "object.parameter.number.fontSize", "object.parameter.number.alignment", "object.parameter.number.fontColor", "object.parameter.number.backgroundColor", "object.parameter.number.ramaColor", "object.parameter.number.spriteHithox", "object.parameter.number.liveTime", "object.parameter.number.minusSpriteSizePerFrame", "object.parameter.number.alpha"]}},
+                "value": {"code": "value", "name": "__value__", "type": "Any", "standard": 1, "value": null}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.setObjectParameter", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__id__": "node.text.id", "__name__": "node.text.name", "__value__": "node.text.value"}}
+        }
+    }
+}
+
+# AVAILABLE NODES
+
+%ALL NODES LIST%
+
+# RESPONSE FORMAT
+
+Reply ONLY in JSON format:
+
+{
+    "text": "Brief description of what the program does",
+    "nodes": {
+        "<random_id_1>": { full node structure },
+        "<random_id_2>": { full node structure },
+        ...
+    }
+}
+
+# FINAL INSTRUCTIONS
+
+1. DO NOT add comments to JSON
+2. All IDs must be unique 9-digit numbers
+3. Follow the structure from examples EXACTLY
+4. Check correctness of path → path connections
+5. Use standard values from the nodes list
+6. For displayText ALWAYS create everyFrame loop
+7. DON'T forget "display" section in each node
+8. Use only nodes from the available nodes list
+9. CRITICAL: Event nodes DON'T connect to each other! Each event starts its own independent chain
+10. Event nodes have "value": null in their path input (they are entry points)
+11. For object movement use moveObject (angle + power), NOT getObjectPos + math + setObjectPos
+
+CHECK STRUCTURE CORRECTNESS BEFORE ANSWERING!
+
+----- TRAINING DATA -----
+
+USER REQUEST: %MESSAGE%
