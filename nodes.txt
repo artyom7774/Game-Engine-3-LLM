@@ -1,107 +1,528 @@
-EVENT:
-- onStartGame: w6h3, out:path
-- onLoadScene: w6h3, out:path
-- everyFrame: w6h3, in:path,N(1), out:path
-- everyTick: w6h3, in:path,N(1), out:path
-- mouseRightClick: w6h3, out:path
-- mouseLeftClick: w6h3, out:path
-- keyboardClick: w6h3, in:path,key(""), out:path
-- keyboardPress: w6h3, in:path,key(""), out:path
-- onButtonPress: w6h3, in:path, out:path,id
-- functionEvent: w6h3, in:name(""),params([]), out:path,params
+# COMPLETE NODES DOCUMENTATION
 
-LOOP:
-- for_: w8h4, in:path,n(1),delay(0), out:iterator,index,after
-- forObjectsGroup: w8h4, in:path,group("object"), out:iterator,id,after
-- forListElements: w10h5, in:path,list([]), out:iterator,index,element,after
-- forDictElements: w10h5, in:path,dict({}), out:iterator,key,element,after
+## EVENTS (program entry points)
+Event nodes start execution chains. They DON'T need path input connections.
+Each event node triggers independently when its condition is met.
 
-TEXT:
-- connectText: w8h4, in:path,text1(""),text2(""), out:path,text
-- sliceText: w10h5, in:path,text(""),start(0),end(-1), out:path,text
-- writeText: w6h3, in:path,text(""), out:path
-- displayText: w10h5, in:path,x(0),y(0),text(""), out:path
+- onStartGame (6x3)
+  Inputs: none
+  Outputs: path
+  Triggers once when game starts
 
-NUMBER:
-- plus: w8h4, in:path,a(0),b(0), out:path,answer
-- minus: w8h4, in:path,a(0),b(0), out:path,answer
-- multiply: w8h4, in:path,a(0),b(0), out:path,answer
-- divide: w8h4, in:path,a(0),b(1), out:path,answer
-- radians: w6h3, in:path,degrees(0), out:path,radians
-- degrees: w6h3, in:path,radians(0), out:path,degrees
-- sin: w6h3, in:path,x(0), out:path,answer
-- cos: w6h3, in:path,x(0), out:path,answer
-- tan: w6h3, in:path,x(0), out:path,answer
-- ctg: w6h3, in:path,x(0), out:path,answer
-- absolute: w6h3, in:path,number(0), out:path,answer
-- pow: w8h4, in:path,number(0),degree(0), out:path,answer
-- sqrt: w6h3, in:path,number(0), out:path,answer
-- modulo: w8h4, in:path,a(0),b(0), out:path,answer
+- onLoadScene (6x3)
+  Inputs: none
+  Outputs: path
+  Triggers when scene loads
 
-LOGIC:
-- if_: w10h5, in:path,a,b,operation(0:==,1:!=,2:<=,3:>=,4:<,5:>), out:path_true,path_false
-- ifCollision: w10h5, in:path,id(-1),group("object"),append(false), out:path_true,path_false,id_in_group
-- ifKeyInDict: w8h4, in:path,dict({}),key(""), out:path_true,path_false
-- ifElementInList: w8h4, in:path,list([]),element(""), out:path_true,path_false
+- mouseLeftClick (6x3)
+  Inputs: none
+  Outputs: path
+  Triggers on left mouse button click
 
-OBJECTS:
-- getObjectIDByName: w6h3, in:path,name(""), out:path,id
-- setObjectPos: w10h5, in:path,id(-1),x(0),y(0), out:path
-- moveObject: w10h5, in:path,id(-1),angle(0),power(1), out:path
-- moveObjectWithBraking: w12h6, in:path,id(-1),angle(0),power(1),slidingStep(1e9), out:path
-- getObjectPos: w8h4, in:path,id(-1), out:path,x,y
-- setObjectVar: w10h5, in:path,id(-1),name(""),value(""), out:path
-- getObjectVar: w8h4, in:path,id(-1),name(""), out:path,answer
-- createObject: w10h5, in:path,name(""),x(0),y(0), out:path,id
-- removeObject: w6h3, in:path,id(-1), out:path
-- getResultingVector: w8h4, in:path,id(-1), out:path,x,y
-- getObjectParameter: w8h4, in:path,id(-1),name(choose:0-16), out:path,value
-- setObjectParameter: w10h5, in:path,id(-1),name(choose:0-16),value(""), out:path
-- getAllObjectInGroup: w6h3, in:path,group(""), out:path,objects
-- jump: w8h4, in:path,id(-1),power(10), out:path
+- mouseRightClick (6x3)
+  Inputs: none
+  Outputs: path
+  Triggers on right mouse button click
 
-ANIMATION:
-- runAnimation: w8h4, in:path,id(-1),animation(""), out:path
-- stopAnimation: w6h3, in:path,id(-1), out:path
-- mirrorAnimation: w10h5, in:path,id(-1),horizontal(false),vertical(false), out:path
+- keyboardClick (6x3)
+  Inputs: path (optional, for chaining), key:""
+  Outputs: path
+  Triggers once when key is pressed
+  Set key parameter to specific key (e.g., "w", "space", "RETURN")
 
-ANOTHER:
-- setVar: w10h5, in:path,name(""),global(false),value(""), out:path
-- getVar: w8h4, in:path,name(""),global(false), out:path,answer
-- random_: w8h4, in:path,a(1),b(2), out:path,answer
-- decodeHolder: w6h3, in:path,text(""), out:path,answer
-- len_: w6h3, in:path,element(""), out:path,answer
-- exit_: w6h3, in:path, out:none
-- python: w10h5, in:path,text("def run..."),list([]),dict({}), out:path,answer
-- callFunction: w8h4, in:path,name(""),params([]), out:path
-- getMousePos: w8h4, in:path, out:path,x,y
-- getTimePassed: w6h3, in:path, out:path,time_passed
-- goToScene: w6h3, in:path,scene(""), out:path
-- getSceneName: w6h3, in:path, out:path,answer
-- wait: w6h3, in:path,time(100), out:path
-- break_: w6h3, in:path, out:none
+- keyboardPress (6x3)
+  Inputs: path (optional, for chaining), key:""
+  Outputs: path
+  Triggers continuously while key is held down
+  Set key parameter to specific key
 
-SET:
-- addListElement: w8h4, in:path,list([]),element(""), out:path,list
-- insertListElement: w10h5, in:path,list([]),index(1),element(""), out:path,list
-- getByIndex: w8h4, in:path,list([]),index(0), out:path,element
-- deleteByIndex: w8h4, in:path,list([]),index(0), out:path,list
-- getIndexOfElement: w8h4, in:path,list([]),element(""), out:path,index
-- sliceList: w10h5, in:path,list([]),start(0),end(-1), out:path,list
-- addDictElement: w10h5, in:path,dict({}),key(""),element(""), out:path,dict
-- getByKey: w8h4, in:path,dict({}),key(""), out:path,element
-- removeByKey: w8h4, in:path,dict({}),key(""), out:path,dict
-- getKeyOfElement: w8h4, in:path,dict({}),element(""), out:path,key
+- onButtonPress (6x3)
+  Inputs: path (optional)
+  Outputs: path, id
+  Triggers when UI button is pressed
+  Outputs button ID
 
-MUSIC:
-- playMusic: w8h4, in:path,name(""),volume(1), out:path
-- stopMusic: w6h3, in:path, out:path
-- playSound: w8h4, in:path,name(""),volume(1), out:path
+- everyFrame (6x3)
+  Inputs: path (optional), N:1
+  Outputs: path
+  Triggers every N frames (default: every frame)
+  Use for continuous updates, animations, text display
 
-NOTES:
-- wNhM = width N, height M
-- in:param(default) = input connector with default value
-- out:param = output connector
-- path connects nodes sequentially
-- iterator connects loop body
-- after connects code after loop
+- everyTick (6x3)
+  Inputs: path (optional), N:1
+  Outputs: path
+  Triggers every N game ticks (physics updates)
+
+## LOOPS
+Loops have two path outputs: "iterator" (loop body) and "after" (after loop completes)
+
+- for_ (8x4)
+  Inputs: path, n:1, delay:0
+  Outputs: iterator, index, after
+  Repeats n times with optional delay between iterations
+  "index" outputs current iteration (0 to n-1)
+  Connect loop body to "iterator", next actions to "after"
+
+- forObjectsGroup (8x4)
+  Inputs: path, group:"object"
+  Outputs: iterator, id, after
+  Iterates through all objects in specified group
+  "id" outputs each object's ID
+
+- forListElements (10x5)
+  Inputs: path, list:[]
+  Outputs: iterator, index, element, after
+  Iterates through list elements
+  "index" is position (0, 1, 2...), "element" is the value
+
+- forDictElements (10x5)
+  Inputs: path, dict:{}
+  Outputs: iterator, key, element, after
+  Iterates through dictionary key-value pairs
+  "key" is the key, "element" is the value
+
+## MATH OPERATIONS
+All math nodes: Inputs: path, a:0, b:0 | Outputs: path, answer
+
+- plus (8x4)
+  Addition: answer = a + b
+
+- minus (8x4)
+  Subtraction: answer = a - b
+
+- multiply (8x4)
+  Multiplication: answer = a × b
+
+- divide (8x4)
+  Division: answer = a ÷ b
+  Default b:1 to avoid division by zero
+
+- modulo (8x4)
+  Remainder: answer = a % b
+  Example: 7 % 3 = 1
+
+- pow (8x4)
+  Inputs: path, number:0, degree:0
+  Outputs: path, answer
+  Power: answer = number^degree
+
+- sqrt (6x3)
+  Inputs: path, number:0
+  Outputs: path, answer
+  Square root: answer = √number
+
+- absolute (6x3)
+  Inputs: path, number:0
+  Outputs: path, answer
+  Absolute value: answer = |number|
+
+## TRIGONOMETRY
+All angles in RADIANS. Use radians/degrees nodes for conversion.
+
+- sin (6x3)
+  Inputs: path, x:0
+  Outputs: path, answer
+  Sine: answer = sin(x)
+
+- cos (6x3)
+  Inputs: path, x:0
+  Outputs: path, answer
+  Cosine: answer = cos(x)
+
+- tan (6x3)
+  Inputs: path, x:0
+  Outputs: path, answer
+  Tangent: answer = tan(x)
+
+- ctg (6x3)
+  Inputs: path, x:0
+  Outputs: path, answer
+  Cotangent: answer = 1/tan(x)
+
+- radians (6x3)
+  Inputs: path, degrees:0
+  Outputs: path, radians
+  Converts degrees to radians
+  Example: 180° → 3.14159 rad
+
+- degrees (6x3)
+  Inputs: path, radians:0
+  Outputs: path, degrees
+  Converts radians to degrees
+  Example: 3.14159 rad → 180°
+
+## TEXT OPERATIONS
+
+- writeText (6x3)
+  Inputs: path, text:""
+  Outputs: path
+  Outputs text to console/debug log
+  Use for debugging, not for displaying on screen
+
+- displayText (10x5)
+  Inputs: path, x:0, y:0, text:""
+  Outputs: path
+  Displays text on screen at position (x, y)
+  IMPORTANT: Text only shows for 1 frame!
+  Always use inside everyFrame loop for continuous display
+  Coordinates: (0,0) is top-left corner
+
+- connectText (8x4)
+  Inputs: path, text1:"", text2:""
+  Outputs: path, text
+  Concatenates two strings: text = text1 + text2
+  Example: "Hello" + " World" = "Hello World"
+
+- sliceText (10x5)
+  Inputs: path, text:"", start:0, end:-1
+  Outputs: path, text
+  Extracts substring from position start to end
+  end:-1 means until the end
+  Example: "Hello"[1:4] = "ell"
+
+## OBJECTS
+Object ID -1 means "self" (current object context)
+
+- createObject (10x5)
+  Inputs: path, name:"", x:0, y:0
+  Outputs: path, id
+  Creates new object at position (x, y)
+  "name" is the object template/prefab name
+  Returns created object's ID
+
+- removeObject (6x3)
+  Inputs: path, id:-1
+  Outputs: path
+  Deletes object from game
+
+- getObjectIDByName (6x3)
+  Inputs: path, name:""
+  Outputs: path, id
+  Finds object by its name and returns ID
+  Use this instead of storing IDs in variables
+
+- moveObject (10x5)
+  Inputs: path, id:-1, angle:0, power:1
+  Outputs: path
+  Moves object in direction (angle) with speed (power)
+  Angle in DEGREES: 0=right, 90=down, 180=left, 270=up
+  This is PHYSICS-BASED movement (adds velocity)
+  PREFERRED for all movement - smooth and natural
+  Example: moveObject(id:player, angle:0, power:5) - move right
+
+- moveObjectWithBraking (12x6)
+  Inputs: path, id:-1, angle:0, power:1, slidingStep:1000000000
+  Outputs: path
+  Like moveObject but with gradual slowdown
+  Lower slidingStep = faster braking
+  Good for ice skating, sliding effects
+
+- jump (8x4)
+  Inputs: path, id:-1, power:10
+  Outputs: path
+  Makes object jump (adds upward velocity)
+  Power determines jump height
+  Requires gravity to be enabled on object
+
+- setObjectPos (10x5)
+  Inputs: path, id:-1, x:0, y:0
+  Outputs: path
+  Instantly moves object to exact position
+  Use ONLY for teleportation, NOT for regular movement
+  For movement use moveObject instead!
+
+- getObjectPos (8x4)
+  Inputs: path, id:-1
+  Outputs: path, x, y
+  Returns object's current position
+
+- getResultingVector (8x4)
+  Inputs: path, id:-1
+  Outputs: path, x, y
+  Returns object's velocity vector
+  x = horizontal speed, y = vertical speed
+
+- setObjectVar (10x5)
+  Inputs: path, id:-1, name:"", value:""
+  Outputs: path
+  Sets custom variable on object
+  Create your own properties: health, score, state, etc.
+  Example: setObjectVar(id:player, name:"health", value:100)
+
+- getObjectVar (8x4)
+  Inputs: path, id:-1, name:""
+  Outputs: path, answer
+  Gets custom variable from object
+  Example: getObjectVar(id:player, name:"health") → answer:100
+
+- setObjectParameter (10x5)
+  Inputs: path, id:-1, name:choose, value:""
+  Outputs: path
+  Sets built-in object parameter
+  name options: hitbox, group, mass, layer, invisible, gravity,
+                brakingPower, message, fontSize, alignment,
+                fontColor, backgroundColor, ramaColor,
+                spriteHitbox, liveTime, minusSpriteSizePerFrame, alpha
+
+- getObjectParameter (8x4)
+  Inputs: path, id:-1, name:choose
+  Outputs: path, value
+  Gets built-in object parameter value
+
+- getAllObjectInGroup (6x3)
+  Inputs: path, group:""
+  Outputs: path, objects
+  Returns list of all object IDs in specified group
+  Example: getAllObjectInGroup(group:"enemies") → [101, 102, 103]
+
+## LOGIC
+Comparison operations. Outputs two paths: path_true and path_false
+
+- if_ (10x5)
+  Inputs: path, a:null, b:null, operation:0
+  Outputs: path_true, path_false
+  Compares a and b using operation:
+    0: == (equals)
+    1: != (not equals)
+    2: <= (less or equal)
+    3: >= (greater or equal)
+    4: <  (less than)
+    5: >  (greater than)
+  Example: if_(a:10, b:5, operation:5) checks if 10 > 5 (true)
+
+- ifCollision (10x5)
+  Inputs: path, id:-1, group:"object", append:false
+  Outputs: path_true, path_false, id_in_group
+  Checks if object collides with any object in group
+  If collision: path_true executes, id_in_group = collided object ID
+  If no collision: path_false executes
+  append:true continues checking even after collision
+
+- ifKeyInDict (8x4)
+  Inputs: path, dict:{}, key:""
+  Outputs: path_true, path_false
+  Checks if key exists in dictionary
+
+- ifElementInList (8x4)
+  Inputs: path, list:[], element:""
+  Outputs: path_true, path_false
+  Checks if element exists in list
+
+## ANIMATION
+
+- runAnimation (8x4)
+  Inputs: path, id:-1, animation:""
+  Outputs: path
+  Starts playing animation on object
+  "animation" is animation name from object's animation list
+
+- stopAnimation (6x3)
+  Inputs: path, id:-1
+  Outputs: path
+  Stops currently playing animation
+
+- mirrorAnimation (10x5)
+  Inputs: path, id:-1, horizontal:false, vertical:false
+  Outputs: path
+  Flips animation
+  horizontal:true = mirror left/right
+  vertical:true = mirror up/down
+
+## VARIABLES
+Variables store data. Local variables only in current function, global visible everywhere.
+
+- setVar (10x5)
+  Inputs: path, name:"", global:false, value:""
+  Outputs: path
+  Creates or updates variable
+  global:false = local to current function/event chain
+  global:true = accessible from entire project
+  Example: setVar(name:"score", global:true, value:0)
+
+- getVar (8x4)
+  Inputs: path, name:"", global:false
+  Outputs: path, answer
+  Retrieves variable value
+  Must match global parameter used in setVar
+  Example: getVar(name:"score", global:true) → answer:0
+
+## DATA STRUCTURES - LISTS
+Lists are ordered collections: [element0, element1, element2, ...]
+Index starts at 0.
+
+- addListElement (8x4)
+  Inputs: path, list:[], element:""
+  Outputs: path, list
+  Appends element to end of list
+  Example: [1,2,3] + 4 → [1,2,3,4]
+
+- insertListElement (10x5)
+  Inputs: path, list:[], index:1, element:""
+  Outputs: path, list
+  Inserts element at specific position
+  Example: [1,3].insert(1, 2) → [1,2,3]
+
+- getByIndex (8x4)
+  Inputs: path, list:[], index:0
+  Outputs: path, element
+  Returns element at position index
+  Example: [10,20,30][1] → 20
+
+- deleteByIndex (8x4)
+  Inputs: path, list:[], index:0
+  Outputs: path, list
+  Removes element at position index
+  Example: [1,2,3].delete(1) → [1,3]
+
+- getIndexOfElement (8x4)
+  Inputs: path, list:[], element:""
+  Outputs: path, index
+  Finds position of element in list
+  Example: [10,20,30].indexOf(20) → 1
+  Returns -1 if not found
+
+- sliceList (10x5)
+  Inputs: path, list:[], start:0, end:-1
+  Outputs: path, list
+  Extracts portion of list from start to end
+  end:-1 means until the end
+  Example: [1,2,3,4,5][1:3] → [2,3]
+
+## DATA STRUCTURES - DICTIONARIES
+Dictionaries are key-value pairs: {"key1": value1, "key2": value2}
+
+- addDictElement (10x5)
+  Inputs: path, dict:{}, key:"", element:""
+  Outputs: path, dict
+  Adds or updates key-value pair
+  Example: {"a":1} + ("b", 2) → {"a":1, "b":2}
+
+- getByKey (8x4)
+  Inputs: path, dict:{}, key:""
+  Outputs: path, element
+  Returns value for given key
+  Example: {"name":"Player"}["name"] → "Player"
+
+- removeByKey (8x4)
+  Inputs: path, dict:{}, key:""
+  Outputs: path, dict
+  Removes key-value pair
+  Example: {"a":1, "b":2}.remove("a") → {"b":2}
+
+- getKeyOfElement (8x4)
+  Inputs: path, dict:{}, element:""
+  Outputs: path, key
+  Finds key for given value
+  Example: {"name":"Player"}.keyOf("Player") → "name"
+
+## UTILITY
+
+- random_ (8x4)
+  Inputs: path, a:1, b:2
+  Outputs: path, answer
+  Returns random integer from a to b (inclusive)
+  Example: random_(1, 10) → any number 1-10
+
+- len_ (6x3)
+  Inputs: path, element:""
+  Outputs: path, answer
+  Returns length of text/list/dictionary
+  Example: len_("Hello") → 5, len_([1,2,3]) → 3
+
+- wait (6x3)
+  Inputs: path, time:100
+  Outputs: path
+  Pauses execution for time frames
+  Example: wait(60) pauses for 1 second at 60 FPS
+
+- getMousePos (8x4)
+  Inputs: path
+  Outputs: path, x, y
+  Returns current mouse cursor position
+  (0,0) is top-left corner
+
+- getTimePassed (6x3)
+  Inputs: path
+  Outputs: path, time_passed
+  Returns time elapsed since game start (in frames or milliseconds)
+
+- decodeHolder (6x3)
+  Inputs: path, text:""
+  Outputs: path, answer
+  Parses text string into data type
+  Example: "123" → 123, "[1,2,3]" → [1,2,3]
+
+- exit_ (6x3)
+  Inputs: path
+  Outputs: none
+  Stops current script execution
+  No code after this node will run
+
+- break_ (6x3)
+  Inputs: path
+  Outputs: none
+  Exits current loop immediately
+  Use inside for/forObjectsGroup/forListElements
+
+## SCENE MANAGEMENT
+
+- goToScene (6x3)
+  Inputs: path, scene:""
+  Outputs: path
+  Switches to specified scene
+  Example: goToScene(scene:"MainMenu")
+
+- getSceneName (6x3)
+  Inputs: path
+  Outputs: path, answer
+  Returns current scene name
+
+## CUSTOM FUNCTIONS
+Create reusable code blocks
+
+- functionEvent (6x3)
+  Inputs: name:"", params:[]
+  Outputs: path, params
+  Defines custom function
+  "name" is function identifier
+  "params" list receives arguments (invisible in UI)
+  This is an EVENT node - starts its own chain
+
+- callFunction (8x4)
+  Inputs: path, name:"", params:[]
+  Outputs: path
+  Calls previously defined function
+  "name" must match functionEvent name
+  "params" list passes arguments
+
+## AUDIO
+
+- playMusic (8x4)
+  Inputs: path, name:"", volume:1
+  Outputs: path
+  Plays background music track
+  "name" is music file name
+  volume: 0.0 (silent) to 1.0 (full volume)
+  Only one music track plays at a time
+
+- stopMusic (6x3)
+  Inputs: path
+  Outputs: path
+  Stops currently playing music
+
+- playSound (8x4)
+  Inputs: path, name:"", volume:1
+  Outputs: path
+  Plays sound effect
+  Multiple sounds can play simultaneously
+  "name" is sound file name
+
+## ADVANCED - PYTHON
+
+- python (10x5)
+  Inputs: path, text:"def run(program, args, kwargs):\n\tpass", list:[], dict:{}
+  Outputs: path, answer
+  Executes custom Python code
+  "text" contains Python function definition
+  "list" and "dict" are invisible parameters for passing data
+  "answer" returns function result
