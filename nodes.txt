@@ -526,4 +526,3 @@ Create reusable code blocks
   "text" contains Python function definition
   "list" and "dict" are invisible parameters for passing data
   "answer" returns function result
-  Advanced users only!
