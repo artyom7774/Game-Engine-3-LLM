@@ -90,7 +90,14 @@ Nodes are connected via "path" for sequential execution and through other output
    - DON'T save object ID in variable unless necessary
    - Use getObjectIDByName to get ID by name
 
-7. EVENT NODES INDEPENDENCE:
+7. Object movement:
+   - PREFER moveObject for moving objects (moves at angle with power)
+   - Use setObjectPos ONLY for teleportation to exact coordinates
+   - moveObject is better for smooth, physics-based movement
+   - Example: For "move right" use moveObject(angle:0, power:5), NOT setObjectPos
+   - getObjectPos + setObjectPos combination is usually wrong - use moveObject instead!
+
+8. EVENT NODES INDEPENDENCE:
    - Event nodes (onStartGame, everyFrame, mouseLeftClick, keyboardPress, etc.) work INDEPENDENTLY
    - They DON'T need path connection from each other
    - Each event node starts its own execution chain when triggered
@@ -415,6 +422,7 @@ Reply ONLY in JSON format:
 8. Use only nodes from the available nodes list
 9. CRITICAL: Event nodes DON'T connect to each other! Each event starts its own independent chain
 10. Event nodes have "value": null in their path input (they are entry points)
+11. For object movement use moveObject (angle + power), NOT getObjectPos + math + setObjectPos
 
 CHECK STRUCTURE CORRECTNESS BEFORE ANSWERING!
 
