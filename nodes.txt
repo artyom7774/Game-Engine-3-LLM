@@ -1,528 +1,5022 @@
-# COMPLETE NODES DOCUMENTATION
-
-## EVENTS (program entry points)
-Event nodes start execution chains. They DON'T need path input connections.
-Each event node triggers independently when its condition is met.
-
-- onStartGame (6x3)
-  Inputs: none
-  Outputs: path
-  Triggers once when game starts
-
-- onLoadScene (6x3)
-  Inputs: none
-  Outputs: path
-  Triggers when scene loads
-
-- mouseLeftClick (6x3)
-  Inputs: none
-  Outputs: path
-  Triggers on left mouse button click
-
-- mouseRightClick (6x3)
-  Inputs: none
-  Outputs: path
-  Triggers on right mouse button click
-
-- keyboardClick (6x3)
-  Inputs: path (optional, for chaining), key:""
-  Outputs: path
-  Triggers once when key is pressed
-  Set key parameter to specific key (e.g., "w", "space", "RETURN")
-
-- keyboardPress (6x3)
-  Inputs: path (optional, for chaining), key:""
-  Outputs: path
-  Triggers continuously while key is held down
-  Set key parameter to specific key
-
-- onButtonPress (6x3)
-  Inputs: path (optional)
-  Outputs: path, id
-  Triggers when UI button is pressed
-  Outputs button ID
-
-- everyFrame (6x3)
-  Inputs: path (optional), N:1
-  Outputs: path
-  Triggers every N frames (default: every frame)
-  Use for continuous updates, animations, text display
-
-- everyTick (6x3)
-  Inputs: path (optional), N:1
-  Outputs: path
-  Triggers every N game ticks (physics updates)
-
-## LOOPS
-Loops have two path outputs: "iterator" (loop body) and "after" (after loop completes)
-
-- for_ (8x4)
-  Inputs: path, n:1, delay:0
-  Outputs: iterator, index, after
-  Repeats n times with optional delay between iterations
-  "index" outputs current iteration (0 to n-1)
-  Connect loop body to "iterator", next actions to "after"
-
-- forObjectsGroup (8x4)
-  Inputs: path, group:"object"
-  Outputs: iterator, id, after
-  Iterates through all objects in specified group
-  "id" outputs each object's ID
-
-- forListElements (10x5)
-  Inputs: path, list:[]
-  Outputs: iterator, index, element, after
-  Iterates through list elements
-  "index" is position (0, 1, 2...), "element" is the value
-
-- forDictElements (10x5)
-  Inputs: path, dict:{}
-  Outputs: iterator, key, element, after
-  Iterates through dictionary key-value pairs
-  "key" is the key, "element" is the value
-
-## MATH OPERATIONS
-All math nodes: Inputs: path, a:0, b:0 | Outputs: path, answer
-
-- plus (8x4)
-  Addition: answer = a + b
-
-- minus (8x4)
-  Subtraction: answer = a - b
-
-- multiply (8x4)
-  Multiplication: answer = a × b
-
-- divide (8x4)
-  Division: answer = a ÷ b
-  Default b:1 to avoid division by zero
-
-- modulo (8x4)
-  Remainder: answer = a % b
-  Example: 7 % 3 = 1
-
-- pow (8x4)
-  Inputs: path, number:0, degree:0
-  Outputs: path, answer
-  Power: answer = number^degree
-
-- sqrt (6x3)
-  Inputs: path, number:0
-  Outputs: path, answer
-  Square root: answer = √number
-
-- absolute (6x3)
-  Inputs: path, number:0
-  Outputs: path, answer
-  Absolute value: answer = |number|
-
-## TRIGONOMETRY
-All angles in RADIANS. Use radians/degrees nodes for conversion.
-
-- sin (6x3)
-  Inputs: path, x:0
-  Outputs: path, answer
-  Sine: answer = sin(x)
-
-- cos (6x3)
-  Inputs: path, x:0
-  Outputs: path, answer
-  Cosine: answer = cos(x)
-
-- tan (6x3)
-  Inputs: path, x:0
-  Outputs: path, answer
-  Tangent: answer = tan(x)
-
-- ctg (6x3)
-  Inputs: path, x:0
-  Outputs: path, answer
-  Cotangent: answer = 1/tan(x)
-
-- radians (6x3)
-  Inputs: path, degrees:0
-  Outputs: path, radians
-  Converts degrees to radians
-  Example: 180° → 3.14159 rad
-
-- degrees (6x3)
-  Inputs: path, radians:0
-  Outputs: path, degrees
-  Converts radians to degrees
-  Example: 3.14159 rad → 180°
-
-## TEXT OPERATIONS
-
-- writeText (6x3)
-  Inputs: path, text:""
-  Outputs: path
-  Outputs text to console/debug log
-  Use for debugging, not for displaying on screen
-
-- displayText (10x5)
-  Inputs: path, x:0, y:0, text:""
-  Outputs: path
-  Displays text on screen at position (x, y)
-  IMPORTANT: Text only shows for 1 frame!
-  Always use inside everyFrame loop for continuous display
-  Coordinates: (0,0) is top-left corner
-
-- connectText (8x4)
-  Inputs: path, text1:"", text2:""
-  Outputs: path, text
-  Concatenates two strings: text = text1 + text2
-  Example: "Hello" + " World" = "Hello World"
-
-- sliceText (10x5)
-  Inputs: path, text:"", start:0, end:-1
-  Outputs: path, text
-  Extracts substring from position start to end
-  end:-1 means until the end
-  Example: "Hello"[1:4] = "ell"
-
-## OBJECTS
-Object ID -1 means "self" (current object context)
-
-- createObject (10x5)
-  Inputs: path, name:"", x:0, y:0
-  Outputs: path, id
-  Creates new object at position (x, y)
-  "name" is the object template/prefab name
-  Returns created object's ID
-
-- removeObject (6x3)
-  Inputs: path, id:-1
-  Outputs: path
-  Deletes object from game
-
-- getObjectIDByName (6x3)
-  Inputs: path, name:""
-  Outputs: path, id
-  Finds object by its name and returns ID
-  Use this instead of storing IDs in variables
-
-- moveObject (10x5)
-  Inputs: path, id:-1, angle:0, power:1
-  Outputs: path
-  Moves object in direction (angle) with speed (power)
-  Angle in DEGREES: 0=right, 90=down, 180=left, 270=up
-  This is PHYSICS-BASED movement (adds velocity)
-  PREFERRED for all movement - smooth and natural
-  Example: moveObject(id:player, angle:0, power:5) - move right
-
-- moveObjectWithBraking (12x6)
-  Inputs: path, id:-1, angle:0, power:1, slidingStep:1000000000
-  Outputs: path
-  Like moveObject but with gradual slowdown
-  Lower slidingStep = faster braking
-  Good for ice skating, sliding effects
-
-- jump (8x4)
-  Inputs: path, id:-1, power:10
-  Outputs: path
-  Makes object jump (adds upward velocity)
-  Power determines jump height
-  Requires gravity to be enabled on object
-
-- setObjectPos (10x5)
-  Inputs: path, id:-1, x:0, y:0
-  Outputs: path
-  Instantly moves object to exact position
-  Use ONLY for teleportation, NOT for regular movement
-  For movement use moveObject instead!
-
-- getObjectPos (8x4)
-  Inputs: path, id:-1
-  Outputs: path, x, y
-  Returns object's current position
-
-- getResultingVector (8x4)
-  Inputs: path, id:-1
-  Outputs: path, x, y
-  Returns object's velocity vector
-  x = horizontal speed, y = vertical speed
-
-- setObjectVar (10x5)
-  Inputs: path, id:-1, name:"", value:""
-  Outputs: path
-  Sets custom variable on object
-  Create your own properties: health, score, state, etc.
-  Example: setObjectVar(id:player, name:"health", value:100)
-
-- getObjectVar (8x4)
-  Inputs: path, id:-1, name:""
-  Outputs: path, answer
-  Gets custom variable from object
-  Example: getObjectVar(id:player, name:"health") → answer:100
-
-- setObjectParameter (10x5)
-  Inputs: path, id:-1, name:choose, value:""
-  Outputs: path
-  Sets built-in object parameter
-  name options: hitbox, group, mass, layer, invisible, gravity,
-                brakingPower, message, fontSize, alignment,
-                fontColor, backgroundColor, ramaColor,
-                spriteHitbox, liveTime, minusSpriteSizePerFrame, alpha
-
-- getObjectParameter (8x4)
-  Inputs: path, id:-1, name:choose
-  Outputs: path, value
-  Gets built-in object parameter value
-
-- getAllObjectInGroup (6x3)
-  Inputs: path, group:""
-  Outputs: path, objects
-  Returns list of all object IDs in specified group
-  Example: getAllObjectInGroup(group:"enemies") → [101, 102, 103]
-
-## LOGIC
-Comparison operations. Outputs two paths: path_true and path_false
-
-- if_ (10x5)
-  Inputs: path, a:null, b:null, operation:0
-  Outputs: path_true, path_false
-  Compares a and b using operation:
-    0: == (equals)
-    1: != (not equals)
-    2: <= (less or equal)
-    3: >= (greater or equal)
-    4: <  (less than)
-    5: >  (greater than)
-  Example: if_(a:10, b:5, operation:5) checks if 10 > 5 (true)
-
-- ifCollision (10x5)
-  Inputs: path, id:-1, group:"object", append:false
-  Outputs: path_true, path_false, id_in_group
-  Checks if object collides with any object in group
-  If collision: path_true executes, id_in_group = collided object ID
-  If no collision: path_false executes
-  append:true continues checking even after collision
-
-- ifKeyInDict (8x4)
-  Inputs: path, dict:{}, key:""
-  Outputs: path_true, path_false
-  Checks if key exists in dictionary
-
-- ifElementInList (8x4)
-  Inputs: path, list:[], element:""
-  Outputs: path_true, path_false
-  Checks if element exists in list
-
-## ANIMATION
-
-- runAnimation (8x4)
-  Inputs: path, id:-1, animation:""
-  Outputs: path
-  Starts playing animation on object
-  "animation" is animation name from object's animation list
-
-- stopAnimation (6x3)
-  Inputs: path, id:-1
-  Outputs: path
-  Stops currently playing animation
-
-- mirrorAnimation (10x5)
-  Inputs: path, id:-1, horizontal:false, vertical:false
-  Outputs: path
-  Flips animation
-  horizontal:true = mirror left/right
-  vertical:true = mirror up/down
-
-## VARIABLES
-Variables store data. Local variables only in current function, global visible everywhere.
-
-- setVar (10x5)
-  Inputs: path, name:"", global:false, value:""
-  Outputs: path
-  Creates or updates variable
-  global:false = local to current function/event chain
-  global:true = accessible from entire project
-  Example: setVar(name:"score", global:true, value:0)
-
-- getVar (8x4)
-  Inputs: path, name:"", global:false
-  Outputs: path, answer
-  Retrieves variable value
-  Must match global parameter used in setVar
-  Example: getVar(name:"score", global:true) → answer:0
-
-## DATA STRUCTURES - LISTS
-Lists are ordered collections: [element0, element1, element2, ...]
-Index starts at 0.
-
-- addListElement (8x4)
-  Inputs: path, list:[], element:""
-  Outputs: path, list
-  Appends element to end of list
-  Example: [1,2,3] + 4 → [1,2,3,4]
-
-- insertListElement (10x5)
-  Inputs: path, list:[], index:1, element:""
-  Outputs: path, list
-  Inserts element at specific position
-  Example: [1,3].insert(1, 2) → [1,2,3]
-
-- getByIndex (8x4)
-  Inputs: path, list:[], index:0
-  Outputs: path, element
-  Returns element at position index
-  Example: [10,20,30][1] → 20
-
-- deleteByIndex (8x4)
-  Inputs: path, list:[], index:0
-  Outputs: path, list
-  Removes element at position index
-  Example: [1,2,3].delete(1) → [1,3]
-
-- getIndexOfElement (8x4)
-  Inputs: path, list:[], element:""
-  Outputs: path, index
-  Finds position of element in list
-  Example: [10,20,30].indexOf(20) → 1
-  Returns -1 if not found
-
-- sliceList (10x5)
-  Inputs: path, list:[], start:0, end:-1
-  Outputs: path, list
-  Extracts portion of list from start to end
-  end:-1 means until the end
-  Example: [1,2,3,4,5][1:3] → [2,3]
-
-## DATA STRUCTURES - DICTIONARIES
-Dictionaries are key-value pairs: {"key1": value1, "key2": value2}
-
-- addDictElement (10x5)
-  Inputs: path, dict:{}, key:"", element:""
-  Outputs: path, dict
-  Adds or updates key-value pair
-  Example: {"a":1} + ("b", 2) → {"a":1, "b":2}
-
-- getByKey (8x4)
-  Inputs: path, dict:{}, key:""
-  Outputs: path, element
-  Returns value for given key
-  Example: {"name":"Player"}["name"] → "Player"
-
-- removeByKey (8x4)
-  Inputs: path, dict:{}, key:""
-  Outputs: path, dict
-  Removes key-value pair
-  Example: {"a":1, "b":2}.remove("a") → {"b":2}
-
-- getKeyOfElement (8x4)
-  Inputs: path, dict:{}, element:""
-  Outputs: path, key
-  Finds key for given value
-  Example: {"name":"Player"}.keyOf("Player") → "name"
-
-## UTILITY
-
-- random_ (8x4)
-  Inputs: path, a:1, b:2
-  Outputs: path, answer
-  Returns random integer from a to b (inclusive)
-  Example: random_(1, 10) → any number 1-10
-
-- len_ (6x3)
-  Inputs: path, element:""
-  Outputs: path, answer
-  Returns length of text/list/dictionary
-  Example: len_("Hello") → 5, len_([1,2,3]) → 3
-
-- wait (6x3)
-  Inputs: path, time:100
-  Outputs: path
-  Pauses execution for time frames
-  Example: wait(60) pauses for 1 second at 60 FPS
-
-- getMousePos (8x4)
-  Inputs: path
-  Outputs: path, x, y
-  Returns current mouse cursor position
-  (0,0) is top-left corner
-
-- getTimePassed (6x3)
-  Inputs: path
-  Outputs: path, time_passed
-  Returns time elapsed since game start (in frames or milliseconds)
-
-- decodeHolder (6x3)
-  Inputs: path, text:""
-  Outputs: path, answer
-  Parses text string into data type
-  Example: "123" → 123, "[1,2,3]" → [1,2,3]
-
-- exit_ (6x3)
-  Inputs: path
-  Outputs: none
-  Stops current script execution
-  No code after this node will run
-
-- break_ (6x3)
-  Inputs: path
-  Outputs: none
-  Exits current loop immediately
-  Use inside for/forObjectsGroup/forListElements
-
-## SCENE MANAGEMENT
-
-- goToScene (6x3)
-  Inputs: path, scene:""
-  Outputs: path
-  Switches to specified scene
-  Example: goToScene(scene:"MainMenu")
-
-- getSceneName (6x3)
-  Inputs: path
-  Outputs: path, answer
-  Returns current scene name
-
-## CUSTOM FUNCTIONS
-Create reusable code blocks
-
-- functionEvent (6x3)
-  Inputs: name:"", params:[]
-  Outputs: path, params
-  Defines custom function
-  "name" is function identifier
-  "params" list receives arguments (invisible in UI)
-  This is an EVENT node - starts its own chain
-
-- callFunction (8x4)
-  Inputs: path, name:"", params:[]
-  Outputs: path
-  Calls previously defined function
-  "name" must match functionEvent name
-  "params" list passes arguments
-
-## AUDIO
-
-- playMusic (8x4)
-  Inputs: path, name:"", volume:1
-  Outputs: path
-  Plays background music track
-  "name" is music file name
-  volume: 0.0 (silent) to 1.0 (full volume)
-  Only one music track plays at a time
-
-- stopMusic (6x3)
-  Inputs: path
-  Outputs: path
-  Stops currently playing music
-
-- playSound (8x4)
-  Inputs: path, name:"", volume:1
-  Outputs: path
-  Plays sound effect
-  Multiple sounds can play simultaneously
-  "name" is sound file name
-
-## ADVANCED - PYTHON
-
-- python (10x5)
-  Inputs: path, text:"def run(program, args, kwargs):\n\tpass", list:[], dict:{}
-  Outputs: path, answer
-  Executes custom Python code
-  "text" contains Python function definition
-  "list" and "dict" are invisible parameters for passing data
-  "answer" returns function result
+NAME: onStartGame
+TYPE: EVENT
+DESCRIPTION: Triggers once when the game starts
+INPUTS: None
+OUTPUTS: path
+
+{
+"type": "event",
+"name": "onStartGame",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.onStartGame",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path"
+}
+}
+}
+
+NAME: onLoadScene
+TYPE: EVENT
+DESCRIPTION: Triggers when a scene is loaded
+INPUTS: None
+OUTPUTS: path
+
+{
+"type": "event",
+"name": "onLoadScene",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.onLoadScene",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path"
+}
+}
+}
+
+NAME: everyFrame
+TYPE: EVENT
+DESCRIPTION: Triggers every N frames
+INPUTS: path, N
+OUTPUTS: path
+
+{
+"type": "event",
+"name": "everyFrame",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"N": {
+"code": "N",
+"name": "__n__",
+"type": "number",
+"value": null,
+"standard": 1,
+"visible": false
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.everyFrame",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__n__": "node.text.n"
+}
+}
+}
+
+NAME: everyTick
+TYPE: EVENT
+DESCRIPTION: Triggers every N game ticks
+INPUTS: path, N
+OUTPUTS: path
+
+{
+"type": "event",
+"name": "everyTick",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"N": {
+"code": "N",
+"name": "__n__",
+"type": "number",
+"value": null,
+"standard": 1,
+"visible": false
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.everyTick",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__n__": "node.text.n"
+}
+}
+}
+
+NAME: mouseRightClick
+TYPE: EVENT
+DESCRIPTION: Triggers when the right mouse button is clicked
+INPUTS: None
+OUTPUTS: path
+
+{
+"type": "event",
+"name": "mouseRightClick",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.mouseRightClick",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path"
+}
+}
+}
+
+NAME: mouseLeftClick
+TYPE: EVENT
+DESCRIPTION: Triggers when the left mouse button is clicked
+INPUTS: None
+OUTPUTS: path
+
+{
+"type": "event",
+"name": "mouseLeftClick",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.mouseLeftClick",
+"text": {
+"__none__": "node.text.none",
+"__key__": "node.text.key",
+"__path__": "node.text.path"
+}
+}
+}
+
+NAME: keyboardClick
+TYPE: EVENT
+DESCRIPTION: Triggers when a keyboard key is clicked (single press)
+INPUTS: path, key
+OUTPUTS: path
+
+{
+"type": "event",
+"name": "keyboardClick",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"key": {
+"code": "key",
+"name": "__key__",
+"type": "text",
+"value": null,
+"standard": "",
+"visible": false
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.keyboardClick",
+"text": {
+"__none__": "node.text.none",
+"__key__": "node.text.key",
+"__path__": "node.text.path"
+}
+}
+}
+
+NAME: keyboardPress
+TYPE: EVENT
+DESCRIPTION: Triggers while a keyboard key is being pressed (continuous)
+INPUTS: path, key
+OUTPUTS: path
+
+{
+"type": "event",
+"name": "keyboardPress",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"key": {
+"code": "key",
+"name": "__key__",
+"type": "text",
+"value": null,
+"standard": "",
+"visible": false
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.keyboardPress",
+"text": {
+"__none__": "node.text.none",
+"__key__": "node.text.key",
+"__path__": "node.text.path"
+}
+}
+}
+
+NAME: onButtonPress
+TYPE: EVENT
+DESCRIPTION: Triggers when a UI button is pressed
+INPUTS: path
+OUTPUTS: path, id
+
+{
+"type": "event",
+"name": "onButtonPress",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.onButtonPress",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__id__": "node.text.id"
+}
+}
+}
+
+NAME: for_
+TYPE: EVENT
+DESCRIPTION: Defines a custom function that can be called from other parts of the code
+INPUTS: name, params
+OUTPUTS: path, params
+
+{
+"type": "loop",
+"name": "for_",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"n",
+"x"
+],
+"outputs": [
+"iterator",
+"index",
+"after"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"n": {
+"code": "n",
+"name": "__n__",
+"type": "number",
+"value": null,
+"standard": 1
+},
+"x": {
+"code": "x",
+"name": "__delay__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"iterator": {
+"code": "iterator",
+"name": "__iterator__",
+"type": "iterator"
+},
+"index": {
+"code": "index",
+"name": "__index__",
+"type": "number"
+},
+"after": {
+"code": "after",
+"name": "__after__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.for",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__iterator__": "node.text.iterator",
+"__after__": "node.text.after",
+"__name__": "node.text.name",
+"__n__": "node.text.n",
+"__x__": "node.text.x",
+"__index__": "node.text.index",
+"__delay__": "node.text.delay"
+}
+}
+}
+
+NAME: forObjectsGroup
+TYPE: LOOP
+DESCRIPTION: Repeats execution N times with optional delay between iterations
+INPUTS: path, n, delay
+OUTPUTS: iterator, index, after
+
+{
+"type": "loop",
+"name": "forObjectsGroup",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"group"
+],
+"outputs": [
+"iterator",
+"id",
+"after"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"group": {
+"code": "group",
+"name": "__group__",
+"type": "text",
+"value": null,
+"standard": "object"
+}
+},
+"outputs": {
+"iterator": {
+"code": "iterator",
+"name": "__iterator__",
+"type": "iterator"
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number"
+},
+"after": {
+"code": "after",
+"name": "__after__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.forObjectsGroup",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__iterator__": "node.text.iterator",
+"__after__": "node.text.after",
+"__name__": "node.text.name",
+"__group__": "node.text.group",
+"__id__": "node.text.id"
+}
+}
+}
+
+NAME: forListElements
+TYPE: LOOP
+DESCRIPTION: Iterates through all objects in a specified group
+INPUTS: path, group
+OUTPUTS: iterator, id, after
+
+{
+"type": "loop",
+"name": "forListElements",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"list"
+],
+"outputs": [
+"iterator",
+"index",
+"element",
+"after"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list",
+"value": null,
+"standard": []
+}
+},
+"outputs": {
+"iterator": {
+"code": "iterator",
+"name": "__iterator__",
+"type": "iterator"
+},
+"index": {
+"code": "index",
+"name": "__index__",
+"type": "number"
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any"
+},
+"after": {
+"code": "after",
+"name": "__after__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.forListElements",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__iterator__": "node.text.iterator",
+"__after__": "node.text.after",
+"__name__": "node.text.name",
+"__element__": "node.text.element",
+"__list__": "node.text.list",
+"__index__": "node.text.index"
+}
+}
+}
+
+NAME: forDictElements
+TYPE: LOOP
+DESCRIPTION: Iterates through all elements in a list
+INPUTS: path, list
+OUTPUTS: iterator, index, element, after
+
+{
+"type": "loop",
+"name": "forDictElements",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"dict"
+],
+"outputs": [
+"iterator",
+"key",
+"element",
+"after"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"dict": {
+"code": "dict",
+"name": "__dict__",
+"type": "dict",
+"value": null,
+"standard": {}
+}
+},
+"outputs": {
+"iterator": {
+"code": "iterator",
+"name": "__iterator__",
+"type": "iterator"
+},
+"key": {
+"code": "key",
+"name": "__key__",
+"type": "text"
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any"
+},
+"after": {
+"code": "after",
+"name": "__after__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.forDictElements",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__iterator__": "node.text.iterator",
+"__after__": "node.text.after",
+"__name__": "node.text.name",
+"__element__": "node.text.element",
+"__dict__": "node.text.dict",
+"__key__": "node.text.key"
+}
+}
+}
+
+NAME: connectText
+TYPE: LOOP
+DESCRIPTION: Iterates through all key-value pairs in a dictionary
+INPUTS: path, dict
+OUTPUTS: iterator, key, element, after
+
+{
+"type": "text",
+"name": "connectText",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"text1",
+"text2"
+],
+"outputs": [
+"path",
+"text"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"text1": {
+"code": "text1",
+"name": "__text1__",
+"type": "text",
+"value": null,
+"standard": ""
+},
+"text2": {
+"code": "text2",
+"name": "__text2__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"text": {
+"code": "text",
+"name": "__text__",
+"type": "text"
+}
+},
+"display": {
+"name": "node.name.connectText",
+"text": {
+"__none__": "node.text.none",
+"__id__": "node.text.id",
+"__path__": "node.text.path",
+"__text__": "node.text.text",
+"__text1__": "node.text.text1",
+"__text2__": "node.text.text2"
+}
+}
+}
+
+NAME: sliceText
+TYPE: TEXT
+DESCRIPTION: Outputs text to console/debug
+INPUTS: path, text
+OUTPUTS: path
+
+{
+"type": "text",
+"name": "sliceText",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"text",
+"start",
+"end"
+],
+"outputs": [
+"path",
+"text"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"text": {
+"code": "text",
+"name": "__text__",
+"type": "text",
+"value": null,
+"standard": ""
+},
+"start": {
+"code": "start",
+"name": "__start__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"end": {
+"code": "end",
+"name": "__end__",
+"type": "number",
+"value": null,
+"standard": -1
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"text": {
+"code": "text",
+"name": "__text__",
+"type": "text"
+}
+},
+"display": {
+"name": "node.name.sliceText",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__text__": "node.text.text",
+"__start__": "node.text.start",
+"__end__": "node.text.end"
+}
+}
+}
+
+NAME: writeText
+TYPE: TEXT
+DESCRIPTION: Displays text on screen at specified coordinates
+INPUTS: path, x, y, text
+OUTPUTS: path
+
+{
+"type": "text",
+"name": "writeText",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"text": {
+"code": "text",
+"name": "__text__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.writeText",
+"text": {
+"__none__": "node.text.none",
+"__text__": "node.text.text",
+"__path__": "node.text.path"
+}
+}
+}
+
+NAME: displayText
+TYPE: TEXT
+DESCRIPTION: Concatenates two text strings
+INPUTS: path, text1, text2
+OUTPUTS: path, text
+
+{
+"type": "text",
+"name": "displayText",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"x": {
+"code": "x",
+"name": "__x__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"y": {
+"code": "y",
+"name": "__y__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"text": {
+"code": "text",
+"name": "__text__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.displayText",
+"text": {
+"__none__": "node.text.none",
+"__text__": "node.text.text",
+"__path__": "node.text.path",
+"__x__": "node.text.x",
+"__y__": "node.text.y"
+}
+}
+}
+
+NAME: plus
+TYPE: TEXT
+DESCRIPTION: Extracts a substring from start to end position
+INPUTS: path, text, start, end
+OUTPUTS: path, text
+
+{
+"type": "number",
+"name": "plus",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"a": {
+"code": "a",
+"name": "__a__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"b": {
+"code": "b",
+"name": "__b__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.plus",
+"text": {
+"__none__": "node.text.none",
+"__text__": "node.text.text",
+"__path__": "node.text.path",
+"__a__": "node.text.a",
+"__b__": "node.text.b",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: minus
+TYPE: NUMBER
+DESCRIPTION: Adds two numbers (a + b)
+INPUTS: path, a, b
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "minus",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"a": {
+"code": "a",
+"name": "__a__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"b": {
+"code": "b",
+"name": "__b__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.minus",
+"text": {
+"__none__": "node.text.none",
+"__text__": "node.text.text",
+"__path__": "node.text.path",
+"__a__": "node.text.a",
+"__b__": "node.text.b",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: multiply
+TYPE: NUMBER
+DESCRIPTION: Subtracts two numbers (a - b)
+INPUTS: path, a, b
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "multiply",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"a": {
+"code": "a",
+"name": "__a__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"b": {
+"code": "b",
+"name": "__b__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.multiply",
+"text": {
+"__none__": "node.text.none",
+"__text__": "node.text.text",
+"__path__": "node.text.path",
+"__a__": "node.text.a",
+"__b__": "node.text.b",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: divide
+TYPE: NUMBER
+DESCRIPTION: Multiplies two numbers (a × b)
+INPUTS: path, a, b
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "divide",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"a": {
+"code": "a",
+"name": "__a__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"b": {
+"code": "b",
+"name": "__b__",
+"type": "number",
+"value": null,
+"standard": 1
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.divide",
+"text": {
+"__none__": "node.text.none",
+"__text__": "node.text.text",
+"__path__": "node.text.path",
+"__a__": "node.text.a",
+"__b__": "node.text.b",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: radians
+TYPE: NUMBER
+DESCRIPTION: Divides two numbers (a ÷ b)
+INPUTS: path, a, b
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "radians",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"degrees": {
+"code": "degrees",
+"name": "__degrees__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"radians": {
+"code": "radians",
+"name": "__radians__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.radians",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__degrees__": "node.text.degrees",
+"__radians__": "node.text.radians"
+}
+}
+}
+
+NAME: degrees
+TYPE: NUMBER
+DESCRIPTION: Raises number to specified power
+INPUTS: path, number, power
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "degrees",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"radians": {
+"code": "radians",
+"name": "__radians__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"degrees": {
+"code": "degrees",
+"name": "__degrees__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.degrees",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__degrees__": "node.text.degrees",
+"__radians__": "node.text.radians"
+}
+}
+}
+
+NAME: sin
+TYPE: NUMBER
+DESCRIPTION: Calculates square root of a number
+INPUTS: path, number
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "sin",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"x": {
+"code": "x",
+"name": "__x__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.sin",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__x__": "node.text.x",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: cos
+TYPE: NUMBER
+DESCRIPTION: Returns remainder of division (a % b)
+INPUTS: path, a, b
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "cos",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"x": {
+"code": "x",
+"name": "__x__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.cos",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__x__": "node.text.x",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: tan
+TYPE: NUMBER
+DESCRIPTION: Returns absolute value of a number
+INPUTS: path, number
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "tan",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"x": {
+"code": "x",
+"name": "__x__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.tan",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__x__": "node.text.x",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: ctg
+TYPE: NUMBER
+DESCRIPTION: Calculates sine of x (in radians)
+INPUTS: path, x
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "ctg",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"x": {
+"code": "x",
+"name": "__x__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.ctg",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__x__": "node.text.x",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: absolute
+TYPE: NUMBER
+DESCRIPTION: Calculates cosine of x (in radians)
+INPUTS: path, x
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "absolute",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"number"
+],
+"outputs": [
+"path",
+"answer"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"number": {
+"code": "number",
+"name": "__number__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.absolute",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__answer__": "node.text.answer",
+"__number__": "node.text.number"
+}
+}
+}
+
+NAME: pow
+TYPE: NUMBER
+DESCRIPTION: Calculates tangent of x (in radians)
+INPUTS: path, x
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "pow",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"number": {
+"code": "number",
+"name": "__number__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"degree": {
+"code": "degree",
+"name": "__degree__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.pow",
+"text": {
+"__none__": "node.text.none",
+"__text__": "node.text.text",
+"__path__": "node.text.path",
+"__number__": "node.text.number",
+"__degree__": "node.text.degree",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: sqrt
+TYPE: NUMBER
+DESCRIPTION: Calculates cotangent of x (in radians)
+INPUTS: path, x
+OUTPUTS: path, answer
+
+{
+"type": "number",
+"name": "sqrt",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"number": {
+"code": "number",
+"name": "__number__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.sqrt",
+"text": {
+"__none__": "node.text.none",
+"__text__": "node.text.text",
+"__path__": "node.text.path",
+"__number__": "node.text.number",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: modulo
+TYPE: NUMBER
+DESCRIPTION: Converts degrees to radians
+INPUTS: path, degrees
+OUTPUTS: path, radians
+
+{
+"type": "number",
+"name": "modulo",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"a": {
+"code": "a",
+"name": "__a__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"b": {
+"code": "b",
+"name": "__b__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.modulo",
+"text": {
+"__none__": "node.text.none",
+"__text__": "node.text.text",
+"__path__": "node.text.path",
+"__a__": "node.text.a",
+"__b__": "node.text.b",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: if_
+TYPE: NUMBER
+DESCRIPTION: Converts radians to degrees
+INPUTS: path, radians
+OUTPUTS: path, degrees
+
+{
+"type": "logic",
+"name": "if_",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"a",
+"operation",
+"b"
+],
+"outputs": [
+"path_true",
+"path_false"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"a": {
+"code": "a",
+"name": "__a__",
+"type": "Any",
+"value": null,
+"standard": null
+},
+"b": {
+"code": "b",
+"name": "__b__",
+"type": "Any",
+"value": null,
+"standard": null
+},
+"operation": {
+"code": "operation",
+"name": "__operation__",
+"type": "choose",
+"value": null,
+"standard": 0,
+"choose": {
+"options": [
+"0. ==",
+"1. !=",
+"2. <=",
+"3. >=",
+"4. <",
+"5. >"
+]
+}
+}
+},
+"outputs": {
+"path_true": {
+"code": "path_true",
+"name": "__path_true__",
+"type": "path"
+},
+"path_false": {
+"code": "path_false",
+"name": "__path_false__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.if",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__a__": "node.text.a",
+"__b__": "node.text.b",
+"__operation__": "node.text.operation",
+"__path_true__": "node.text.pathTrue",
+"__path_false__": "node.text.pathFalse"
+}
+}
+}
+
+NAME: ifCollision
+TYPE: LOGIC
+DESCRIPTION: Compares two values using specified operation and branches execution
+INPUTS: path, a, b, operation
+OUTPUTS: path_true, path_false
+
+{
+"type": "logic",
+"name": "ifCollision",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"id",
+"group",
+"append"
+],
+"outputs": [
+"path_true",
+"path_false",
+"id_in_group"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"group": {
+"code": "group",
+"name": "__group__",
+"type": "text",
+"value": null,
+"standard": "object"
+},
+"append": {
+"code": "append",
+"name": "__append__",
+"type": "logic",
+"value": null,
+"standard": false
+}
+},
+"outputs": {
+"path_true": {
+"code": "path_true",
+"name": "__path_true__",
+"type": "path"
+},
+"path_false": {
+"code": "path_false",
+"name": "__path_false__",
+"type": "path"
+},
+"id_in_group": {
+"code": "id_in_group",
+"name": "__id_in_group__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.ifCollision",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__id__": "node.text.id",
+"__group__": "node.text.group",
+"__append__": "node.text.append",
+"__path_true__": "node.text.pathTrue",
+"__path_false__": "node.text.pathFalse",
+"__id_in_group__": "node.text.idInGroup"
+}
+}
+}
+
+NAME: ifKeyInDict
+TYPE: LOGIC
+DESCRIPTION: Checks if object collides with any object in specified group
+INPUTS: path, id, group, append
+OUTPUTS: path_true, path_false, id_in_group
+
+{
+"type": "logic",
+"name": "ifKeyInDict",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"dict",
+"key"
+],
+"outputs": [
+"path_true",
+"path_false"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"dict": {
+"code": "dict",
+"name": "__dict__",
+"type": "dict",
+"value": null,
+"standard": {}
+},
+"key": {
+"code": "key",
+"name": "__key__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path_true": {
+"code": "path_true",
+"name": "__path_true__",
+"type": "path"
+},
+"path_false": {
+"code": "path_false",
+"name": "__path_false__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.ifKeyInDict",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__dict__": "node.text.dict",
+"__key__": "node.text.key",
+"__path_true__": "node.text.pathTrue",
+"__path_false__": "node.text.pathFalse"
+}
+}
+}
+
+NAME: ifElementInList
+TYPE: LOGIC
+DESCRIPTION: Checks if a key exists in dictionary
+INPUTS: path, dict, key
+OUTPUTS: path_true, path_false
+
+{
+"type": "logic",
+"name": "ifElementInList",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"list",
+"element"
+],
+"outputs": [
+"path_true",
+"path_false"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list",
+"value": null,
+"standard": []
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path_true": {
+"code": "path_true",
+"name": "__path_true__",
+"type": "path"
+},
+"path_false": {
+"code": "path_false",
+"name": "__path_false__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.ifElementInList",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__list__": "node.text.list",
+"__element__": "node.text.element",
+"__path_true__": "node.text.pathTrue",
+"__path_false__": "node.text.pathFalse"
+}
+}
+}
+
+NAME: getObjectIDByName
+TYPE: LOGIC
+DESCRIPTION: Checks if an element exists in list
+INPUTS: path, list, element
+OUTPUTS: path_true, path_false
+
+{
+"type": "objects",
+"name": "getObjectIDByName",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.getObjectIDByName",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name",
+"__id__": "node.text.id"
+}
+}
+}
+
+NAME: setObjectPos
+TYPE: OBJECTS
+DESCRIPTION: Returns object ID by its name
+INPUTS: path, name
+OUTPUTS: path, id
+
+{
+"type": "objects",
+"name": "setObjectPos",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"x": {
+"code": "x",
+"name": "__x__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"y": {
+"code": "y",
+"name": "__y__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.setObjectPos",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name",
+"__id__": "node.text.id",
+"__x__": "node.text.x",
+"__y__": "node.text.y"
+}
+}
+}
+
+NAME: moveObject
+TYPE: OBJECTS
+DESCRIPTION: Creates a new object at specified position
+INPUTS: path, name, x, y
+OUTPUTS: path, id
+
+{
+"type": "objects",
+"name": "moveObject",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"id",
+"angle",
+"power"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"angle": {
+"code": "angle",
+"name": "__angle__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"power": {
+"code": "power",
+"name": "__power__",
+"type": "number",
+"value": null,
+"standard": 1
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.moveObject",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name",
+"__id__": "node.text.id",
+"__angle__": "node.text.angle",
+"__power__": "node.text.power"
+}
+}
+}
+
+NAME: moveObjectWithBraking
+TYPE: OBJECTS
+DESCRIPTION: Removes an object from the game
+INPUTS: path, id
+OUTPUTS: path
+
+{
+"type": "objects",
+"name": "moveObjectWithBraking",
+"x": null,
+"y": null,
+"width": 12,
+"height": 6,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"id",
+"angle",
+"power",
+"slidingStep"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"angle": {
+"code": "angle",
+"name": "__angle__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"power": {
+"code": "power",
+"name": "__power__",
+"type": "number",
+"value": null,
+"standard": 1
+},
+"slidingStep": {
+"code": "slidingStep",
+"name": "__slidingStep__",
+"type": "number",
+"value": null,
+"standard": 1000000000.0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.moveObjectWithBraking",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name",
+"__id__": "node.text.id",
+"__angle__": "node.text.angle",
+"__power__": "node.text.power",
+"__slidingStep__": "node.text.slidingStep"
+}
+}
+}
+
+NAME: getObjectPos
+TYPE: OBJECTS
+DESCRIPTION: Sets object position to exact coordinates
+INPUTS: path, id, x, y
+OUTPUTS: path
+
+{
+"type": "objects",
+"name": "getObjectPos",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"x": {
+"code": "x",
+"name": "__x__",
+"type": "number"
+},
+"y": {
+"code": "y",
+"name": "__y__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.getObjectPos",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name",
+"__id__": "node.text.id",
+"__x__": "node.text.x",
+"__y__": "node.text.y"
+}
+}
+}
+
+NAME: setObjectVar
+TYPE: OBJECTS
+DESCRIPTION: Returns current object position
+INPUTS: path, id
+OUTPUTS: path, x, y
+
+{
+"type": "objects",
+"name": "setObjectVar",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"id",
+"name",
+"value"
+],
+"outputs": [
+"path",
+"answer"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "text",
+"value": null,
+"standard": ""
+},
+"value": {
+"code": "value",
+"name": "__value__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.setObjectVar",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name",
+"__id__": "node.text.id",
+"__value__": "node.text.value"
+}
+}
+}
+
+NAME: getObjectVar
+TYPE: OBJECTS
+DESCRIPTION: Moves object in specified angle with given power
+INPUTS: path, id, angle, power
+OUTPUTS: path
+
+{
+"type": "objects",
+"name": "getObjectVar",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"id",
+"name"
+],
+"outputs": [
+"path",
+"answer"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "Any"
+}
+},
+"display": {
+"name": "node.name.getObjectVar",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__answer__": "node.text.answer",
+"__name__": "node.text.name",
+"__id__": "node.text.id"
+}
+}
+}
+
+NAME: createObject
+TYPE: OBJECTS
+DESCRIPTION: Moves object with gradual braking effect
+INPUTS: path, id, angle, power, slidingStep
+OUTPUTS: path
+
+{
+"type": "objects",
+"name": "createObject",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"name",
+"x",
+"y"
+],
+"outputs": [
+"path",
+"id"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "text",
+"value": null,
+"standard": ""
+},
+"x": {
+"code": "x",
+"name": "__x__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"y": {
+"code": "y",
+"name": "__y__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.createObject",
+"text": {
+"__none__": "node.text.none",
+"__name__": "node.text.name",
+"__path__": "node.text.path",
+"__id__": "node.text.id",
+"__x__": "node.text.x",
+"__y__": "node.text.y"
+}
+}
+}
+
+NAME: removeObject
+TYPE: OBJECTS
+DESCRIPTION: Makes object jump with specified power
+INPUTS: path, id, power
+OUTPUTS: path
+
+{
+"type": "objects",
+"name": "removeObject",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.removeObject",
+"text": {
+"__none__": "node.text.none",
+"__id__": "node.text.id",
+"__path__": "node.text.path"
+}
+}
+}
+
+NAME: getResultingVector
+TYPE: OBJECTS
+DESCRIPTION: Sets a custom variable for specific object
+INPUTS: path, id, name, value
+OUTPUTS: path
+
+{
+"type": "objects",
+"name": "getResultingVector",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"id"
+],
+"outputs": [
+"path",
+"x",
+"y"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"x": {
+"code": "x",
+"name": "__x__",
+"type": "number"
+},
+"y": {
+"code": "y",
+"name": "__y__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.getResultingVector",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__id__": "node.text.id",
+"__x__": "node.text.x",
+"__y__": "node.text.y"
+}
+}
+}
+
+NAME: getObjectParameter
+TYPE: OBJECTS
+DESCRIPTION: Gets a custom variable from specific object
+INPUTS: path, id, name
+OUTPUTS: path, answer
+
+{
+"type": "objects",
+"name": "getObjectParameter",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "choose",
+"value": null,
+"standard": 0,
+"choose": {
+"options": [
+"object.parameter.number.hitbox",
+"object.parameter.number.group",
+"object.parameter.number.mass",
+"object.parameter.number.layer",
+"object.parameter.number.invisible",
+"object.parameter.number.gravity",
+"object.parameter.number.brakingPower",
+"object.parameter.number.message",
+"object.parameter.number.fontSize",
+"object.parameter.number.alignment",
+"object.parameter.number.fontColor",
+"object.parameter.number.backgroundColor",
+"object.parameter.number.ramaColor",
+"object.parameter.number.spriteHithox",
+"object.parameter.number.liveTime",
+"object.parameter.number.minusSpriteSizePerFrame",
+"object.parameter.number.alpha"
+]
+}
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"value": {
+"code": "value",
+"name": "__value__",
+"type": "Any"
+}
+},
+"display": {
+"name": "node.name.getObjectParameter",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__id__": "node.text.id",
+"__name__": "node.text.name",
+"__value__": "node.text.value"
+}
+}
+}
+
+NAME: setObjectParameter
+TYPE: OBJECTS
+DESCRIPTION: Sets built-in object parameter (hitbox, mass, layer, etc.)
+INPUTS: path, id, name, value
+OUTPUTS: path
+
+{
+"type": "objects",
+"name": "setObjectParameter",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "choose",
+"value": null,
+"standard": 0,
+"choose": {
+"options": [
+"object.parameter.number.hitbox",
+"object.parameter.number.group",
+"object.parameter.number.mass",
+"object.parameter.number.layer",
+"object.parameter.number.invisible",
+"object.parameter.number.gravity",
+"object.parameter.number.brakingPower",
+"object.parameter.number.message",
+"object.parameter.number.fontSize",
+"object.parameter.number.alignment",
+"object.parameter.number.fontColor",
+"object.parameter.number.backgroundColor",
+"object.parameter.number.ramaColor",
+"object.parameter.number.spriteHithox",
+"object.parameter.number.liveTime",
+"object.parameter.number.minusSpriteSizePerFrame",
+"object.parameter.number.alpha"
+]
+}
+},
+"value": {
+"code": "value",
+"name": "__value__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.setObjectParameter",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__id__": "node.text.id",
+"__name__": "node.text.name",
+"__value__": "node.text.value"
+}
+}
+}
+
+NAME: getAllObjectInGroup
+TYPE: OBJECTS
+DESCRIPTION: Gets built-in object parameter value
+INPUTS: path, id, name
+OUTPUTS: path, value
+
+{
+"type": "objects",
+"name": "getAllObjectInGroup",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"group"
+],
+"outputs": [
+"path",
+"objects"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"group": {
+"code": "group",
+"name": "__group__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"objects": {
+"code": "objects",
+"name": "__listObjectID__",
+"type": "list"
+}
+},
+"display": {
+"name": "node.name.getAllObjectInGroup",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__group__": "node.text.group",
+"__element__": "node.text.element",
+"__listObjectID__": "node.text.listObjectID"
+}
+}
+}
+
+NAME: jump
+TYPE: OBJECTS
+DESCRIPTION: Returns object's movement vector components
+INPUTS: path, id
+OUTPUTS: path, x, y
+
+{
+"type": "objects",
+"name": "jump",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"id",
+"power"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"power": {
+"code": "power",
+"name": "__power__",
+"type": "number",
+"value": null,
+"standard": 10
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.jump",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__id__": "node.text.id",
+"__angle__": "node.text.angle",
+"__power__": "node.text.power"
+}
+}
+}
+
+NAME: runAnimation
+TYPE: OBJECTS
+DESCRIPTION: Returns list of all object IDs in specified group
+INPUTS: path, group
+OUTPUTS: path, objects
+
+{
+"type": "animation",
+"name": "runAnimation",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"id",
+"animation"
+],
+"outputs": [
+"path"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"animation": {
+"code": "animation",
+"name": "__animation__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.runAnimation",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__id__": "node.text.id",
+"__animation__": "node.text.animation"
+}
+}
+}
+
+NAME: stopAnimation
+TYPE: ANIMATION
+DESCRIPTION: Starts playing animation on object
+INPUTS: path, id, animation
+OUTPUTS: path
+
+{
+"type": "animation",
+"name": "stopAnimation",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"id"
+],
+"outputs": [
+"path"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.stopAnimation",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__id__": "node.text.id"
+}
+}
+}
+
+NAME: mirrorAnimation
+TYPE: ANIMATION
+DESCRIPTION: Stops current animation on object
+INPUTS: path, id
+OUTPUTS: path
+
+{
+"type": "animation",
+"name": "mirrorAnimation",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"id",
+"horizontal",
+"vertical"
+],
+"outputs": [
+"path"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"id": {
+"code": "id",
+"name": "__id__",
+"type": "number",
+"value": null,
+"standard": -1
+},
+"horizontal": {
+"code": "horizontal",
+"name": "__horizontal__",
+"type": "logic",
+"value": null,
+"standard": false
+},
+"vertical": {
+"code": "vertical",
+"name": "__vertical__",
+"type": "logic",
+"value": null,
+"standard": false
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.mirrorAnimation",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__id__": "node.text.id",
+"__horizontal__": "node.text.horizontal",
+"__vertical__": "node.text.vertical"
+}
+}
+}
+
+NAME: setVar
+TYPE: ANIMATION
+DESCRIPTION: Flips animation horizontally and/or vertically
+INPUTS: path, id, horizontal, vertical
+OUTPUTS: path
+
+{
+"type": "another",
+"name": "setVar",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"name",
+"global",
+"value"
+],
+"outputs": [
+"path"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "text",
+"value": null,
+"standard": ""
+},
+"global": {
+"code": "global",
+"name": "__global__",
+"type": "logic",
+"value": null,
+"standard": false
+},
+"value": {
+"code": "value",
+"name": "__value__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.setVar",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__value__": "node.text.value",
+"__name__": "node.text.name",
+"__global__": "node.text.global"
+}
+}
+}
+
+NAME: getVar
+TYPE: ANOTHER
+DESCRIPTION: Sets variable by name and value (if global == true, variable visible in all project, else only in this function)
+INPUTS: path, name, global, value
+OUTPUTS: path
+
+{
+"type": "another",
+"name": "getVar",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"name",
+"global"
+],
+"outputs": [
+"path",
+"answer"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"global": {
+"code": "global",
+"name": "__global__",
+"type": "logic",
+"value": null,
+"standard": false
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "Any"
+}
+},
+"display": {
+"name": "node.name.getVar",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__answer__": "node.text.answer",
+"__name__": "node.text.name",
+"__global__": "node.text.global"
+}
+}
+}
+
+NAME: random_
+TYPE: ANOTHER
+DESCRIPTION: Gets variable by name (if global == true, variable visible in all project, else only in this function)
+INPUTS: path, name, global
+OUTPUTS: path, answer
+
+{
+"type": "another",
+"name": "random_",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"a",
+"b"
+],
+"outputs": [
+"path",
+"answer"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"a": {
+"code": "a",
+"name": "__a__",
+"type": "number",
+"value": null,
+"standard": 1
+},
+"b": {
+"code": "b",
+"name": "__b__",
+"type": "number",
+"value": null,
+"standard": 2
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.random",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__answer__": "node.text.answer",
+"__a__": "node.text.a",
+"__b__": "node.text.b"
+}
+}
+}
+
+NAME: decodeHolder
+TYPE: SET
+DESCRIPTION: Appends element to the end of list
+INPUTS: path, list, element
+OUTPUTS: path, list
+
+{
+"type": "another",
+"name": "decodeHolder",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"text"
+],
+"outputs": [
+"path",
+"answer"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"text": {
+"code": "text",
+"name": "__text__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "Any"
+}
+},
+"display": {
+"name": "node.name.decodeHolder",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__text__": "node.text.text",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: len_
+TYPE: SET
+DESCRIPTION: Inserts element at specified index in list
+INPUTS: path, list, index, element
+OUTPUTS: path, list
+
+{
+"type": "another",
+"name": "len_",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"element"
+],
+"outputs": [
+"path",
+"answer"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.len_",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__answer__": "node.text.answer",
+"__element__": "node.text.element"
+}
+}
+}
+
+NAME: exit_
+TYPE: SET
+DESCRIPTION: Returns element at specified index from list
+INPUTS: path, list, index
+OUTPUTS: path, element
+
+{
+"type": "another",
+"name": "exit_",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"sorting": {
+"inputs": [
+"path"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+}
+},
+"outputs": {},
+"display": {
+"name": "node.name.exit",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path"
+}
+}
+}
+
+NAME: python
+TYPE: SET
+DESCRIPTION: Removes element at specified index from list
+INPUTS: path, list, index
+OUTPUTS: path, list
+
+{
+"type": "another",
+"name": "python",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"text",
+"list",
+"dict"
+],
+"outputs": [
+"path",
+"answer"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"text": {
+"code": "text",
+"name": "__text__",
+"type": "text",
+"value": null,
+"standard": "def run(program, args, kwargs):\n\tpass"
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list",
+"value": null,
+"standard": []
+},
+"dict": {
+"code": "dict",
+"name": "__dict__",
+"type": "dict",
+"value": null,
+"standard": {}
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "list"
+}
+},
+"display": {
+"name": "node.name.python",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__text__": "node.text.text",
+"__list__": "node.text.list",
+"__dict__": "node.text.dict",
+"__answer__": "node.text.answer"
+}
+},
+"special": {
+"inputs": {
+"list": {
+"invisible": true
+},
+"dict": {
+"invisible": true
+},
+"text": {
+"type": "text-box",
+"height": 3
+}
+}
+}
+}
+
+NAME: functionEvent
+TYPE: SET
+DESCRIPTION: Finds and returns index of element in list
+INPUTS: path, list, element
+OUTPUTS: path, index
+
+{
+"type": "event",
+"name": "functionEvent",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"name",
+"params"
+],
+"outputs": [
+"path",
+"params"
+]
+},
+"inputs": {
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "text",
+"value": null,
+"standard": ""
+},
+"params": {
+"code": "params",
+"name": "__params__",
+"type": "list",
+"value": null,
+"standard": []
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"params": {
+"code": "params",
+"name": "__params__",
+"type": "list"
+}
+},
+"display": {
+"name": "node.name.functionEvent",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name",
+"__params__": "node.text.params"
+}
+},
+"special": {
+"inputs": {
+"params": {
+"invisible": true,
+"invisible-input": true
+}
+}
+}
+}
+
+NAME: callFunction
+TYPE: SET
+DESCRIPTION: Extracts portion of list from start to end index
+INPUTS: path, list, start, end
+OUTPUTS: path, list
+
+{
+"type": "another",
+"name": "callFunction",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"name",
+"params"
+],
+"outputs": [
+"path"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "text",
+"value": null,
+"standard": ""
+},
+"params": {
+"code": "params",
+"name": "__params__",
+"type": "list",
+"value": null,
+"standard": []
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.callFunction",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name",
+"__params__": "node.text.params"
+}
+}
+}
+
+NAME: getMousePos
+TYPE: SET
+DESCRIPTION: Adds or updates key-value pair in dictionary
+INPUTS: path, dict, key, element
+OUTPUTS: path, dict
+
+{
+"type": "another",
+"name": "getMousePos",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"x": {
+"code": "x",
+"name": "__x__",
+"type": "number"
+},
+"y": {
+"code": "y",
+"name": "__y__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.getMousePos",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__x__": "node.text.x",
+"__y__": "node.text.y"
+}
+}
+}
+
+NAME: getTimePassed
+TYPE: SET
+DESCRIPTION: Returns value associated with key in dictionary
+INPUTS: path, dict, key
+OUTPUTS: path, element
+
+{
+"type": "another",
+"name": "getTimePassed",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"time_passed": {
+"code": "time_passed",
+"name": "__time_passed__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.getTimePassed",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__time_passed__": "node.text.timePassed"
+}
+}
+}
+
+NAME: goToScene
+TYPE: SET
+DESCRIPTION: Removes key-value pair from dictionary
+INPUTS: path, dict, key
+OUTPUTS: path, dict
+
+{
+"type": "another",
+"name": "goToScene",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"scene": {
+"code": "scene",
+"name": "__scene__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.goToScene",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__scene__": "node.text.scene"
+}
+}
+}
+
+NAME: getSceneName
+TYPE: SET
+DESCRIPTION: Finds and returns key for given value in dictionary
+INPUTS: path, dict, element
+OUTPUTS: path, key
+
+{
+"type": "another",
+"name": "getSceneName",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"answer": {
+"code": "answer",
+"name": "__answer__",
+"type": "text"
+}
+},
+"display": {
+"name": "node.name.getSceneName",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__answer__": "node.text.answer"
+}
+}
+}
+
+NAME: wait
+TYPE: ANOTHER
+DESCRIPTION: Returns random number from A to B
+INPUTS: path, a, b
+OUTPUTS: path, answer
+
+{
+"type": "another",
+"name": "wait",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"time": {
+"code": "time",
+"name": "__time__",
+"type": "number",
+"value": null,
+"standard": 100
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.wait",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__time__": "node.text.time"
+}
+}
+}
+
+NAME: break_
+TYPE: ANOTHER
+DESCRIPTION: Pauses execution for specified number of frames
+INPUTS: path, time
+OUTPUTS: path
+
+{
+"type": "another",
+"name": "break_",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+}
+},
+"outputs": {},
+"display": {
+"name": "node.name.break",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path"
+}
+}
+}
+
+NAME: addListElement
+TYPE: ANOTHER
+DESCRIPTION: Returns length of text, list, or dictionary
+INPUTS: path, element
+OUTPUTS: path, answer
+
+{
+"type": "set",
+"name": "addListElement",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"list",
+"element"
+],
+"outputs": [
+"path",
+"list"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list",
+"value": null,
+"standard": []
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list"
+}
+},
+"display": {
+"name": "node.name.addListElement",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__list__": "node.text.list",
+"__key__": "node.text.key",
+"__element__": "node.text.element"
+}
+}
+}
+
+NAME: insertListElement
+TYPE: ANOTHER
+DESCRIPTION: Stops execution of current script
+INPUTS: path
+OUTPUTS: None
+
+{
+"type": "set",
+"name": "insertListElement",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"list",
+"index",
+"element"
+],
+"outputs": [
+"path",
+"list"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list",
+"value": null,
+"standard": []
+},
+"index": {
+"code": "index",
+"name": "__index__",
+"type": "number",
+"value": null,
+"standard": 1
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list"
+}
+},
+"display": {
+"name": "node.name.insertListElement",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__index__": "note.text.index",
+"__list__": "node.text.list",
+"__element__": "node.text.element"
+}
+}
+}
+
+NAME: getByIndex
+TYPE: ANOTHER
+DESCRIPTION: Breaks out of current loop
+INPUTS: path
+OUTPUTS: None
+
+{
+"type": "set",
+"name": "getByIndex",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"list",
+"index"
+],
+"outputs": [
+"path",
+"element"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list",
+"value": null,
+"standard": []
+},
+"index": {
+"code": "index",
+"name": "__index__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any"
+}
+},
+"display": {
+"name": "node.name.getByIndex",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__list__": "node.text.list",
+"__index__": "node.text.index",
+"__element__": "node.text.element"
+}
+}
+}
+
+NAME: deleteByIndex
+TYPE: ANOTHER
+DESCRIPTION: Decodes/parses text into appropriate data type
+INPUTS: path, text
+OUTPUTS: path, answer
+
+{
+"type": "set",
+"name": "deleteByIndex",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"list",
+"index"
+],
+"outputs": [
+"path",
+"list"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list",
+"value": null,
+"standard": []
+},
+"index": {
+"code": "index",
+"name": "__index__",
+"type": "number",
+"value": null,
+"standard": 0
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list"
+}
+},
+"display": {
+"name": "node.name.deleteByIndex",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__list__": "node.text.list",
+"__index__": "node.text.index"
+}
+}
+}
+
+NAME: getIndexOfElement
+TYPE: ANOTHER
+DESCRIPTION: Calls custom function by name with parameters
+INPUTS: path, name, params
+OUTPUTS: path
+
+{
+"type": "set",
+"name": "getIndexOfElement",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"list",
+"element"
+],
+"outputs": [
+"path",
+"index"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list",
+"value": null,
+"standard": []
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"index": {
+"code": "index",
+"name": "__index__",
+"type": "number"
+}
+},
+"display": {
+"name": "node.name.getIndexOfElement",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__list__": "node.text.list",
+"__index__": "node.text.index",
+"__element__": "node.text.element"
+}
+}
+}
+
+NAME: sliceList
+TYPE: ANOTHER
+DESCRIPTION: Executes custom Python code with provided arguments
+INPUTS: path, text, list, dict
+OUTPUTS: path, answer
+
+{
+"type": "set",
+"name": "sliceList",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"list",
+"start",
+"end"
+],
+"outputs": [
+"path",
+"list"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list",
+"value": null,
+"standard": []
+},
+"start": {
+"code": "start",
+"name": "__start__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"end": {
+"code": "end",
+"name": "__end__",
+"type": "number",
+"value": null,
+"standard": -1
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list"
+}
+},
+"display": {
+"name": "node.name.sliceList",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__list__": "node.text.list",
+"__start__": "node.text.start",
+"__end__": "node.text.end"
+}
+}
+}
+
+NAME: addDictElement
+TYPE: ANOTHER
+DESCRIPTION: Returns current mouse cursor coordinates
+INPUTS: path
+OUTPUTS: path, x, y
+
+{
+"type": "set",
+"name": "addDictElement",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"dict",
+"key",
+"element"
+],
+"outputs": [
+"path",
+"dict"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"dict": {
+"code": "dict",
+"name": "__dict__",
+"type": "dict",
+"value": null,
+"standard": {}
+},
+"key": {
+"code": "key",
+"name": "__key__",
+"type": "text",
+"value": null,
+"standard": ""
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"dict": {
+"code": "dict",
+"name": "__dict__",
+"type": "dict"
+}
+},
+"display": {
+"name": "node.name.addDictElement",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__dict__": "node.text.dict",
+"__key__": "node.text.key",
+"__element__": "node.text.element"
+}
+}
+}
+
+NAME: getByKey
+TYPE: ANOTHER
+DESCRIPTION: Returns time elapsed since game start
+INPUTS: path
+OUTPUTS: path, time_passed
+
+{
+"type": "set",
+"name": "getByKey",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"dict",
+"key"
+],
+"outputs": [
+"path",
+"element"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"dict": {
+"code": "dict",
+"name": "__dict__",
+"type": "dict",
+"value": null,
+"standard": {}
+},
+"key": {
+"code": "key",
+"name": "__key__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any"
+}
+},
+"display": {
+"name": "node.name.getByKey",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__dict__": "node.text.dict",
+"__key__": "node.text.key",
+"__element__": "node.text.element"
+}
+}
+}
+
+NAME: removeByKey
+TYPE: ANOTHER
+DESCRIPTION: Switches to specified scene
+INPUTS: path, scene
+OUTPUTS: path
+
+{
+"type": "set",
+"name": "removeByKey",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"dict",
+"key"
+],
+"outputs": [
+"path",
+"dict"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"dict": {
+"code": "dict",
+"name": "__dict__",
+"type": "dict",
+"value": null,
+"standard": {}
+},
+"key": {
+"code": "key",
+"name": "__key__",
+"type": "text",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"dict": {
+"code": "dict",
+"name": "__dict__",
+"type": "dict"
+}
+},
+"display": {
+"name": "node.name.removeByKey",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__dict__": "node.text.dict",
+"__key__": "node.text.key",
+"__element__": "node.text.element"
+}
+}
+}
+
+NAME: getKeyOfElement
+TYPE: ANOTHER
+DESCRIPTION: Returns name of current scene
+INPUTS: path
+OUTPUTS: path, answer
+
+{
+"type": "set",
+"name": "getKeyOfElement",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"dict",
+"element"
+],
+"outputs": [
+"path",
+"key"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"dict": {
+"code": "dict",
+"name": "__dict__",
+"type": "dict",
+"value": null,
+"standard": {}
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"key": {
+"code": "key",
+"name": "__key__",
+"type": "text"
+}
+},
+"display": {
+"name": "node.name.getKeyOfElement",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__dict__": "node.text.dict",
+"__key__": "node.text.key",
+"__element__": "node.text.element"
+}
+}
+}
+
+NAME: playMusic
+TYPE: MUSIC
+DESCRIPTION: Starts playing music track with specified volume
+INPUTS: path, name, volume
+OUTPUTS: path
+
+{
+"type": "music",
+"name": "playMusic",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"name",
+"volume"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "text",
+"value": null,
+"standard": ""
+},
+"volume": {
+"code": "volume",
+"name": "__volume__",
+"type": "number",
+"value": null,
+"standard": 1
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.playMusic",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name",
+"__volume__": "node.text.volume"
+}
+}
+}
+
+NAME: stopMusic
+TYPE: MUSIC
+DESCRIPTION: Stops currently playing music
+INPUTS: path
+OUTPUTS: path
+
+{
+"type": "music",
+"name": "stopMusic",
+"x": null,
+"y": null,
+"width": 6,
+"height": 3,
+"id": null,
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.stopMusic",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name"
+}
+}
+}
+
+NAME: playSound
+TYPE: MUSIC
+DESCRIPTION: Plays sound effect with specified volume
+INPUTS: path, name, volume
+OUTPUTS: path
+
+{
+"type": "music",
+"name": "playSound",
+"x": null,
+"y": null,
+"width": 8,
+"height": 4,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"name",
+"volume"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"name": {
+"code": "name",
+"name": "__name__",
+"type": "text",
+"value": null,
+"standard": ""
+},
+"volume": {
+"code": "volume",
+"name": "__volume__",
+"type": "number",
+"value": null,
+"standard": 1
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+}
+},
+"display": {
+"name": "node.name.playSound",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__name__": "node.text.name",
+"__volume__": "node.text.volume"
+}
+}
+}
