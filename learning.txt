@@ -90,6 +90,14 @@ Nodes are connected via "path" for sequential execution and through other output
    - DON'T save object ID in variable unless necessary
    - Use getObjectIDByName to get ID by name
 
+7. EVENT NODES INDEPENDENCE:
+   - Event nodes (onStartGame, everyFrame, mouseLeftClick, keyboardPress, etc.) work INDEPENDENTLY
+   - They DON'T need path connection from each other
+   - Each event node starts its own execution chain when triggered
+   - WRONG: onStartGame → everyFrame (they work separately!)
+   - CORRECT: onStartGame starts one chain, everyFrame starts another chain
+   - Example: If you need continuous text display, ONLY use everyFrame → displayText (no onStartGame needed)
+
 # EXAMPLES
 
 ## Example 1: Output text on start
@@ -276,28 +284,16 @@ Nodes are connected via "path" for sequential execution and through other output
 {
     "text": "Every frame displays 'Score: 100' at position (50, 50)",
     "nodes": {
-        "111222333": {
-            "type": "event",
-            "name": "onStartGame",
-            "x": 0,
-            "y": 0,
-            "width": 6,
-            "height": 3,
-            "id": 111222333,
-            "inputs": {},
-            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
-            "display": {"name": "node.name.onStartGame", "text": {"__none__": "node.text.none", "__path__": "node.text.path"}}
-        },
         "444555666": {
             "type": "event",
             "name": "everyFrame",
-            "x": 8,
+            "x": 0,
             "y": 0,
             "width": 6,
             "height": 3,
             "id": 444555666,
             "inputs": {
-                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 111222333, "name": "path"}},
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": null},
                 "N": {"code": "N", "name": "__n__", "type": "number", "standard": 1, "value": null, "visible": false}
             },
             "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
@@ -306,7 +302,7 @@ Nodes are connected via "path" for sequential execution and through other output
         "777888999": {
             "type": "text",
             "name": "displayText",
-            "x": 16,
+            "x": 8,
             "y": 0,
             "width": 10,
             "height": 5,
@@ -316,6 +312,73 @@ Nodes are connected via "path" for sequential execution and through other output
                 "x": {"code": "x", "name": "__x__", "type": "number", "standard": 50, "value": null},
                 "y": {"code": "y", "name": "__y__", "type": "number", "standard": 50, "value": null},
                 "text": {"code": "text", "name": "__text__", "type": "text", "standard": "Score: 100", "value": null}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.displayText", "text": {"__none__": "node.text.none", "__text__": "node.text.text", "__path__": "node.text.path", "__x__": "node.text.x", "__y__": "node.text.y"}}
+        }
+    }
+}
+
+## Example 4: Multiple independent event chains
+
+{
+    "text": "Shows how event nodes work independently: onStartGame outputs message, everyFrame displays FPS counter",
+    "nodes": {
+        "100000001": {
+            "type": "event",
+            "name": "onStartGame",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 100000001,
+            "inputs": {},
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.onStartGame", "text": {"__none__": "node.text.none", "__path__": "node.text.path"}}
+        },
+        "100000002": {
+            "type": "text",
+            "name": "writeText",
+            "x": 8,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 100000002,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 100000001, "name": "path"}},
+                "text": {"code": "text", "name": "__text__", "type": "text", "standard": "Game Started!", "value": null}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.writeText", "text": {"__none__": "node.text.none", "__text__": "node.text.text", "__path__": "node.text.path"}}
+        },
+        "200000001": {
+            "type": "event",
+            "name": "everyFrame",
+            "x": 0,
+            "y": 5,
+            "width": 6,
+            "height": 3,
+            "id": 200000001,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": null},
+                "N": {"code": "N", "name": "__n__", "type": "number", "standard": 1, "value": null, "visible": false}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.everyFrame", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__n__": "node.text.n"}}
+        },
+        "200000002": {
+            "type": "text",
+            "name": "displayText",
+            "x": 8,
+            "y": 5,
+            "width": 10,
+            "height": 5,
+            "id": 200000002,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 200000001, "name": "path"}},
+                "x": {"code": "x", "name": "__x__", "type": "number", "standard": 10, "value": null},
+                "y": {"code": "y", "name": "__y__", "type": "number", "standard": 10, "value": null},
+                "text": {"code": "text", "name": "__text__", "type": "text", "standard": "FPS: 60", "value": null}
             },
             "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
             "display": {"name": "node.name.displayText", "text": {"__none__": "node.text.none", "__text__": "node.text.text", "__path__": "node.text.path", "__x__": "node.text.x", "__y__": "node.text.y"}}
@@ -350,6 +413,8 @@ Reply ONLY in JSON format:
 6. For displayText ALWAYS create everyFrame loop
 7. DON'T forget "display" section in each node
 8. Use only nodes from the available nodes list
+9. CRITICAL: Event nodes DON'T connect to each other! Each event starts its own independent chain
+10. Event nodes have "value": null in their path input (they are entry points)
 
 CHECK STRUCTURE CORRECTNESS BEFORE ANSWERING!
 
