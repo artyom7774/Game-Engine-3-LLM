@@ -393,6 +393,119 @@ Nodes are connected via "path" for sequential execution and through other output
     }
 }
 
+## Example 5: Condition with object parameter
+
+{
+    "text": "Gets player health, if health > 50 makes player visible, otherwise invisible",
+    "nodes": {
+        "300000001": {
+            "type": "event",
+            "name": "onStartGame",
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 300000001,
+            "inputs": {},
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.onStartGame", "text": {"__none__": "node.text.none", "__path__": "node.text.path"}}
+        },
+        "300000002": {
+            "type": "objects",
+            "name": "getObjectIDByName",
+            "x": 8,
+            "y": 0,
+            "width": 6,
+            "height": 3,
+            "id": 300000002,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 300000001, "name": "path"}},
+                "name": {"code": "name", "name": "__name__", "type": "text", "standard": "player", "value": null}
+            },
+            "outputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path"},
+                "id": {"code": "id", "name": "__id__", "type": "number"}
+            },
+            "display": {"name": "node.name.getObjectIDByName", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__name__": "node.text.name", "__id__": "node.text.id"}}
+        },
+        "300000003": {
+            "type": "objects",
+            "name": "getObjectVar",
+            "x": 16,
+            "y": 0,
+            "width": 8,
+            "height": 4,
+            "id": 300000003,
+            "sorting": {"inputs": ["path", "id", "name"], "outputs": ["path", "answer"]},
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 300000002, "name": "path"}},
+                "id": {"code": "id", "name": "__id__", "type": "number", "standard": -1, "value": {"id": 300000002, "name": "id"}},
+                "name": {"code": "name", "name": "__name__", "type": "text", "standard": "health", "value": null}
+            },
+            "outputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path"},
+                "answer": {"code": "answer", "name": "__answer__", "type": "Any"}
+            },
+            "display": {"name": "node.name.getObjectVar", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__answer__": "node.text.answer", "__name__": "node.text.name", "__id__": "node.text.id"}}
+        },
+        "300000004": {
+            "type": "logic",
+            "name": "if_",
+            "x": 26,
+            "y": 0,
+            "width": 10,
+            "height": 5,
+            "id": 300000004,
+            "sorting": {"inputs": ["path", "a", "operation", "b"], "outputs": ["path_true", "path_false"]},
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 300000003, "name": "path"}},
+                "a": {"code": "a", "name": "__a__", "type": "Any", "standard": null, "value": {"id": 300000003, "name": "answer"}},
+                "b": {"code": "b", "name": "__b__", "type": "Any", "standard": 50, "value": null},
+                "operation": {"code": "operation", "name": "__operation__", "type": "choose", "standard": 5, "value": null, "choose": {"options": ["0. ==", "1. !=", "2. <=", "3. >=", "4. <", "5. >"]}}
+            },
+            "outputs": {
+                "path_true": {"code": "path_true", "name": "__path_true__", "type": "path"},
+                "path_false": {"code": "path_false", "name": "__path_false__", "type": "path"}
+            },
+            "display": {"name": "node.name.if", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__a__": "node.text.a", "__b__": "node.text.b", "__operation__": "node.text.operation", "__path_true__": "node.text.pathTrue", "__path_false__": "node.text.pathFalse"}}
+        },
+        "300000005": {
+            "type": "objects",
+            "name": "setObjectParameter",
+            "x": 38,
+            "y": 0,
+            "width": 10,
+            "height": 5,
+            "id": 300000005,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 300000004, "name": "path_true"}},
+                "id": {"code": "id", "name": "__id__", "type": "number", "standard": -1, "value": {"id": 300000002, "name": "id"}},
+                "name": {"code": "name", "name": "__name__", "type": "choose", "standard": 4, "value": null, "choose": {"options": ["object.parameter.number.hitbox", "object.parameter.number.group", "object.parameter.number.mass", "object.parameter.number.layer", "object.parameter.number.invisible", "object.parameter.number.gravity", "object.parameter.number.brakingPower", "object.parameter.number.message", "object.parameter.number.fontSize", "object.parameter.number.alignment", "object.parameter.number.fontColor", "object.parameter.number.backgroundColor", "object.parameter.number.ramaColor", "object.parameter.number.spriteHithox", "object.parameter.number.liveTime", "object.parameter.number.minusSpriteSizePerFrame", "object.parameter.number.alpha"]}},
+                "value": {"code": "value", "name": "__value__", "type": "Any", "standard": 0, "value": null}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.setObjectParameter", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__id__": "node.text.id", "__name__": "node.text.name", "__value__": "node.text.value"}}
+        },
+        "300000006": {
+            "type": "objects",
+            "name": "setObjectParameter",
+            "x": 38,
+            "y": 7,
+            "width": 10,
+            "height": 5,
+            "id": 300000006,
+            "inputs": {
+                "path": {"code": "path", "name": "__path__", "type": "path", "standard": null, "value": {"id": 300000004, "name": "path_false"}},
+                "id": {"code": "id", "name": "__id__", "type": "number", "standard": -1, "value": {"id": 300000002, "name": "id"}},
+                "name": {"code": "name", "name": "__name__", "type": "choose", "standard": 4, "value": null, "choose": {"options": ["object.parameter.number.hitbox", "object.parameter.number.group", "object.parameter.number.mass", "object.parameter.number.layer", "object.parameter.number.invisible", "object.parameter.number.gravity", "object.parameter.number.brakingPower", "object.parameter.number.message", "object.parameter.number.fontSize", "object.parameter.number.alignment", "object.parameter.number.fontColor", "object.parameter.number.backgroundColor", "object.parameter.number.ramaColor", "object.parameter.number.spriteHithox", "object.parameter.number.liveTime", "object.parameter.number.minusSpriteSizePerFrame", "object.parameter.number.alpha"]}},
+                "value": {"code": "value", "name": "__value__", "type": "Any", "standard": 1, "value": null}
+            },
+            "outputs": {"path": {"code": "path", "name": "__path__", "type": "path"}},
+            "display": {"name": "node.name.setObjectParameter", "text": {"__none__": "node.text.none", "__path__": "node.text.path", "__id__": "node.text.id", "__name__": "node.text.name", "__value__": "node.text.value"}}
+        }
+    }
+}
+
 # AVAILABLE NODES
 
 %ALL NODES LIST%

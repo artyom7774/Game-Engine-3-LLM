@@ -28,7 +28,7 @@ Each event node triggers independently when its condition is met.
   Inputs: path (optional, for chaining), key:""
   Outputs: path
   Triggers once when key is pressed
-  Set key parameter to specific key (e.g., "w", "space", "ArrowUp")
+  Set key parameter to specific key (e.g., "w", "space", "RETURN")
 
 - keyboardPress (6x3)
   Inputs: path (optional, for chaining), key:""
