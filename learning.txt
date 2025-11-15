@@ -11,11 +11,50 @@ VALUE PARAMETER IN CONNECTOR IS A LINK TO NODE FOR GET VALUE, STANDARD PARAMETER
 
 THE PHRASE "RETURNS THE PATH" MEANS THAT ALL NODES IN WHICH THE PATH IS OBTAINED FROM THIS NODE ARE LAUNCHED FOR EXECUTION
 "standard" IS VALUE WHAT SET VALUE OF NODE, BUT "value" IN A LINK TO GET VALUE FROM LAST NODE AND HAVE PATH FOR CONNECTOR AND NODE ID
+YOU MUST CONNECT CONNECTORS BY THE SAME (OR IN TYPES INFELICITY) ELEMENTS
 
 # TYPES
 
 NODES TYPES: events, loops, text, numbers, logic, objects, animation, another, set, music, experimental
 CONNECTOR TYPES: path, text, number, logic, iterator, choose, list, dict, Any
+
+# TYPES INFELICITY
+
+{
+    "path": [],
+    "number": [
+        "text",
+        "choose",
+        "Any"
+    ],
+    "text": [
+        "Any"
+    ],
+    "logic": [
+        "number",
+        "text",
+        "Any"
+    ],
+    "iterator": [
+        "path"
+    ],
+    "list": [
+        "text",
+        "Any"
+    ],
+    "dict": [
+        "text",
+        "Any"
+    ],
+    "Any": [
+        "number",
+        "choose",
+        "text",
+        "logic",
+        "list",
+        "dict"
+    ]
+}
 
 # FULL NODE STRUCTURE (YOU WILL MUST USING THIS STRUCTURE FOR WRITING PROGRAMS)
 
@@ -29,7 +68,6 @@ CONNECTOR TYPES: path, text, number, logic, iterator, choose, list, dict, Any
     "id":          $RANDOM NO ZERO UNIQUE NUMBER MORE THAN 1e5$ (EXAMPLE: 12341542134, 6523451245, 842359975, ect.)
     "inputs":      !USING TEMPLATE FROM ALL NODES LIST AND YOU CAN REPLACE "STANDARD VALUE" AND "VALUE"! <INPUTS NODE PARAMETERS, ANY PARAMETER CALLED CONNECTOR> (EXAMPLE: {"path": {"code": "path" <DOUBLES KEY OF CONNECTOR>, "name": "__path__" <NAME FOR USING IN TRANSLATING>, "standard": null <STANDARD VALUE OF PARAMETER>, "type": "path" <TYPE OF CONNECTOR>, "value": {"id": 81376843 <ID FROM NODE WHERE GET THIS PARAMETER>, "name": "path" <CODE NAME OF NODE PARAMETER FROM GET VALUE>}})
     "outputs":     !USING TEMPLATE FROM ALL NODES LIST AND YOU CAN REPLACE "STANDARD VALUE" AND "VALUE"! <OUTPUTS NODE PARAMETERS> (EXAMPLE: {"path": {"code": "path" <DOUBLES KEY OF CONNECTOR>, "name": "__path__" <NAME FOR USING IN TRANSLATING>, "type": "path" <TYPE OF CONNECTOR>})
-    "specials":    !USING ONLY IF USING IN TEMPLATE ELSE NOT USE THIS KEY, COPY THIS PARAMETER FROM ALL NODES LIST! <SPECIALS NODE PARAMETERS>
 }
 
 # EXAMPLES OF ANY NODES
