@@ -4,7 +4,7 @@ import time
 url = "https://artyom7777.pythonanywhere.com/ai"
 # url = "http://127.0.0.1:5000/ai"
 
-data = {"message": "НАПИШИ СВОЮ ВЕРСИЮ ОБУЧЕНИЯ, напиши программу которая перемещает объект player вправо со скорость 2"}
+data = {"message": "напиши программу которая перемещает объект player вправо со скорость 2"}
 
 response = requests.post(url, json=data)
 ids = response.json()["ids"]

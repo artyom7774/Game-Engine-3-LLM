@@ -4114,6 +4114,87 @@ OUTPUTS: path
 }
 }
 
+NAME: setListElement
+TYPE: SET
+DESCRIPTION: SET ON INDEX ANY VALUE
+INPUTS: path, list, index,element
+OUTPUTS: path, answer
+
+"setListElement": {
+"type": "set",
+"name": "setListElement",
+"x": null,
+"y": null,
+"width": 10,
+"height": 5,
+"id": null,
+"sorting": {
+"inputs": [
+"path",
+"list",
+"index",
+"element"
+],
+"outputs": [
+"path",
+"list"
+]
+},
+"inputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path",
+"value": null,
+"standard": null
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list",
+"value": null,
+"standard": []
+},
+"index": {
+"code": "index",
+"name": "__index__",
+"type": "number",
+"value": null,
+"standard": 0
+},
+"element": {
+"code": "element",
+"name": "__element__",
+"type": "Any",
+"value": null,
+"standard": ""
+}
+},
+"outputs": {
+"path": {
+"code": "path",
+"name": "__path__",
+"type": "path"
+},
+"list": {
+"code": "list",
+"name": "__list__",
+"type": "list"
+}
+},
+"display": {
+"name": "node.name.setListElement",
+"text": {
+"__none__": "node.text.none",
+"__path__": "node.text.path",
+"__list__": "node.text.list",
+"__key__": "node.text.key",
+"__element__": "node.text.element",
+"__index__": "node.text.index"
+}
+}
+}
+
 NAME: addListElement
 TYPE: ANOTHER
 DESCRIPTION: Returns length of text, list, or dictionary
