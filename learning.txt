@@ -121,12 +121,14 @@ class Node:
         return answer
 
 
+# ALL NODES
+
 jump = Node("objects", "jump", 0, 0, 8, 4, {"path": InputConnector("path", "__path__", "path", None, None), "id": InputConnector("id", "__id__", "number", None, -1), "power": InputConnector("power", "__power__", "number", None, 10)}, {"path": OutputConnector("path", "__path__", "path")}, NODES["jump"]["display"])
-keyboardClick = Node("event", "keyboardClick", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "key": InputConnector("key", "__key__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["keyboardClick"]["display"])
-keyboardPress = Node("event", "keyboardPress", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "key": InputConnector("key", "__key__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["keyboardPress"]["display"])
-keyboardRelease = Node("event", "keyboardRelease", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "key": InputConnector("key", "__key__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["keyboardRelease"]["display"])
-mouseLeftClick = Node("event", "mouseLeftClick", 0, 0, 6, 3, {}, {"path": OutputConnector("path", "__path__", "path")}, NODES["mouseLeftClick"]["display"])
-mouseRightClick = Node("event", "mouseRightClick", 0, 0, 6, 3, {}, {"path": OutputConnector("path", "__path__", "path")}, NODES["mouseRightClick"]["display"])
+keyboardClick = Node("event", "keyboardClick", 0, 0, 6, 3, {"key": InputConnector("key", "__key__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["keyboardClick"]["display"])
+keyboardPress = Node("event", "keyboardPress", 0, 0, 6, 3, {"key": InputConnector("key", "__key__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["keyboardPress"]["display"])
+keyboardRelease = Node("event", "keyboardRelease", 0, 0, 6, 3, {"key": InputConnector("key", "__key__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["keyboardRelease"]["display"])
+mouseLeftClick = Node("event", "mouseLeftClick", 0, 0, 6, 3, {}, {}, NODES["mouseLeftClick"]["display"])
+mouseRightClick = Node("event", "mouseRightClick", 0, 0, 6, 3, {}, {}, NODES["mouseRightClick"]["display"])
 decodeHolder = Node("another", "decodeHolder", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "text": InputConnector("text", "__text__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path"), "answer": OutputConnector("answer", "__answer__", "Any")}, NODES["decodeHolder"]["display"])
 setVar = Node("another", "setVar", 0, 0, 10, 5, {"path": InputConnector("path", "__path__", "path", None, None), "name": InputConnector("name", "__name__", "text", None, ""), "global": InputConnector("global", "__global__", "logic", None, False), "value": InputConnector("value", "__value__", "Any", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["setVar"]["display"])
 createObject = Node("objects", "createObject", 0, 0, 10, 5, {"path": InputConnector("path", "__path__", "path", None, None), "name": InputConnector("name", "__name__", "text", None, ""), "x": InputConnector("x", "__x__", "number", None, 0), "y": InputConnector("y", "__y__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path"), "id": OutputConnector("id", "__id__", "number")}, NODES["createObject"]["display"], NODES["createObject"]["special"])
@@ -148,8 +150,8 @@ getObjectPos = Node("objects", "getObjectPos", 0, 0, 8, 4, {"path": InputConnect
 setObjectRotation = Node("objects", "setObjectRotation", 0, 0, 8, 4, {"path": InputConnector("path", "__path__", "path", None, None), "id": InputConnector("id", "__id__", "number", None, -1), "angle": InputConnector("angle", "__angle__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path")}, NODES["setObjectRotation"]["display"])
 getObjectIDByName = Node("objects", "getObjectIDByName", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "name": InputConnector("name", "__name__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path"), "id": OutputConnector("id", "__id__", "number")}, NODES["getObjectIDByName"]["display"])
 onStartGame = Node("event", "onStartGame", 0, 0, 6, 3, {}, {"path": OutputConnector("path", "__path__", "path")}, NODES["onStartGame"]["display"])
-everyTick = Node("event", "everyTick", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "N": InputConnector("N", "__n__", "number", None, 1)}, {"path": OutputConnector("path", "__path__", "path")}, NODES["everyTick"]["display"])
-everyFrame = Node("event", "everyFrame", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "N": InputConnector("N", "__n__", "number", None, 1)}, {"path": OutputConnector("path", "__path__", "path")}, NODES["everyFrame"]["display"])
+everyTick = Node("event", "everyTick", 0, 0, 6, 3, {"N": InputConnector("N", "__n__", "number", None, 1)}, {"path": OutputConnector("path", "__path__", "path")}, NODES["everyTick"]["display"])
+everyFrame = Node("event", "everyFrame", 0, 0, 6, 3, {"N": InputConnector("N", "__n__", "number", None, 1)}, {"path": OutputConnector("path", "__path__", "path")}, NODES["everyFrame"]["display"])
 displayText = Node("text", "displayText", 0, 0, 10, 5, {"path": InputConnector("path", "__path__", "path", None, None), "x": InputConnector("x", "__x__", "number", None, 0), "y": InputConnector("y", "__y__", "number", None, 0), "text": InputConnector("text", "__text__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["displayText"]["display"])
 writeText = Node("text", "writeText", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "text": InputConnector("text", "__text__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["writeText"]["display"])
 plus = Node("number", "plus", 0, 0, 8, 4, {"path": InputConnector("path", "__path__", "path", None, None), "a": InputConnector("a", "__a__", "number", None, 0), "b": InputConnector("b", "__b__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path"), "answer": OutputConnector("answer", "__answer__", "number")}, NODES["plus"]["display"])
@@ -186,7 +188,7 @@ getMousePos = Node("another", "getMousePos", 0, 0, 8, 4, {"path": InputConnector
 setObjectParameter = Node("objects", "setObjectParameter", 0, 0, 10, 5, {"path": InputConnector("path", "__path__", "path", None, None), "id": InputConnector("id", "__id__", "number", None, -1), "name": InputConnector("name", "__name__", "choose", None, 0, {"options": ["object.parameter.number.hitbox", "object.parameter.number.group", "object.parameter.number.mass", "object.parameter.number.layer", "object.parameter.number.invisible", "object.parameter.number.gravity", "object.parameter.number.brakingPower", "object.parameter.number.message", "object.parameter.number.fontSize", "object.parameter.number.alignment", "object.parameter.number.fontColor", "object.parameter.number.backgroundColor", "object.parameter.number.ramaColor", "object.parameter.number.spriteHithox", "object.parameter.number.liveTime", "object.parameter.number.minusSpriteSizePerFrame", "object.parameter.number.alpha"]}), "value": InputConnector("value", "__value__", "Any", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["setObjectParameter"]["display"])
 getObjectParameter = Node("objects", "getObjectParameter", 0, 0, 8, 4, {"path": InputConnector("path", "__path__", "path", None, None), "id": InputConnector("id", "__id__", "number", None, -1), "name": InputConnector("name", "__name__", "choose", None, 0, NODES["getObjectParameter"]["inputs"]["name"]["choose"])}, {"path": OutputConnector("path", "__path__", "path"), "value": OutputConnector("value", "__value__", "Any")}, NODES["getObjectParameter"]["display"])
 getTimePassed = Node("another", "getTimePassed", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None)}, {"path": OutputConnector("path", "__path__", "path"), "time_passed": OutputConnector("time_passed", "__time_passed__", "number")}, NODES["getTimePassed"]["display"])
-onButtonPress = Node("event", "onButtonPress", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None)}, {"path": OutputConnector("path", "__path__", "path"), "id": OutputConnector("id", "__id__", "number")}, NODES["onButtonPress"]["display"])
+onButtonPress = Node("event", "onButtonPress", 0, 0, 6, 3, {}, {"path": OutputConnector("path", "__path__", "path"), "id": OutputConnector("id", "__id__", "number")}, NODES["onButtonPress"]["display"])
 getNoiseValue = Node("another", "getNoiseValue", 0, 0, 10, 12, {"path": InputConnector("path", "__path__", "path", None, None), "seed": InputConnector("seed", "__seed__", "number", None, 0), "x": InputConnector("x", "__x__", "number", None, 0), "y": InputConnector("y", "__y__", "number", None, 0), "min": InputConnector("min", "__min__", "number", None, 0), "max": InputConnector("max", "__max__", "number", None, 1), "octaves": InputConnector("octaves", "__octaves__", "number", None, 4), "frequency": InputConnector("frequency", "__frequency__", "number", None, 1), "amplitude": InputConnector("amplitude", "__amplitude__", "number", None, 1), "lacunarity": InputConnector("lacunarity", "__lacunarity__", "number", None, 2), "persistence": InputConnector("persistence", "__persistence__", "number", None, 0.5)}, {"path": OutputConnector("path", "__path__", "path"), "value": OutputConnector("value", "__value__", "number")}, NODES["getNoiseValue"]["display"])
 sin = Node("number", "sin", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "x": InputConnector("x", "__x__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path"), "answer": OutputConnector("answer", "__answer__", "number")}, NODES["sin"]["display"])
 cos = Node("number", "cos", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "x": InputConnector("x", "__x__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path"), "answer": OutputConnector("answer", "__answer__", "number")}, NODES["cos"]["display"])
@@ -207,17 +209,19 @@ ifElementInList = Node("logic", "ifElementInList", 0, 0, 8, 4, {"path": InputCon
 getAllObjectInGroup = Node("objects", "getAllObjectInGroup", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "group": InputConnector("group", "__group__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path"), "objects": OutputConnector("objects", "__listObjectID__", "list")}, NODES["getAllObjectInGroup"]["display"])
 absolute = Node("number", "absolute", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "number": InputConnector("number", "__number__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path"), "answer": OutputConnector("answer", "__answer__", "number")}, NODES["absolute"]["display"])
 
-# ОПИСАНИЕ infelicity В КОНФИГЕ
+# CREATING NODES
 
 v1 = onStartGame.create(2, 10)
 v2 = writeText.create(10, 10)
 
 v2.connect("path", v1.id, "path")
-v2.set("text", "Hello World!")
+v2.set("text", "Hello World")
+
+# ANSWER
 
 print(json.dumps(compile(), indent=4))
 
-LEARNING_VERSION = 1.0.30
+LEARNING_VERSION = 2.0.0
 
 ----- TRAINING DATA -----
 
@@ -228,17 +232,11 @@ THEY COME IN THE FOLLOWING TYPES: events, loops, text, numbers, logic, objects, 
 YOU SHOULD DO INDENTS FROM NODES ON 2 POINTS (DO NOT FORGET ABOUT THE WIDTH AND HEIGHT OF THE OBJECT)
 PROGRAM LOGIC STARTS WITH NODE IN GROUP EVENTS
 YOU MUST FOLLOW THE STRUCTURE AS ACCURATELY AS POSSIBLE WHEN WRITING NODES
+YOU MUST WRITING CODE FOR CREATING NODES
 
-THE PHRASE "RETURNS THE PATH" MEANS THAT ALL NODES IN WHICH THE PATH IS OBTAINED FROM THIS NODE ARE LAUNCHED FOR EXECUTION
-"standard" IS VALUE WHAT SET VALUE OF NODE, BUT "value" IN A LINK TO GET VALUE FROM LAST NODE AND HAVE PATH FOR CONNECTOR AND NODE ID
+# EXAMPLES
 
-# NODE TYPES
-
-## EVENTS
-THIS TYPE OF NODES RETURNS PATH UNDER A GIVEN CONDITION
-HAVEN'T GOT VALUE FOR PATH
-
-# HOW WRITE HELLO WORLD ON NODES
+## HELLO WORLD
 
 event = onStartGame.create(2, 10)
 print = writeText.create(10, 10)
@@ -248,11 +246,10 @@ print.set("text", "Hello World!")
 
 # IMPORTANT
 
-0. ANSWER IS ONLY PYTHON FORMAT
-1. DO NOT SAVE THE OBJECT ID IN A VARIABLE UNLESS NECESSARY
-2. IF YOU ARE ASKED TO WRITE AN OBJECT MOVEMENT PROCEDURE, USE THE "MOVE OBJECT" NODE
-3. FOR DISPLAING TEXT BY "DISPLAY TEXT" NODE YOU CREATE CYCLE WITH DELAY 1 FOR DISPLAING TEXT EVERY FRAME
-4. NODE CONNECTOR HAVE "VALUE" and "STANDARD", VALUE IS A LINK TO NODE FOR GET VALUE, STANDARD IS STANDARD VALUE FOR NODE (THIS USING IF VALUE IS NONE)
+1. ANSWER IS ONLY PYTHON FORMAT
+2. DO NOT SAVE THE OBJECT ID IN A VARIABLE UNLESS NECESSARY
+3. IF YOU ARE ASKED TO WRITE AN OBJECT MOVEMENT PROCEDURE, USE THE "MOVE OBJECT" NODE
+4. FOR DISPLAING TEXT BY "DISPLAY TEXT" NODE YOU CREATE CYCLE WITH DELAY 1 FOR DISPLAING TEXT EVERY FRAME
 5. YOU MUST WRITING STRUCTURE WITH OUT COMMENTS
 6. NODES ARE MOSTLY LOCATED HORIZONTALLY
 7. USE WRITE TEXT NODE FOR WRITE TEXT ON CONSOLE, AND USE DISPLAY NODE FOR DISPLAING TEXT ON SCENE (IF REQUESTED) WITH NODE EVERY FRAME (BECAUSE DISPLAY TEXT DISPLAYED TEXT ON 1 FRAME)
@@ -266,4 +263,3 @@ YOU MUST OBEY THESE RULES AND ANSWER THE QUESTION BASED ON WHAT IS DESCRIBED IN 
 
 ----- TRAINING DATA -----
 
-ANSWER FOR THIS QUESTION: %MESSAGE%
