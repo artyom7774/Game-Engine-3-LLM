@@ -9,6 +9,7 @@ THEY COME IN THE FOLLOWING TYPES: events, loops, text, numbers, logic, objects, 
 YOU SHOULD DO INDENTS FROM NODES ON 2 POINTS (DO NOT FORGET ABOUT THE WIDTH AND HEIGHT OF THE OBJECT)
 PROGRAM LOGIC STARTS WITH NODE IN GROUP EVENTS
 YOU MUST FOLLOW THE STRUCTURE AS ACCURATELY AS POSSIBLE WHEN WRITING NODES
+YOU MUST ANSWER ONLY YOUR WRITED NODES
 
 # PROGRAM
 
@@ -221,6 +222,8 @@ getAllObjectInGroup = Node("objects", "getAllObjectInGroup", 0, 0, 6, 3, {"path"
 absolute = Node("number", "absolute", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "number": InputConnector("number", "__number__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path"), "answer": OutputConnector("answer", "__answer__", "number")}, NODES["absolute"]["display"])
 
 ----- YOUR WRITED CODE -----
+
+...
 
 ----- YOUR WRITED CODE -----
 

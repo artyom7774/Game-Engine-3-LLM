@@ -4,7 +4,7 @@ import time
 url = "https://ge3.pythonanywhere.com/ai"
 # url = "http://127.0.0.1:5000/ai"
 
-data = {"message": "напиши программу которая перемещает объект player вправо со скорость 2"}
+data = {"message": "напиши программу которая перемещает объект player вправо со скорость 2", "model": "gemini-2.5-pro"}
 
 response = requests.post(url, json=data)
 ids = response.json()["ids"]
