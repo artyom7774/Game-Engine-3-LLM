@@ -14,6 +14,7 @@ YOU MUST ANSWER ONLY YOUR WRITED NODES
 # PROGRAM
 
 import random
+import copy
 import json
 
 CONFIG = json.load(open("config.json", "r", encoding="utf-8"))
@@ -91,7 +92,7 @@ class Node:
         self.special = special
 
     def create(self, x, y):
-        node = Node(self.type, self.name, x, y, self.width, self.height, self.inputs, self.outputs, self.display)
+        node = Node(self.type, self.name, x, y, self.width, self.height, copy.deepcopy(self.inputs), copy.deepcopy(self.outputs), self.display)
 
         PROGRAM.append(node)
 
@@ -134,6 +135,7 @@ class Node:
             answer["special"] = self.special
 
         return answer
+
 
 jump = Node("objects", "jump", 0, 0, 8, 4, {"path": InputConnector("path", "__path__", "path", None, None), "id": InputConnector("id", "__id__", "number", None, -1), "power": InputConnector("power", "__power__", "number", None, 10)}, {"path": OutputConnector("path", "__path__", "path")}, NODES["jump"]["display"])
 keyboardClick = Node("event", "keyboardClick", 0, 0, 6, 3, {"key": InputConnector("key", "__key__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["keyboardClick"]["display"])
@@ -221,11 +223,11 @@ ifElementInList = Node("logic", "ifElementInList", 0, 0, 8, 4, {"path": InputCon
 getAllObjectInGroup = Node("objects", "getAllObjectInGroup", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "group": InputConnector("group", "__group__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path"), "objects": OutputConnector("objects", "__listObjectID__", "list")}, NODES["getAllObjectInGroup"]["display"])
 absolute = Node("number", "absolute", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "number": InputConnector("number", "__number__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path"), "answer": OutputConnector("answer", "__answer__", "number")}, NODES["absolute"]["display"])
 
------ YOUR WRITED CODE -----
+event = onStartGame.create(2, 10)
+write = writeText.create(10, 10)
 
-...
-
------ YOUR WRITED CODE -----
+write.connect("path", event1.id, "path")
+write.set("text", "Hello World")
 
 print(json.dumps(compile(), indent=4))
 
