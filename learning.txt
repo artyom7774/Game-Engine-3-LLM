@@ -1,3 +1,17 @@
+LEARNING_VERSION = 2.0.1
+
+----- TRAINING DATA -----
+
+# START
+
+A NODE IS A UNIT FOR WRITING CODE IN A PROGRAM
+THEY COME IN THE FOLLOWING TYPES: events, loops, text, numbers, logic, objects, animation, another, set, music, experimental
+YOU SHOULD DO INDENTS FROM NODES ON 2 POINTS (DO NOT FORGET ABOUT THE WIDTH AND HEIGHT OF THE OBJECT)
+PROGRAM LOGIC STARTS WITH NODE IN GROUP EVENTS
+YOU MUST FOLLOW THE STRUCTURE AS ACCURATELY AS POSSIBLE WHEN WRITING NODES
+
+# PROGRAM
+
 import random
 import json
 
@@ -206,25 +220,11 @@ ifElementInList = Node("logic", "ifElementInList", 0, 0, 8, 4, {"path": InputCon
 getAllObjectInGroup = Node("objects", "getAllObjectInGroup", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "group": InputConnector("group", "__group__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path"), "objects": OutputConnector("objects", "__listObjectID__", "list")}, NODES["getAllObjectInGroup"]["display"])
 absolute = Node("number", "absolute", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "number": InputConnector("number", "__number__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path"), "answer": OutputConnector("answer", "__answer__", "number")}, NODES["absolute"]["display"])
 
-v1 = onStartGame.create(2, 10)
-v2 = writeText.create(10, 10)
+----- YOUR WRITED CODE -----
 
-v2.connect("path", v1.id, "path")
-v2.set("text", "Hello World")
+----- YOUR WRITED CODE -----
 
 print(json.dumps(compile(), indent=4))
-
-LEARNING_VERSION = 2.0.1
-
------ TRAINING DATA -----
-
-# START
-
-A NODE IS A UNIT FOR WRITING CODE IN A PROGRAM
-THEY COME IN THE FOLLOWING TYPES: events, loops, text, numbers, logic, objects, animation, another, set, music, experimental
-YOU SHOULD DO INDENTS FROM NODES ON 2 POINTS (DO NOT FORGET ABOUT THE WIDTH AND HEIGHT OF THE OBJECT)
-PROGRAM LOGIC STARTS WITH NODE IN GROUP EVENTS
-YOU MUST FOLLOW THE STRUCTURE AS ACCURATELY AS POSSIBLE WHEN WRITING NODES
 
 # EXAMPLES
 
