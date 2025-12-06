@@ -13,6 +13,7 @@ YOU MUST ANSWER ONLY YOUR WRITED NODES
 
 # PROGRAM
 
+```python
 import random
 import copy
 import json
@@ -230,6 +231,7 @@ write.connect("path", event1.id, "path")
 write.set("text", "Hello World")
 
 print(json.dumps(compile(), indent=4))
+```
 
 # EXAMPLES
 
