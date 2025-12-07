@@ -11,9 +11,133 @@ PROGRAM LOGIC STARTS WITH NODE IN GROUP EVENTS
 YOU MUST FOLLOW THE STRUCTURE AS ACCURATELY AS POSSIBLE WHEN WRITING NODES
 YOU MUST ANSWER ONLY YOUR WRITED NODES
 
-# NODES
+# PROGRAM
 
 ```python
+import random
+import copy
+import json
+
+CONFIG = json.load(open("src/code/config.json", "r", encoding="utf-8"))
+NODES = CONFIG["nodes"]
+
+PROGRAM = []
+
+
+def compile():
+    program = {}
+
+    for node in PROGRAM:
+        program[str(node.id)] = node.get()
+
+    return program
+
+
+class InputConnector:
+    def __init__(self, code, name, type, value, standard, choose = None):
+        self.code = code
+        self.name = name
+        self.type = type
+
+        self.value = value
+        self.standard = standard
+
+        self.choose = choose
+
+    def get(self):
+        answer = {
+            "code": self.code,
+            "name": self.name,
+            "type": self.type,
+            "value": self.value,
+            "standard": self.standard
+        }
+
+        if self.choose is not None:
+            answer["choose"] = self.choose
+
+        return answer
+
+
+class OutputConnector:
+    def __init__(self, code, name, type):
+        self.code = code
+        self.name = name
+        self.type = type
+
+    def get(self):
+        return {
+            "code": self.code,
+            "name": self.name,
+            "type": self.type
+        }
+
+
+class Node:
+    def __init__(self, type: str, name: str, x: int, y: int, width: int, height: int, inputs: dict, outputs: dict, display: dict, special: dict = None) -> None:
+        self.type = type
+        self.name = name
+
+        self.id = random.randint(1, 1e18)
+
+        self.x = x
+        self.y = y
+
+        self.width = width
+        self.height = height
+
+        self.inputs = inputs
+        self.outputs = outputs
+        self.display = display
+
+        self.special = special
+
+    def create(self, x, y):
+        node = Node(self.type, self.name, x, y, self.width, self.height, copy.deepcopy(self.inputs), copy.deepcopy(self.outputs), self.display)
+
+        PROGRAM.append(node)
+
+        return node
+
+    def connect(self, nodeInputName, nodeID, nodeOutputName):
+        self.inputs[nodeInputName].value = {
+            "id": nodeID,
+            "name": nodeOutputName
+        }
+
+    def set(self, nodeInputName, nodeInputValue):
+        self.inputs[nodeInputName].standard = nodeInputValue
+
+    def get(self):
+        inputs = {}
+
+        for input in self.inputs.values():
+            inputs[input.code] = input.get()
+
+        outputs = {}
+
+        for output in self.outputs.values():
+            outputs[output.code] = output.get()
+
+        answer = {
+            "type": self.type,
+            "name": self.name,
+            "x": self.x,
+            "y": self.y,
+            "width": self.width,
+            "height": self.height,
+            "id": self.id,
+            "inputs": inputs,
+            "outputs": outputs,
+            "display": self.display
+        }
+
+        if self.special is not None:
+            answer["special"] = self.special
+
+        return answer
+
+
 jump = Node("objects", "jump", 0, 0, 8, 4, {"path": InputConnector("path", "__path__", "path", None, None), "id": InputConnector("id", "__id__", "number", None, -1), "power": InputConnector("power", "__power__", "number", None, 10)}, {"path": OutputConnector("path", "__path__", "path")}, NODES["jump"]["display"])
 keyboardClick = Node("event", "keyboardClick", 0, 0, 6, 3, {"key": InputConnector("key", "__key__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["keyboardClick"]["display"])
 keyboardPress = Node("event", "keyboardPress", 0, 0, 6, 3, {"key": InputConnector("key", "__key__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path")}, NODES["keyboardPress"]["display"])
@@ -99,6 +223,18 @@ ifKeyInDict = Node("logic", "ifKeyInDict", 0, 0, 8, 4, {"path": InputConnector("
 ifElementInList = Node("logic", "ifElementInList", 0, 0, 8, 4, {"path": InputConnector("path", "__path__", "path", None, None), "list": InputConnector("list", "__list__", "list", None, []), "element": InputConnector("element", "__element__", "Any", None, "")}, {"path_true": OutputConnector("path_true", "__path_true__", "path"), "path_false": OutputConnector("path_false", "__path_false__", "path")}, NODES["ifElementInList"]["display"])
 getAllObjectInGroup = Node("objects", "getAllObjectInGroup", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "group": InputConnector("group", "__group__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path"), "objects": OutputConnector("objects", "__listObjectID__", "list")}, NODES["getAllObjectInGroup"]["display"])
 absolute = Node("number", "absolute", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "number": InputConnector("number", "__number__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path"), "answer": OutputConnector("answer", "__answer__", "number")}, NODES["absolute"]["display"])
+
+# START: CREATING NODES
+
+event = onStartGame.create(2, 10)
+write = writeText.create(10, 10)
+
+write.connect("path", event1.id, "path")
+write.set("text", "Hello World")
+
+# END: CREATING NODES
+
+print(json.dumps(compile(), indent=4))
 ```
 
 # EXAMPLES
@@ -130,4 +266,5 @@ YOU MUST OBEY THESE RULES AND ANSWER THE QUESTION BASED ON WHAT IS DESCRIBED IN 
 
 ----- TRAINING DATA -----
 
+YOU MUST WRITE ONLY CODE FOR CREATING NODES
 ANSWER FOR THIS QUESTION: %MESSAGE%
