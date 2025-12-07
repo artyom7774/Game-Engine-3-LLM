@@ -431,3 +431,5 @@ Now generate Python code based on user request. Remember:
 2. No comments
 3. No explanations
 4. Follow examples exactly
+
+REQUEST: %MESSAGE%
