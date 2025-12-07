@@ -46,16 +46,16 @@ node.set("input_name", value)
 ### Events (execution triggers)
 ```
 onStartGame          - Game starts
-everyFrame           - Every frame (params: N)
-everyTick            - Every tick (params: N)
-keyboardPress        - Key held (params: key)
-keyboardClick        - Key pressed once (params: key)
-keyboardRelease      - Key released (params: key)
+everyFrame           - Every frame (input: N - uppercase!)
+everyTick            - Every tick (input: N - uppercase!)
+keyboardPress        - Key held (input: key)
+keyboardClick        - Key pressed once (input: key)
+keyboardRelease      - Key released (input: key)
 mouseLeftClick       - Left mouse click
 mouseRightClick      - Right mouse click
-onButtonPress        - UI button pressed
+onButtonPress        - UI button pressed (output: id)
 onLoadScene          - Scene loaded
-functionEvent        - Custom function (params: name, params)
+functionEvent        - Custom function (inputs: name, params)
 ```
 
 ### Logic (branching)
@@ -78,24 +78,24 @@ forObjectsGroup      - Iterate objects (params: group)
 
 ### Objects
 ```
-createObject         - Create object (params: name, x, y)
-moveObject           - Move object (params: id, angle, power)
-moveObjectWithBraking - Move with braking (params: id, angle, power, slidingStep)
-setObjectPos         - Set position (params: id, x, y)
-getObjectPos         - Get position (params: id)
-setObjectRotation    - Set rotation (params: id, angle)
-jump                 - Make object jump (params: id, power)
-removeObject         - Delete object (params: id)
-getObjectIDByName    - Get ID by name (params: name)
-getAllObjectInGroup  - Get all IDs in group (params: group)
-setObjectVar         - Set object variable (params: id, name, value)
-getObjectVar         - Get object variable (params: id, name)
-setObjectParameter   - Set parameter (params: id, name, value)
-getObjectParameter   - Get parameter (params: id, name)
-getResultingVector   - Get velocity vector (params: id)
-runAnimation         - Play animation (params: id, animation)
-stopAnimation        - Stop animation (params: id)
-mirrorAnimation      - Mirror animation (params: id, horizontal, vertical)
+getObjectIDByName    - Get ID by name (inputs: name | outputs: id)
+createObject         - Create object (inputs: name, x, y | outputs: id)
+setObjectPos         - Set position (inputs: id, x, y)
+moveObject           - Move object (inputs: id, angle, power)
+moveObjectWithBraking - Move with braking (inputs: id, angle, power, slidingStep)
+jump                 - Make object jump (inputs: id, power)
+removeObject         - Delete object (inputs: id)
+setObjectVar         - Set object variable (inputs: id, name, value | NO VALUE OUTPUT)
+getObjectVar         - Get object variable (inputs: id, name | outputs: answer)
+setObjectParameter   - Set parameter (inputs: id, name, value)
+getObjectParameter   - Get parameter (inputs: id, name | outputs: value)
+setObjectRotation    - Set rotation (inputs: id, angle)
+getObjectPos         - Get position (inputs: id | outputs: x, y)
+getResultingVector   - Get velocity vector (inputs: id | outputs: x, y)
+getAllObjectInGroup  - Get all IDs in group (inputs: group | outputs: objects)
+runAnimation         - Play animation (inputs: id, animation)
+stopAnimation        - Stop animation (inputs: id)
+mirrorAnimation      - Mirror animation (inputs: id, horizontal, vertical)
 ```
 
 ### Numbers
@@ -317,6 +317,22 @@ jump_node.set("power", 15)
 
 ## CRITICAL RULES
 
+### Input/Output Parameter Names
+**IMPORTANT: Some nodes have SPECIFIC parameter names that differ from others:**
+
+**Event nodes with uppercase N:**
+- everyFrame and everyTick use `"N"` (uppercase), not `"n"`
+- Example: `event.set("N", 1)` NOT `event.set("n", 1)`
+
+**Loop delay parameter:**
+- for_ node uses `"x"` for delay parameter (mapped to __delay__)
+
+**Output naming:**
+- Most nodes use `"answer"` for output
+- getObjectPos uses `"x"` and `"y"` outputs
+- for_ uses `"index"` output
+- setObjectVar has NO value output (only path)
+
 ### Working with Objects
 **ALWAYS get object ID by name first before using object nodes**
 
@@ -374,6 +390,8 @@ move.set("id", 0)  # BAD
 - Increase Y coordinate for each parallel branch
 - Keep connected nodes at same Y coordinate
 - ALWAYS use `getObjectIDByName` before object manipulation
+- Use uppercase "N" for everyFrame and everyTick
+- Check node outputs before connecting (setObjectVar has no value output)
 
 ### DON'T
 - Add comments to code
@@ -382,6 +400,8 @@ move.set("id", 0)  # BAD
 - Connect wrong output types to inputs
 - Use `displayText` without `everyFrame` for persistent text
 - Store unnecessary variables
+- Use lowercase "n" for everyFrame/everyTick (must be uppercase "N")
+- Try to connect non-existent outputs (check node definition first)
 
 ---
 
