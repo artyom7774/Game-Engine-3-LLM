@@ -375,12 +375,42 @@ move.set("id", 0)  # BAD
 - runAnimation, stopAnimation, mirrorAnimation
 - ifCollision (for id parameter)
 
-### Connection Types (MUST MATCH)
-- `path` → `path`
-- `iterator` → `path`
-- `after` → `path`
-- `path_true` → `path`
-- `path_false` → `path`
+### INFELICITY
+"infelicity": {
+    "path": [],
+    "number": [
+        "text",
+        "choose",
+        "Any"
+    ],
+    "text": [
+        "Any"
+    ],
+    "logic": [
+        "number",
+        "text",
+        "Any"
+    ],
+    "iterator": [
+        "path"
+    ],
+    "list": [
+        "text",
+        "Any"
+    ],
+    "dict": [
+        "text",
+        "Any"
+    ],
+    "Any": [
+        "number",
+        "choose",
+        "text",
+        "logic",
+        "list",
+        "dict"
+    ]
+}
 
 ### DO
 - Use `everyFrame` + `displayText` for continuous text display
