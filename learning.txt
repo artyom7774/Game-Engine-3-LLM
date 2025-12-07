@@ -179,33 +179,45 @@ write.set("text", "Hello World!")
 ```python
 event_w = keyboardPress.create(2, 10)
 event_w.set("key", "w")
-move_w = moveObject.create(10, 10)
-move_w.connect("path", event_w.id, "path")
-move_w.set("id", 0)
+get_id_w = getObjectIDByName.create(10, 10)
+get_id_w.connect("path", event_w.id, "path")
+get_id_w.set("name", "player")
+move_w = moveObject.create(18, 10)
+move_w.connect("path", get_id_w.id, "path")
+move_w.connect("id", get_id_w.id, "id")
 move_w.set("angle", 90)
 move_w.set("power", 5)
 
 event_a = keyboardPress.create(2, 16)
 event_a.set("key", "a")
-move_a = moveObject.create(10, 16)
-move_a.connect("path", event_a.id, "path")
-move_a.set("id", 0)
+get_id_a = getObjectIDByName.create(10, 16)
+get_id_a.connect("path", event_a.id, "path")
+get_id_a.set("name", "player")
+move_a = moveObject.create(18, 16)
+move_a.connect("path", get_id_a.id, "path")
+move_a.connect("id", get_id_a.id, "id")
 move_a.set("angle", 180)
 move_a.set("power", 5)
 
 event_s = keyboardPress.create(2, 22)
 event_s.set("key", "s")
-move_s = moveObject.create(10, 22)
-move_s.connect("path", event_s.id, "path")
-move_s.set("id", 0)
+get_id_s = getObjectIDByName.create(10, 22)
+get_id_s.connect("path", event_s.id, "path")
+get_id_s.set("name", "player")
+move_s = moveObject.create(18, 22)
+move_s.connect("path", get_id_s.id, "path")
+move_s.connect("id", get_id_s.id, "id")
 move_s.set("angle", 270)
 move_s.set("power", 5)
 
 event_d = keyboardPress.create(2, 28)
 event_d.set("key", "d")
-move_d = moveObject.create(10, 28)
-move_d.connect("path", event_d.id, "path")
-move_d.set("id", 0)
+get_id_d = getObjectIDByName.create(10, 28)
+get_id_d.connect("path", event_d.id, "path")
+get_id_d.set("name", "player")
+move_d = moveObject.create(18, 28)
+move_d.connect("path", get_id_d.id, "path")
+move_d.connect("id", get_id_d.id, "id")
 move_d.set("angle", 0)
 move_d.set("power", 5)
 ```
@@ -245,14 +257,17 @@ set_var.connect("value", add.id, "answer")
 ```python
 event = everyFrame.create(2, 10)
 event.set("N", 1)
-check = ifCollision.create(10, 10)
-check.connect("path", event.id, "path")
-check.set("id", 0)
+get_id = getObjectIDByName.create(10, 10)
+get_id.connect("path", event.id, "path")
+get_id.set("name", "player")
+check = ifCollision.create(18, 10)
+check.connect("path", get_id.id, "path")
+check.connect("id", get_id.id, "id")
 check.set("group", "enemy")
-write_hit = writeText.create(18, 8)
+write_hit = writeText.create(26, 8)
 write_hit.connect("path", check.id, "path_true")
 write_hit.set("text", "Hit enemy!")
-write_miss = writeText.create(18, 14)
+write_miss = writeText.create(26, 14)
 write_miss.connect("path", check.id, "path_false")
 write_miss.set("text", "No collision")
 ```
@@ -289,15 +304,42 @@ create.set("y", 300)
 ```python
 event = keyboardClick.create(2, 10)
 event.set("key", "space")
-jump_node = jump.create(10, 10)
-jump_node.connect("path", event.id, "path")
-jump_node.set("id", 0)
+get_id = getObjectIDByName.create(10, 10)
+get_id.connect("path", event.id, "path")
+get_id.set("name", "player")
+jump_node = jump.create(18, 10)
+jump_node.connect("path", get_id.id, "path")
+jump_node.connect("id", get_id.id, "id")
 jump_node.set("power", 15)
 ```
 
 ---
 
 ## CRITICAL RULES
+
+### Working with Objects
+⚠️ **ALWAYS get object ID by name first before using object nodes**
+
+```python
+# CORRECT - Get ID first
+get_id = getObjectIDByName.create(10, 10)
+get_id.set("name", "player")
+move = moveObject.create(18, 10)
+move.connect("id", get_id.id, "id")
+
+# WRONG - Don't use hardcoded IDs
+move = moveObject.create(10, 10)
+move.set("id", 0)  # ❌ BAD
+```
+
+**ALL object manipulation nodes require getting ID first:**
+- moveObject, moveObjectWithBraking, setObjectPos, getObjectPos
+- setObjectRotation, jump, removeObject
+- setObjectVar, getObjectVar
+- setObjectParameter, getObjectParameter
+- getResultingVector
+- runAnimation, stopAnimation, mirrorAnimation
+- ifCollision (for id parameter)
 
 ### Connection Types (MUST MATCH)
 - `path` → `path`
@@ -324,6 +366,21 @@ jump_node.set("power", 15)
 ---
 
 ## COMMON PATTERNS
+
+### Pattern: Working with objects
+```python
+# ALWAYS get ID by name first
+event = keyboardPress.create(2, 10)
+event.set("key", "w")
+get_id = getObjectIDByName.create(10, 10)
+get_id.connect("path", event.id, "path")
+get_id.set("name", "player")
+move = moveObject.create(18, 10)
+move.connect("path", get_id.id, "path")
+move.connect("id", get_id.id, "id")
+move.set("angle", 90)
+move.set("power", 5)
+```
 
 ### Pattern: Continuous display
 ```python
@@ -374,7 +431,3 @@ Now generate Python code based on user request. Remember:
 2. No comments
 3. No explanations
 4. Follow examples exactly
-
-# ANSWER FOR THIS QUESTION
-
-%MESSAGE%
