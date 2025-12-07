@@ -46,8 +46,8 @@ node.set("input_name", value)
 ### Events (execution triggers)
 ```
 onStartGame          - Game starts
-everyFrame           - Every frame (input: N - uppercase!)
-everyTick            - Every tick (input: N - uppercase!)
+everyFrame           - Every frame (input: N)
+everyTick            - Every tick (input: N)
 keyboardPress        - Key held (input: key)
 keyboardClick        - Key pressed once (input: key)
 keyboardRelease      - Key released (input: key)
@@ -60,20 +60,20 @@ functionEvent        - Custom function (inputs: name, params)
 
 ### Logic (branching)
 ```
-if_                  - Compare values (params: a, b, operation)
+if_                  - Compare values (inputs: a, b, operation)
                        operations: 0==, 1!=, 2<=, 3>=, 4<, 5>
-ifKeyPressed         - Check if key pressed (params: key)
-ifCollision          - Check collision (params: id, group, append)
-ifKeyInDict          - Check key in dict (params: dict, key)
-ifElementInList      - Check element in list (params: list, element)
+ifKeyPressed         - Check if key pressed (inputs: key)
+ifCollision          - Check collision (inputs: id, group, append)
+ifKeyInDict          - Check key in dict (inputs: dict, key)
+ifElementInList      - Check element in list (inputs: list, element)
 ```
 
 ### Loops
 ```
-for_                 - Repeat N times (params: n, x-delay)
-forListElements      - Iterate list (params: list)
-forDictElements      - Iterate dict (params: dict)
-forObjectsGroup      - Iterate objects (params: group)
+for_                 - Repeat N times (inputs: n, x)
+forListElements      - Iterate list (inputs: list)
+forDictElements      - Iterate dict (inputs: dict)
+forObjectsGroup      - Iterate objects (inputs: group)
 ```
 
 ### Objects
@@ -100,67 +100,67 @@ mirrorAnimation      - Mirror animation (inputs: id, horizontal, vertical)
 
 ### Numbers
 ```
-plus                 - Add (params: a, b)
-minus                - Subtract (params: a, b)
-multiply             - Multiply (params: a, b)
-divide               - Divide (params: a, b)
-pow                  - Power (params: number, degree)
-sqrt                 - Square root (params: number)
-modulo               - Modulo (params: a, b)
-absolute             - Absolute value (params: number)
-sin, cos, tan, ctg   - Trigonometry (params: x)
-radians              - Degrees to radians (params: degrees)
-degrees              - Radians to degrees (params: radians)
+plus                 - Add (inputs: a, b)
+minus                - Subtract (inputs: a, b)
+multiply             - Multiply (inputs: a, b)
+divide               - Divide (inputs: a, b)
+pow                  - Power (inputs: number, degree)
+sqrt                 - Square root (inputs: number)
+modulo               - Modulo (inputs: a, b)
+absolute             - Absolute value (inputs: number)
+sin, cos, tan, ctg   - Trigonometry (inputs: x)
+radians              - Degrees to radians (inputs: degrees)
+degrees              - Radians to degrees (inputs: radians)
 ```
 
 ### Text
 ```
-writeText            - Write to console (params: text)
-displayText          - Display on screen (params: x, y, text)
-connectText          - Concatenate (params: text1, text2)
-sliceText            - Slice text (params: text, start, end)
+writeText            - Write to console (inputs: text)
+displayText          - Display on screen (inputs: x, y, text)
+connectText          - Concatenate (inputs: text1, text2)
+sliceText            - Slice text (inputs: text, start, end)
 ```
 
 ### Lists & Dicts
 ```
-getByIndex           - Get list element (params: list, index)
-deleteByIndex        - Delete by index (params: list, index)
-getIndexOfElement    - Find index (params: list, element)
-addListElement       - Append to list (params: list, element)
-setListElement       - Set element (params: list, index, element)
-insertListElement    - Insert element (params: list, index, element)
-sliceList            - Slice list (params: list, start, end)
+getByIndex           - Get list element (inputs: list, index)
+deleteByIndex        - Delete by index (inputs: list, index)
+getIndexOfElement    - Find index (inputs: list, element)
+addListElement       - Append to list (inputs: list, element)
+setListElement       - Set element (inputs: list, index, element)
+insertListElement    - Insert element (inputs: list, index, element)
+sliceList            - Slice list (inputs: list, start, end)
 
-getByKey             - Get dict element (params: dict, key)
-removeByKey          - Remove by key (params: dict, key)
-getKeyOfElement      - Find key (params: dict, element)
-addDictElement       - Add to dict (params: dict, key, element)
+getByKey             - Get dict element (inputs: dict, key)
+removeByKey          - Remove by key (inputs: dict, key)
+getKeyOfElement      - Find key (inputs: dict, element)
+addDictElement       - Add to dict (inputs: dict, key, element)
 ```
 
 ### Variables
 ```
-setVar               - Set variable (params: name, global, value)
-getVar               - Get variable (params: name, global)
+setVar               - Set variable (inputs: name, global, value)
+getVar               - Get variable (inputs: name, global)
 ```
 
 ### Other
 ```
-random_              - Random number (params: a, b)
-len_                 - Get length (params: element)
-wait                 - Wait milliseconds (params: time)
+random_              - Random number (inputs: a, b)
+len_                 - Get length (inputs: element)
+wait                 - Wait milliseconds (inputs: time)
 exit_                - Exit program
 break_               - Break loop
-callFunction         - Call function (params: name, params)
+callFunction         - Call function (inputs: name, params)
 getMousePos          - Get mouse position
 getTimePassed        - Get elapsed time
-getNoiseValue        - Perlin noise (params: seed, x, y, min, max, octaves, frequency, amplitude, lacunarity, persistence)
-goToScene            - Change scene (params: scene)
+getNoiseValue        - Perlin noise (inputs: seed, x, y, min, max, octaves, frequency, amplitude, lacunarity, persistence)
+goToScene            - Change scene (inputs: scene)
 getSceneName         - Get current scene
-playMusic            - Play music (params: name, volume)
+playMusic            - Play music (inputs: name, volume)
 stopMusic            - Stop music
-playSound            - Play sound (params: name, volume)
-decodeHolder         - Decode placeholder (params: text)
-python               - Execute Python (params: text, list, dict)
+playSound            - Play sound (inputs: name, volume)
+decodeHolder         - Decode placeholder (inputs: text)
+python               - Execute Python (inputs: text, list, dict)
 ```
 
 ---
