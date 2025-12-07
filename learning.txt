@@ -318,9 +318,9 @@ jump_node.set("power", 15)
 ## CRITICAL RULES
 
 ### Working with Objects
-⚠️ **ALWAYS get object ID by name first before using object nodes**
+**ALWAYS get object ID by name first before using object nodes**
 
-⚠️ **NEVER use createObject for movement/manipulation - objects already exist on scene**
+**NEVER use createObject for movement/manipulation - objects already exist on scene**
 
 ```python
 # CORRECT - Get existing object ID and move it
@@ -330,14 +330,14 @@ move = moveObject.create(18, 10)
 move.connect("id", get_id.id, "id")
 
 # WRONG - Don't create object for movement
-create = createObject.create(10, 10)  # ❌ BAD - only for spawning NEW objects
+create = createObject.create(10, 10)  # BAD - only for spawning NEW objects
 create.set("name", "player")
 move = moveObject.create(18, 10)
 move.connect("id", create.id, "id")
 
 # WRONG - Don't use hardcoded IDs
 move = moveObject.create(10, 10)
-move.set("id", 0)  # ❌ BAD
+move.set("id", 0)  # BAD
 ```
 
 **Use createObject ONLY when:**
@@ -367,21 +367,21 @@ move.set("id", 0)  # ❌ BAD
 - `path_false` → `path`
 
 ### DO
-✅ Use `everyFrame` + `displayText` for continuous text display
-✅ Use `writeText` for console output
-✅ Use `displayText` for on-screen text
-✅ Store node.id in variable ONLY if used multiple times
-✅ Increase Y coordinate for each parallel branch
-✅ Keep connected nodes at same Y coordinate
-✅ ALWAYS use `getObjectIDByName` before object manipulation
+- Use `everyFrame` + `displayText` for continuous text display
+- Use `writeText` for console output
+- Use `displayText` for on-screen text
+- Store node.id in variable ONLY if used multiple times
+- Increase Y coordinate for each parallel branch
+- Keep connected nodes at same Y coordinate
+- ALWAYS use `getObjectIDByName` before object manipulation
 
 ### DON'T
-❌ Add comments to code
-❌ Use `createObject` when working with existing objects (movement, rotation, etc.)
-❌ Use hardcoded object IDs - always get ID by name first
-❌ Connect wrong output types to inputs
-❌ Use `displayText` without `everyFrame` for persistent text
-❌ Store unnecessary variables
+- Add comments to code
+- Use `createObject` when working with existing objects (movement, rotation, etc.)
+- Use hardcoded object IDs - always get ID by name first
+- Connect wrong output types to inputs
+- Use `displayText` without `everyFrame` for persistent text
+- Store unnecessary variables
 
 ---
 
