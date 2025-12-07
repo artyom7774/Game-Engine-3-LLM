@@ -117,7 +117,7 @@ degrees              - Radians to degrees (inputs: radians)
 ```
 writeText            - Write to console (inputs: text)
 displayText          - Display on screen (inputs: x, y, text)
-connectText          - Concatenate (inputs: text1, text2)
+connectText          - Concatenate (inputs: text1, text2 | outputs: text)
 sliceText            - Slice text (inputs: text, start, end)
 ```
 
@@ -374,43 +374,6 @@ move.set("id", 0)  # BAD
 - getResultingVector
 - runAnimation, stopAnimation, mirrorAnimation
 - ifCollision (for id parameter)
-
-### INFELICITY
-"infelicity": {
-    "path": [],
-    "number": [
-        "text",
-        "choose",
-        "Any"
-    ],
-    "text": [
-        "Any"
-    ],
-    "logic": [
-        "number",
-        "text",
-        "Any"
-    ],
-    "iterator": [
-        "path"
-    ],
-    "list": [
-        "text",
-        "Any"
-    ],
-    "dict": [
-        "text",
-        "Any"
-    ],
-    "Any": [
-        "number",
-        "choose",
-        "text",
-        "logic",
-        "list",
-        "dict"
-    ]
-}
 
 ### DO
 - Use `everyFrame` + `displayText` for continuous text display
