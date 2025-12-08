@@ -384,6 +384,7 @@ move.set("id", 0)  # BAD
 - ALWAYS use `getObjectIDByName` before object manipulation
 - Use uppercase "N" for everyFrame and everyTick
 - Check node outputs before connecting (setObjectVar has no value output)
+- Check the names of the inputs and outputs, they must match.
 
 ### DON'T
 - Add comments to code
