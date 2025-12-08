@@ -45,122 +45,121 @@ node.set("input_name", value)
 
 ### Events (execution triggers)
 ```
-onStartGame          - Game starts
-everyFrame           - Every frame (input: N)
-everyTick            - Every tick (input: N)
-keyboardPress        - Key held (input: key)
-keyboardClick        - Key pressed once (input: key)
-keyboardRelease      - Key released (input: key)
-mouseLeftClick       - Left mouse click
-mouseRightClick      - Right mouse click
-onButtonPress        - UI button pressed (output: id)
-onLoadScene          - Scene loaded
-functionEvent        - Custom function (inputs: name, params)
+onStartGame           - Game starts
+everyFrame            - Every frame (input: N)
+everyTick             - Every tick (input: N)
+keyboardPress         - Key held (input: key)
+keyboardClick         - Key pressed once (input: key)
+keyboardRelease       - Key released (input: key)
+mouseLeftClick        - Left mouse click
+mouseRightClick       - Right mouse click
+onButtonPress         - UI button pressed (output: id)
+onLoadScene           - Scene loaded
+functionEvent         - Custom function (inputs: name, params)
 ```
 
 ### Logic (branching)
 ```
-if_                  - Compare values (inputs: a, b, operation)
-                       operations: 0==, 1!=, 2<=, 3>=, 4<, 5>
-ifKeyPressed         - Check if key pressed (inputs: key)
-ifCollision          - Check collision (inputs: id, group, append)
-ifKeyInDict          - Check key in dict (inputs: dict, key)
-ifElementInList      - Check element in list (inputs: list, element)
+if_                   - Compare values (inputs: a, b, operation | outputs: path_true, path_false)
+                        operations: 0. ==, 1. !=, 2. <=, 3. >=, 4. <, 5. >
+ifKeyPressed          - Check if key pressed (inputs: key | outputs: path_true, path_false)
+ifCollision           - Check collision (inputs: id, group, append | outputs: path_true, path_false)
+ifKeyInDict           - Check key in dict (inputs: dict, key | outputs: path_true, path_false)
+ifElementInList       - Check element in list (inputs: list, element | outputs: path_true, path_false)
 ```
 
 ### Loops
 ```
-for_                 - Repeat N times (inputs: n, x)
-forListElements      - Iterate list (inputs: list)
-forDictElements      - Iterate dict (inputs: dict)
-forObjectsGroup      - Iterate objects (inputs: group)
+for_                  - Repeat N times (inputs: n, x | outputs: iterator, index, after)
+forListElements       - Iterate list (inputs: list | outputs: iterator, index, element, after)
+forDictElements       - Iterate dict (inputs: dict | outputs: iterator, key, element, after)
+forObjectsGroup       - Iterate objects (inputs: group | outputs: iterator, id, after)
 ```
 
 ### Objects
 ```
-getObjectIDByName    - Get ID by name (inputs: name | outputs: id)
-createObject         - Create object (inputs: name, x, y | outputs: id)
-setObjectPos         - Set position (inputs: id, x, y)
-moveObject           - Move object (inputs: id, angle, power)
+getObjectIDByName     - Get ID by name (inputs: name | outputs: id)
+createObject          - Create object (inputs: name, x, y | outputs: id)
+setObjectPos          - Set position (inputs: id, x, y)
+moveObject            - Move object (inputs: id, angle, power)
 moveObjectWithBraking - Move with braking (inputs: id, angle, power, slidingStep)
-jump                 - Make object jump (inputs: id, power)
-removeObject         - Delete object (inputs: id)
-setObjectVar         - Set object variable (inputs: id, name, value | NO VALUE OUTPUT)
-getObjectVar         - Get object variable (inputs: id, name | outputs: answer)
-setObjectParameter   - Set parameter (inputs: id, name, value)
-getObjectParameter   - Get parameter (inputs: id, name | outputs: value)
-setObjectRotation    - Set rotation (inputs: id, angle)
-getObjectPos         - Get position (inputs: id | outputs: x, y)
-getResultingVector   - Get velocity vector (inputs: id | outputs: x, y)
-getAllObjectInGroup  - Get all IDs in group (inputs: group | outputs: objects)
-runAnimation         - Play animation (inputs: id, animation)
-stopAnimation        - Stop animation (inputs: id)
-mirrorAnimation      - Mirror animation (inputs: id, horizontal, vertical)
+jump                  - Make object jump (inputs: id, power)
+removeObject          - Delete object (inputs: id)
+setObjectVar          - Set object variable (inputs: id, name, value | NO VALUE OUTPUT)
+getObjectVar          - Get object variable (inputs: id, name | outputs: answer)
+setObjectParameter    - Set parameter (inputs: id, name, value)
+getObjectParameter    - Get parameter (inputs: id, name | outputs: value)
+setObjectRotation     - Set rotation (inputs: id, angle)
+getObjectPos          - Get position (inputs: id | outputs: x, y)
+getResultingVector    - Get velocity vector (inputs: id | outputs: x, y)
+getAllObjectInGroup   - Get all IDs in group (inputs: group | outputs: objects)
+runAnimation          - Play animation (inputs: id, animation)
+stopAnimation         - Stop animation (inputs: id)
+mirrorAnimation       - Mirror animation (inputs: id, horizontal, vertical)
 ```
 
 ### Numbers
 ```
-plus                 - Add (inputs: a, b)
-minus                - Subtract (inputs: a, b)
-multiply             - Multiply (inputs: a, b)
-divide               - Divide (inputs: a, b)
-pow                  - Power (inputs: number, degree)
-sqrt                 - Square root (inputs: number)
-modulo               - Modulo (inputs: a, b)
-absolute             - Absolute value (inputs: number)
-sin, cos, tan, ctg   - Trigonometry (inputs: x)
-radians              - Degrees to radians (inputs: degrees)
-degrees              - Radians to degrees (inputs: radians)
+plus                  - Add (inputs: a, b | outputs: answer)
+minus                 - Subtract (inputs: a, b | outputs: answer)
+multiply              - Multiply (inputs: a, b | outputs: answer)
+divide                - Divide (inputs: a, b | outputs: answer)
+pow                   - Power (inputs: number, degree | outputs: answer)
+sqrt                  - Square root (inputs: number | outputs: answer)
+modulo                - Modulo (inputs: a, b | outputs: answer)
+absolute              - Absolute value (inputs: number | outputs: answer)
+sin, cos, tan, ctg    - Trigonometry (inputs: x | outputs: answer)
+radians               - Degrees to radians (inputs: degrees | outputs: answer)
+degrees               - Radians to degrees (inputs: radians | outputs: answer)
 ```
 
 ### Text
 ```
-writeText            - Write to console (inputs: text)
-displayText          - Display on screen (inputs: x, y, text)
-connectText          - Concatenate (inputs: text1, text2 | outputs: text)
-sliceText            - Slice text (inputs: text, start, end)
+writeText             - Write to console (inputs: text)
+displayText           - Display on screen (inputs: x, y, text)
+connectText           - Concatenate (inputs: text1, text2 | outputs: text)
+sliceText             - Slice text (inputs: text, start, end | outptus: text)
 ```
 
 ### Lists & Dicts
 ```
-getByIndex           - Get list element (inputs: list, index)
-deleteByIndex        - Delete by index (inputs: list, index)
-getIndexOfElement    - Find index (inputs: list, element)
-addListElement       - Append to list (inputs: list, element)
-setListElement       - Set element (inputs: list, index, element)
-insertListElement    - Insert element (inputs: list, index, element)
-sliceList            - Slice list (inputs: list, start, end)
-
-getByKey             - Get dict element (inputs: dict, key)
-removeByKey          - Remove by key (inputs: dict, key)
-getKeyOfElement      - Find key (inputs: dict, element)
-addDictElement       - Add to dict (inputs: dict, key, element)
+getByIndex            - Get list element (inputs: list, index | outptus: element)
+deleteByIndex         - Delete by index (inputs: list, index | outptus: list)
+getIndexOfElement     - Find index (inputs: list, element | outptus: index)
+addListElement        - Append to list (inputs: list, element | outptus: list)
+setListElement        - Set element (inputs: list, index, element | outptus: list)
+insertListElement     - Insert element (inputs: list, index, element | outptus: list)
+sliceList             - Slice list (inputs: list, start, end | outptus: list)
+getByKey              - Get dict element (inputs: dict, key | outptus: element)
+removeByKey           - Remove by key (inputs: dict, key | outptus: dict)
+getKeyOfElement       - Find key (inputs: dict, element | outptus: key)
+addDictElement        - Add to dict (inputs: dict, key, element | outptus: dict)
 ```
 
 ### Variables
 ```
 setVar               - Set variable (inputs: name, global, value)
-getVar               - Get variable (inputs: name, global)
+getVar               - Get variable (inputs: name, global | outptus: answer)
 ```
 
 ### Other
 ```
-random_              - Random number (inputs: a, b)
-len_                 - Get length (inputs: element)
+random_              - Random number (inputs: a, b | outptus: answer)
+len_                 - Get length (inputs: element | outptus: answer)
 wait                 - Wait milliseconds (inputs: time)
 exit_                - Exit program
 break_               - Break loop
 callFunction         - Call function (inputs: name, params)
-getMousePos          - Get mouse position
-getTimePassed        - Get elapsed time
-getNoiseValue        - Perlin noise (inputs: seed, x, y, min, max, octaves, frequency, amplitude, lacunarity, persistence)
+getMousePos          - Get mouse position (outptus: x, y)
+getTimePassed        - Get elapsed time (outptus: time_passed)
+getNoiseValue        - Perlin noise (inputs: seed, x, y, min, max, octaves, frequency, amplitude, lacunarity, persistence | outptus: value)
 goToScene            - Change scene (inputs: scene)
-getSceneName         - Get current scene
+getSceneName         - Get current scene (outptus: answer)
 playMusic            - Play music (inputs: name, volume)
 stopMusic            - Stop music
 playSound            - Play sound (inputs: name, volume)
-decodeHolder         - Decode placeholder (inputs: text)
-python               - Execute Python (inputs: text, list, dict)
+decodeHolder         - Decode placeholder (inputs: text | outptus: answer)
+python               - Execute Python (inputs: text, list, dict | outptus: answer)
 ```
 
 ---
