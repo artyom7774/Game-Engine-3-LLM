@@ -33,9 +33,9 @@ node.set("input_name", value)
 
 ## POSITIONING RULES
 
-- **Event nodes**: Start at x=2
-- **Horizontal spacing**: x + 8 (standard), x + 10 (wide nodes)
-- **Vertical spacing**: y + 6 (for branches)
+- **Event nodes**: Start at x = 0, y = 0
+- **Horizontal spacing**: x + node_width + 2
+- **Vertical spacing**: y + node_height + 2
 - **Connected nodes**: Keep same Y coordinate
 - **Branches**: Increase Y for each branch
 
@@ -128,7 +128,6 @@ ifKeyInDict = Node("logic", "ifKeyInDict", 0, 0, 8, 4, {"path": InputConnector("
 ifElementInList = Node("logic", "ifElementInList", 0, 0, 8, 4, {"path": InputConnector("path", "__path__", "path", None, None), "list": InputConnector("list", "__list__", "list", None, []), "element": InputConnector("element", "__element__", "Any", None, "")}, {"path_true": OutputConnector("path_true", "__path_true__", "path"), "path_false": OutputConnector("path_false", "__path_false__", "path")}, NODES["ifElementInList"]["display"])
 getAllObjectInGroup = Node("objects", "getAllObjectInGroup", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "group": InputConnector("group", "__group__", "text", None, "")}, {"path": OutputConnector("path", "__path__", "path"), "objects": OutputConnector("objects", "__listObjectID__", "list")}, NODES["getAllObjectInGroup"]["display"])
 absolute = Node("number", "absolute", 0, 0, 6, 3, {"path": InputConnector("path", "__path__", "path", None, None), "number": InputConnector("number", "__number__", "number", None, 0)}, {"path": OutputConnector("path", "__path__", "path"), "answer": OutputConnector("answer", "__answer__", "number")}, NODES["absolute"]["display"])
-
 
 ### Events (execution triggers)
 ```
@@ -225,28 +224,28 @@ addDictElement        - Add to dict (inputs: dict, key, element | outptus: dict)
 
 ### Variables
 ```
-setVar               - Set variable (inputs: name, global, value)
-getVar               - Get variable (inputs: name, global | outptus: answer)
+setVar                - Set variable (inputs: name, global, value)
+getVar                - Get variable (inputs: name, global | outptus: answer)
 ```
 
 ### Other
 ```
-random_              - Random number (inputs: a, b | outptus: answer)
-len_                 - Get length (inputs: element | outptus: answer)
-wait                 - Wait milliseconds (inputs: time)
-exit_                - Exit program
-break_               - Break loop
-callFunction         - Call function (inputs: name, params)
-getMousePos          - Get mouse position (outptus: x, y)
-getTimePassed        - Get elapsed time (outptus: time_passed)
-getNoiseValue        - Perlin noise (inputs: seed, x, y, min, max, octaves, frequency, amplitude, lacunarity, persistence | outptus: value)
-goToScene            - Change scene (inputs: scene)
-getSceneName         - Get current scene (outptus: answer)
-playMusic            - Play music (inputs: name, volume)
-stopMusic            - Stop music
-playSound            - Play sound (inputs: name, volume)
-decodeHolder         - Decode placeholder (inputs: text | outptus: answer)
-python               - Execute Python (inputs: text, list, dict | outptus: answer)
+random_               - Random number (inputs: a, b | outptus: answer)
+len_                  - Get length (inputs: element | outptus: answer)
+wait                  - Wait milliseconds (inputs: time)
+exit_                 - Exit program
+break_                - Break loop
+callFunction          - Call function (inputs: name, params)
+getMousePos           - Get mouse position (outptus: x, y)
+getTimePassed         - Get elapsed time (outptus: time_passed)
+getNoiseValue         - Perlin noise (inputs: seed, x, y, min, max, octaves, frequency, amplitude, lacunarity, persistence | outptus: value)
+goToScene             - Change scene (inputs: scene)
+getSceneName          - Get current scene (outptus: answer)
+playMusic             - Play music (inputs: name, volume)
+stopMusic             - Stop music
+playSound             - Play sound (inputs: name, volume)
+decodeHolder          - Decode placeholder (inputs: text | outptus: answer)
+python                - Execute Python (inputs: text, list, dict | outptus: answer)
 ```
 
 ---
