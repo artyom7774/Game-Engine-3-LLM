@@ -471,6 +471,7 @@ move.set("id", 0)  # BAD
 - Use uppercase "N" for everyFrame and everyTick
 - Check node outputs before connecting (setObjectVar has no value output)
 - Check the names of the inputs and outputs, they must match.
+- Every node in loops group haven't got path and have iterator!
 
 ### DON'T
 - Add comments to code
